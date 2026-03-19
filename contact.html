@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Ata Malfuzi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="page-hero-tag">Get in touch</span>
+    <h1 class="page-hero-title">Let's<br><span class="italic-serif">connect</span></h1>
+    <p class="page-hero-sub">
+      Open to research collaborations, consulting on data science and energy-economic modelling,
+      and interesting conversations in applied econometrics and policy.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-layout">
+
+    <!-- LEFT: Links -->
+    <div>
+      <div style="font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem;">Find me on</div>
+
+      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank" class="contact-link-block">
+        <div class="contact-link-icon">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">linkedin.com/in/ata-malfuzi</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/atamalfuzi" target="_blank" class="contact-link-block">
+        <div class="contact-link-icon">🐙</div>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">github.com/atamalfuzi</div>
+        </div>
+      </a>
+
+      <a href="mailto:atamalfuzi@gmail.com" class="contact-link-block">
+        <div class="contact-link-icon">✉️</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">atamalfuzi@gmail.com</div>
+        </div>
+      </a>
+
+      <a href="Resume_Ata Malfuzi.pdf" download class="contact-link-block">
+        <div class="contact-link-icon">📄</div>
+        <div>
+          <div class="contact-link-label">Résumé</div>
+          <div class="contact-link-value">Download PDF</div>
+        </div>
+      </a>
+
+      <div class="contact-open-to">
+        <h4>Currently open to</h4>
+        <div class="open-to-list">
+          <div class="open-to-item">Research collaborations in energy or environmental economics</div>
+          <div class="open-to-item">Consulting on energy-economic modelling and data science</div>
+          <div class="open-to-item">Applied econometrics and quantitative analysis projects</div>
+          <div class="open-to-item">Policy analysis and evidence synthesis</div>
+          <div class="open-to-item">Academic co-authorship and working papers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div>
+      <div style="font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem;">Send a message</div>
+
+      <!--
+        HOW TO ACTIVATE THIS FORM (free, no backend needed):
+        1. Go to https://formspree.io — create a free account
+        2. Create a new form and copy the Form ID (e.g. "xyzabcde")
+        3. Replace YOUR_FORM_ID below with your real ID
+        Submissions arrive directly in your email inbox.
+      -->
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me about your project, question, or idea…" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;cursor:pointer;border:none;font-family:var(--ff-mono);">
+          Send message →
+        </button>
+      </form>
+
+      <p style="font-size:.75rem;color:var(--text-3);margin-top:1rem;font-family:var(--ff-mono);">
+        I aim to respond within 2–3 business days.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-logo">AM<span class="logo-dot">.</span></span>
+    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
+      <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

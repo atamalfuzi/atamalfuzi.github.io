@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Ata Malfuzi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .about-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-hero-photo {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; object-position: center top;
+      border: 1px solid var(--rule-2);
+    }
+    .about-hero-photo-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--bg-3); border: 1px solid var(--rule-2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: .5rem;
+      color: var(--text-3); font-size: .8rem;
+    }
+    .about-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-sticky-sidebar { position: sticky; top: 5rem; }
+    @media (max-width: 900px) {
+      .about-hero-grid { grid-template-columns: 1fr; }
+      .about-hero-photo, .about-hero-photo-placeholder { aspect-ratio: 4/3; max-width: 340px; }
+      .about-body { grid-template-columns: 1fr; }
+      .about-sticky-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO — text left, photo right -->
+<section class="page-hero">
+  <div class="container about-hero-grid">
+    <div>
+      <span class="page-hero-tag">Background</span>
+      <h1 class="page-hero-title">About<br><span class="italic-serif">me</span></h1>
+      <p class="page-hero-sub">
+        Data scientist and economist with a track record of delivering rigorous quantitative
+        analysis for public-sector decision making — from energy-economic modelling and carbon
+        policy tools to poverty and housing indices.
+      </p>
+    </div>
+    <div>
+      <img src="bio_photo_Ata Malfuzi.jpg" alt="Ata Malfuzi" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BODY — sticky sidebar left, content right -->
+<section class="section">
+  <div class="container about-body">
+
+    <!-- STICKY SIDEBAR -->
+    <aside class="about-sticky-sidebar">
+      <div class="about-sidebar-links">
+        <a href="https://linkedin.com/in/ata-malfuzi" target="_blank" class="sidebar-link">
+          <span>LinkedIn</span><span class="icon">↗</span>
+        </a>
+        <a href="https://github.com/atamalfuzi" target="_blank" class="sidebar-link">
+          <span>GitHub</span><span class="icon">↗</span>
+        </a>
+        <a href="Resume_Ata Malfuzi.pdf" download class="sidebar-link">
+          <span>Download Resume</span><span class="icon">↓</span>
+        </a>
+        <a href="contact.html" class="sidebar-link">
+          <span>Get in touch</span><span class="icon">→</span>
+        </a>
+      </div>
+
+      <div style="margin-top:1.5rem;padding:1.2rem 1.4rem;background:var(--bg-3);border:1px solid var(--rule);">
+        <div style="font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.8rem;">Quick facts</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div style="font-size:.8rem;color:var(--text-2)"><span style="color:var(--accent)">📍</span> Vancouver, BC, Canada</div>
+          <div style="font-size:.8rem;color:var(--text-2)"><span style="color:var(--accent)">🏛</span> Environment & Climate Change Canada</div>
+          <div style="font-size:.8rem;color:var(--text-2)"><span style="color:var(--accent)">🔬</span> SESIT Lab · UVic</div>
+          <div style="font-size:.8rem;color:var(--text-2)"><span style="color:var(--accent)">🎓</span> MA Economics, SFU</div>
+          <div style="font-size:.8rem;color:var(--text-2)"><span style="color:var(--accent)">🌐</span> EN · FA · AZ · FR</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="about-main">
+
+      <div class="about-section reveal">
+        <h3>Bio</h3>
+        <p>
+          I'm a data scientist and economist who works end-to-end on quantitative projects — defining the
+          question, integrating and cleaning data, building and validating models, and communicating
+          findings through clear briefings and reports.
+        </p>
+        <p>
+          My technical work spans machine learning, applied econometrics, and energy-economic modelling,
+          with a strong emphasis on reproducible workflows using R, Python, Julia, and SQL. I've built
+          production analytical tools for federal government, contributed to open-source energy models,
+          and published peer-reviewed research in energy economics.
+        </p>
+        <p>
+          At Environment and Climate Change Canada I lead transportation electrification research as
+          Passenger Transport Lead. In parallel I work as a Macro Modeller with the SESIT Lab at the
+          University of Victoria, endogenising carbon markets in the open-source CIMS model from SFU.
+        </p>
+      </div>
+
+      <div class="about-section reveal">
+        <h3>Experience</h3>
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Macro Modeller</div>
+              <div class="tl-org">SESIT Lab · University of Victoria</div>
+              <div class="tl-period">Jan 2026 – Present · Remote</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Endogenising carbon markets within the CIMS (Canadian Integrated Modelling System) open-source energy-economic model from SFU, enabling policy-consistent simulation of net-zero transition pathways.</li>
+              <li>Developing market-clearing mechanisms and price formation algorithms integrated into the existing CIMS R/Julia codebase.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economic Analyst (EC-04) — Passenger Transport Lead</div>
+              <div class="tl-org">Environment and Climate Change Canada</div>
+              <div class="tl-period">Feb 2025 – Present · Vancouver, BC</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Overseeing research on EV adoption and off-road electrification, guiding a team of 2 economists to develop evidence-based transportation energy policy models.</li>
+              <li>Leading modernisation of energy-economic models, migrating legacy SQL/Excel systems to R-based workflows integrated with Azure and Git.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economist (EC-03)</div>
+              <div class="tl-org">Environment and Climate Change Canada</div>
+              <div class="tl-period">Nov 2023 – Feb 2025 · Vancouver, BC</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Modernised codebases across mid-to-large data repositories; transformed Access/SQL/Excel systems into efficient R and Julia workflows with optimised data storage.</li>
+              <li>Built the Carbon Policy Coverage Tool to evaluate carbon pricing coverage across Canadian provinces, integrating large datasets with SQL and advanced modelling in R.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economist (ECON 24)</div>
+              <div class="tl-org">Government of British Columbia</div>
+              <div class="tl-period">May 2023 – May 2024 · Vancouver, BC</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Developed a comprehensive Poverty Index for BC using advanced Factor Analysis and multiple indexing methods to guide poverty reduction programs across ministries.</li>
+              <li>Created the BC Housing Affordability Index using StatsCan, CRA, and Bank of Canada data; presented to government stakeholders.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economic Analyst</div>
+              <div class="tl-org">Government of British Columbia</div>
+              <div class="tl-period">Jan 2023 – Apr 2023 · Vancouver, BC</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Designed econometric models in R using time series and panel data analysis for government projects.</li>
+              <li>Conducted data wrangling and analysis on large datasets; composed literature reviews supporting economic analysis.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Blockchain Consultant</div>
+              <div class="tl-org">KPMG Canada</div>
+              <div class="tl-period">May 2022 – Aug 2022 · Toronto, ON</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Advised clients on innovative financial technologies, completing 5 high-value engagements worth $2M.</li>
+              <li>Developed financial products for a Capital Management firm with $200B AUM, introducing 3 new investment opportunities.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Teaching Assistant</div>
+              <div class="tl-org">Simon Fraser University</div>
+              <div class="tl-period">Sep 2021 – Apr 2023 · Vancouver, BC</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Delivered tutorials and office hours; administered and graded assignments and exams across economics courses.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Consultant</div>
+              <div class="tl-org">Ripple Financial Consultants</div>
+              <div class="tl-period">Jan 2020 – Jun 2021 · Iran</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Conducted global financial market analysis to identify low-risk investment opportunities; drove 20% portfolio diversification increase.</li>
+              <li>Applied R and Excel for market trend analysis; strategies yielded 35% increase in investment profits over 9 months.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="about-section reveal">
+        <h3>Education</h3>
+        <div class="edu-grid">
+          <div class="edu-item">
+            <div class="edu-degree">Master of Arts — Economics</div>
+            <div class="edu-school">Simon Fraser University</div>
+            <div class="edu-years mono">2021 – 2023 · Special Graduate Entrance Scholarship (SGES)</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-degree">Master of Arts — Theoretical Economics</div>
+            <div class="edu-school">Allameh Tabataba'i University</div>
+            <div class="edu-years mono">2018 – 2021 · Top Researcher Award</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-degree">Bachelor of Science — Mechanical Engineering</div>
+            <div class="edu-school">Payame Noor University</div>
+            <div class="edu-years mono">2012 – 2018</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section reveal">
+        <h3>Technical skills</h3>
+        <div class="skills-matrix">
+          <div class="skill-row">
+            <span class="skill-name">R / Tidyverse</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="95%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Python</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="88%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">SQL</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="85%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Econometrics</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="93%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Energy modelling</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="87%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Julia</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="65%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Azure / Git</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="75%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Stata / MATLAB</span>
+            <div class="skill-bar-bg"><div class="skill-bar-fill" data-w="70%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section reveal">
+        <h3>Certifications</h3>
+        <div class="cert-list">
+          <div class="cert-item">
+            <span>Sustainable Investing Certificate</span>
+            <span class="cert-issuer">CFA Institute · Apr 2025</span>
+          </div>
+          <div class="cert-item">
+            <span>Google Data Analytics</span>
+            <span class="cert-issuer">Google · Jul 2023</span>
+          </div>
+          <div class="cert-item">
+            <span>SFU Big Data Fellowship: AI</span>
+            <span class="cert-issuer">Simon Fraser University · Mar 2023</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section reveal">
+        <h3>Volunteer & community</h3>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Committee Member — Technical Advisory, Open-Source Modelling Platform</div>
+              <div class="tl-org">Energy Modelling Hub (EMH)</div>
+              <div class="tl-period mono">Feb 2025 – Present</div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Contributing to development and strategic direction of an integrated, open-source energy system modelling platform for evidence-based net-zero policymaking.</li>
+            </ul>
+          </div>
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Alumni Council Member</div>
+              <div class="tl-org">Simon Fraser University</div>
+              <div class="tl-period mono">Jan 2025 – Present</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Career Mentor</div>
+              <div class="tl-org">S.U.C.C.E.S.S.</div>
+              <div class="tl-period mono">Oct 2024</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economist</div>
+              <div class="tl-org">Pro Bono Economics</div>
+              <div class="tl-period mono">May 2023</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Member, Finance Committee</div>
+              <div class="tl-org">Canadian Association of Professional Employees (CAPE)</div>
+              <div class="tl-period mono">Jun 2024 – Present</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /.about-body -->
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-logo">AM<span class="logo-dot">.</span></span>
+    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <div class="footer-links">
+      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
+      <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

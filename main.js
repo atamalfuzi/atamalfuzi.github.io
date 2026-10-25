@@ -1,4 +1,4 @@
-/* main.js — shared across all pages */
+/* main.js: shared across all pages */
 
 // Year in footer
 document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
@@ -17,7 +17,7 @@ const ro = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-// Project filter buttons — uses includes() so cards with multiple categories match correctly
+// Project filter buttons: uses includes() so cards with multiple categories match correctly
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.setAttribute('aria-pressed', b === btn));

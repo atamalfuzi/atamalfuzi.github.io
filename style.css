@@ -16,7 +16,7 @@
   --accent-dim: rgba(0,212,160,.12);
 
   /* Type */
-  --ff-display: 'Outfit ', Georgia, serif;
+  --ff-display: Georgia, serif;
   --ff-mono:    'IBM Plex Mono', monospace;
   --ff-body:    'Inter', system-ui, sans-serif;
 

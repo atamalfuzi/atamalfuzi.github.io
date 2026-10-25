@@ -11,10 +11,8 @@
   <meta property="og:url" content="https://atamalfuzi.github.io/about.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/photo.jpg" />
   <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/about.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
     .about-hero-grid {
@@ -39,21 +37,25 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <nav class="nav">
   <div class="nav-inner container">
     <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="about.html" class="active" aria-current="page">About</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="research.html">Research</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
+
+<main id="main">
 
 <!-- PAGE HERO — text left, photo right -->
 <section class="page-hero">
@@ -68,7 +70,7 @@
       </p>
     </div>
     <div>
-      <img src="photo.jpg" alt="Ata Malfuzi" />
+      <img src="photo.jpg" alt="Ata Malfuzi" width="800" height="800" />
     </div>
   </div>
 </section>
@@ -94,20 +96,20 @@
       <div style="margin-top:1.5rem;padding:1.2rem 1.4rem;background:var(--bg-3);border:1px solid var(--rule);">
         <div style="font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.8rem;">Quick facts</div>
         <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.8rem;color:var(--text-2)">
-          <div>📍 Vancouver, BC, Canada</div>
-          <div>🏛 Environment & Climate Change Canada</div>
-          <div>🔬 SESIT Lab · UVic</div>
-          <div>🎓 MA Economics, SFU</div>
-          <div>🌐 EN · FA · AZ · FR</div>
+          <div><span aria-hidden="true">📍</span> Vancouver, BC, Canada</div>
+          <div><span aria-hidden="true">🏛</span> Environment & Climate Change Canada</div>
+          <div><span aria-hidden="true">🔬</span> SESIT Lab · UVic</div>
+          <div><span aria-hidden="true">🎓</span> MA Economics, SFU</div>
+          <div><span aria-hidden="true">🌐</span> EN · FA · AZ · FR</div>
         </div>
       </div>
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="about-main">
+    <div class="about-main">
 
       <div class="about-section reveal">
-        <h3>Bio</h3>
+        <h2>Bio</h2>
         <p>
           I'm a data scientist and economist who works end-to-end on quantitative projects — defining the
           question, integrating and cleaning data, building and validating models, and communicating
@@ -127,7 +129,7 @@
       </div>
 
       <div class="about-section reveal">
-        <h3>Experience</h3>
+        <h2>Experience</h2>
         <div class="timeline">
 
           <div class="tl-item">
@@ -229,7 +231,7 @@
       </div>
 
       <div class="about-section reveal">
-        <h3>Education</h3>
+        <h2>Education</h2>
         <div class="edu-grid">
           <div class="edu-item">
             <div class="edu-degree">Master of Arts — Economics</div>
@@ -250,7 +252,7 @@
       </div>
 
       <div class="about-section reveal">
-        <h3>Technical skills</h3>
+        <h2>Technical skills</h2>
         <div class="skills-matrix">
           <div class="skill-row">
             <span class="skill-name">R / Tidyverse</span>
@@ -288,7 +290,7 @@
       </div>
 
       <div class="about-section reveal">
-        <h3>Certifications</h3>
+        <h2>Certifications</h2>
         <div class="cert-list">
           <div class="cert-item">
             <span>Sustainable Investing Certificate</span>
@@ -306,7 +308,7 @@
       </div>
 
       <div class="about-section reveal">
-        <h3>Volunteer & community</h3>
+        <h2>Volunteer & community</h2>
         <div class="timeline">
           <div class="tl-item">
             <div class="tl-header">
@@ -334,29 +336,31 @@
           </div>
           <div class="tl-item">
             <div class="tl-header">
-              <div class="tl-role">Economist</div>
-              <div class="tl-org">Pro Bono Economics</div>
-              <div class="tl-period mono">May 2023</div>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-header">
               <div class="tl-role">Member, Finance Committee</div>
               <div class="tl-org">Canadian Association of Professional Employees (CAPE)</div>
               <div class="tl-period mono">Jun 2024 – Present</div>
             </div>
           </div>
+          <div class="tl-item">
+            <div class="tl-header">
+              <div class="tl-role">Economist</div>
+              <div class="tl-org">Pro Bono Economics</div>
+              <div class="tl-period mono">May 2023</div>
+            </div>
+          </div>
         </div>
       </div>
 
-    </main>
+    </div>
   </div><!-- /.about-body -->
 </section>
+
+</main>
 
 <footer class="footer">
   <div class="container footer-inner">
     <span class="footer-logo">AM<span class="logo-dot">.</span></span>
-    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <span class="footer-copy mono">© <span class="yr">2026</span> Ata Malfuzi</span>
     <div class="footer-links">
       <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
       <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>

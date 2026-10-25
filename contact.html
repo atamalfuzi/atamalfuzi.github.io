@@ -11,18 +11,18 @@
   <meta property="og:url" content="https://atamalfuzi.github.io/contact.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/photo.jpg" />
   <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/contact.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <nav class="nav">
   <div class="nav-inner container">
     <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
@@ -30,18 +30,20 @@
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="research.html">Research</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
     </ul>
   </div>
 </nav>
+
+<main id="main">
 
 <section class="page-hero">
   <div class="container">
     <span class="page-hero-tag">Get in touch</span>
     <h1 class="page-hero-title">Let's<br><span class="italic-serif">connect</span></h1>
     <p class="page-hero-sub">
-      Open to research collaborations, consulting on data science and energy-economic modelling,
-      and interesting conversations in applied econometrics and policy.
+      Get in touch about roles, research collaborations or consulting in data science,
+      applied econometrics and energy-economic modelling.
     </p>
   </div>
 </section>
@@ -54,7 +56,7 @@
       <div style="font-size:.65rem;font-family:var(--ff-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem;">Find me on</div>
 
       <a href="https://linkedin.com/in/ata-malfuzi" target="_blank" class="contact-link-block">
-        <div class="contact-link-icon">💼</div>
+        <div class="contact-link-icon" aria-hidden="true">💼</div>
         <div>
           <div class="contact-link-label">LinkedIn</div>
           <div class="contact-link-value">linkedin.com/in/ata-malfuzi</div>
@@ -62,7 +64,7 @@
       </a>
 
       <a href="https://github.com/atamalfuzi" target="_blank" class="contact-link-block">
-        <div class="contact-link-icon">🐙</div>
+        <div class="contact-link-icon" aria-hidden="true">🐙</div>
         <div>
           <div class="contact-link-label">GitHub</div>
           <div class="contact-link-value">github.com/atamalfuzi</div>
@@ -70,7 +72,7 @@
       </a>
 
       <a href="mailto:atamalfuzi@gmail.com" class="contact-link-block">
-        <div class="contact-link-icon">✉️</div>
+        <div class="contact-link-icon" aria-hidden="true">✉️</div>
         <div>
           <div class="contact-link-label">Email</div>
           <div class="contact-link-value">atamalfuzi@gmail.com</div>
@@ -82,10 +84,11 @@
     <!-- RIGHT: Open to -->
     <div>
       <div class="contact-open-to">
-        <h4>Currently open to</h4>
+        <h2>Happy to talk about</h2>
         <div class="open-to-list">
           <div class="open-to-item">Research collaborations in energy or environmental economics</div>
           <div class="open-to-item">Consulting on energy-economic modelling and data science</div>
+          <div class="open-to-item">Roles in data science, applied economics and energy modelling</div>
           <div class="open-to-item">Applied econometrics and quantitative analysis projects</div>
           <div class="open-to-item">Policy analysis and evidence synthesis</div>
           <div class="open-to-item">Academic co-authorship and working papers</div>
@@ -96,10 +99,12 @@
   </div>
 </section>
 
+</main>
+
 <footer class="footer">
   <div class="container footer-inner">
     <span class="footer-logo">AM<span class="logo-dot">.</span></span>
-    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <span class="footer-copy mono">© <span class="yr">2026</span> Ata Malfuzi</span>
     <div class="footer-links">
       <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
       <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>

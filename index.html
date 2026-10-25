@@ -11,22 +11,39 @@
   <meta property="og:url" content="https://atamalfuzi.github.io/" />
   <meta property="og:image" content="https://atamalfuzi.github.io/photo.jpg" />
   <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ata Malfuzi",
+    "url": "https://atamalfuzi.github.io/",
+    "image": "https://atamalfuzi.github.io/photo.jpg",
+    "jobTitle": "Data Scientist and Economist",
+    "worksFor": [
+      { "@type": "Organization", "name": "Environment and Climate Change Canada" },
+      { "@type": "Organization", "name": "SESIT Lab, University of Victoria" }
+    ],
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Simon Fraser University" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Vancouver", "addressRegion": "BC", "addressCountry": "CA" },
+    "sameAs": ["https://github.com/atamalfuzi", "https://www.linkedin.com/in/ata-malfuzi"]
+  }
+  </script>
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav class="nav">
   <div class="nav-inner container">
     <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="research.html">Research</a></li>
@@ -34,6 +51,8 @@
     </ul>
   </div>
 </nav>
+
+<main id="main">
 
 <!-- HERO -->
 <section class="hero">
@@ -90,25 +109,25 @@
     </div>
     <div class="expertise-grid">
       <a href="projects.html" class="exp-card">
-        <div class="exp-icon">⚙️</div>
+        <div class="exp-icon" aria-hidden="true">⚙️</div>
         <h3>Data Science & ML</h3>
         <p>End-to-end quantitative pipelines — data integration, feature engineering, model development, validation, and reproducible reporting in R and Python.</p>
         <span class="exp-link mono">See projects →</span>
       </a>
       <a href="projects.html" class="exp-card">
-        <div class="exp-icon">⚡</div>
+        <div class="exp-icon" aria-hidden="true">⚡</div>
         <h3>Energy-Economic Modelling</h3>
         <p>Transportation electrification, carbon market endogenisation in CIMS, and energy policy scenario analysis for federal and academic research.</p>
         <span class="exp-link mono">See projects →</span>
       </a>
       <a href="projects.html" class="exp-card">
-        <div class="exp-icon">📐</div>
+        <div class="exp-icon" aria-hidden="true">📐</div>
         <h3>Applied Econometrics</h3>
         <p>Causal inference, panel data, time-series, index construction, and state-space modelling for public-sector and academic decision making.</p>
         <span class="exp-link mono">See projects →</span>
       </a>
       <a href="research.html" class="exp-card">
-        <div class="exp-icon">📄</div>
+        <div class="exp-icon" aria-hidden="true">📄</div>
         <h3>Research & Policy Writing</h3>
         <p>Peer-reviewed publications, government policy briefs, and evidence synthesis — translating model outputs into actionable findings.</p>
         <span class="exp-link mono">See research →</span>
@@ -128,22 +147,22 @@
       <a href="projects.html" class="btn-outline">All projects</a>
     </div>
     <div class="preview-list">
-      <a href="projects.html" class="preview-item">
+      <a href="projects.html#cims" class="preview-item">
         <span class="preview-tag">UVic SESIT · Ongoing</span>
         <span class="preview-title">Carbon Market Endogenisation — CIMS Model</span>
         <span class="preview-tech mono">R · Julia · Energy Modelling</span>
       </a>
-      <a href="projects.html" class="preview-item">
+      <a href="projects.html#ev" class="preview-item">
         <span class="preview-tag">ECCC · Ongoing</span>
         <span class="preview-title">EV Adoption & Off-road Electrification Modelling</span>
         <span class="preview-tech mono">R · Python · Scenario Analysis</span>
       </a>
-      <a href="projects.html" class="preview-item">
+      <a href="projects.html#carbon" class="preview-item">
         <span class="preview-tag">ECCC · Policy Tool</span>
         <span class="preview-title">Carbon Policy Coverage Tool</span>
         <span class="preview-tech mono">R · SQL · Azure</span>
       </a>
-      <a href="projects.html" class="preview-item">
+      <a href="projects.html#poverty" class="preview-item">
         <span class="preview-tag">Gov BC · Index</span>
         <span class="preview-title">BC Poverty Index</span>
         <span class="preview-tech mono">R · Factor Analysis</span>
@@ -189,15 +208,17 @@
 <section class="section cta-section">
   <div class="container cta-inner">
     <h2 class="cta-title">Working on something<br><span class="italic-serif">interesting?</span></h2>
-    <p class="cta-sub">Open to research collaborations, consulting on data science or energy-economic modelling, and interesting problems at the intersection of data and policy.</p>
+    <p class="cta-sub">Happy to talk about roles, research collaborations and consulting in data science, applied econometrics and energy-economic modelling.</p>
     <a href="contact.html" class="btn-primary">Get in touch</a>
   </div>
 </section>
 
+</main>
+
 <footer class="footer">
   <div class="container footer-inner">
     <span class="footer-logo">AM<span class="logo-dot">.</span></span>
-    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <span class="footer-copy mono">© <span class="yr">2026</span> Ata Malfuzi</span>
     <div class="footer-links">
       <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
       <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>

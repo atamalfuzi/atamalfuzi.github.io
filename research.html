@@ -11,29 +11,31 @@
   <meta property="og:url" content="https://atamalfuzi.github.io/research.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/photo.jpg" />
   <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/research.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <nav class="nav">
   <div class="nav-inner container">
     <a href="index.html" class="nav-logo">AM<span class="logo-dot">.</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html">Projects</a></li>
-      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="research.html" class="active" aria-current="page">Research</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
+
+<main id="main">
 
 <section class="page-hero">
   <div class="container">
@@ -70,7 +72,7 @@
         raises fiscal burdens, and undermines long-run policy effectiveness — highlighting the
         case for phased reforms with targeted support for vulnerable households.
       </p>
-      <div class="pub-card-authors">Co-author: Mahsa Ghahremani</div>
+      <div class="pub-card-authors">Authors: Siab Mamipour · Mahsa Ghahremani · <strong>Ata Malfuzi</strong> · Seyed Armin Motahar</div>
       <div class="pub-card-bottom">
         <div class="pub-tags-row">
           <span class="ptag">Kalman Filter</span>
@@ -102,7 +104,7 @@
         and policy change scenarios to validate robustness of findings.
       </p>
       <div class="pub-card-authors">
-        Co-authors: Ali Saberi Mehr · Marc A. Rosen · Prof. Majed Alharthi · Anastasia A. Kurilova
+        Authors: <strong>Ata Malfuzi</strong> (first author) · Ali Saberi Mehr · Marc A. Rosen · Majed Alharthi · Anastasia A. Kurilova
       </div>
       <div class="pub-card-bottom">
         <div class="pub-tags-row">
@@ -113,7 +115,7 @@
           <span class="ptag">Energy Economics</span>
           <span class="ptag">Scenario Analysis</span>
         </div>
-        <a href="https://doi.org/10.1016/j.energy.2020.117816" target="_blank" class="btn-outline" style="font-size:.7rem;padding:.45rem 1.1rem;">View publication →</a>
+        <a href="https://doi.org/10.1016/j.energy.2020.117843" target="_blank" class="btn-outline" style="font-size:.7rem;padding:.45rem 1.1rem;">View publication →</a>
       </div>
     </div>
   </div>
@@ -166,10 +168,12 @@
   </div>
 </section>
 
+</main>
+
 <footer class="footer">
   <div class="container footer-inner">
     <span class="footer-logo">AM<span class="logo-dot">.</span></span>
-    <span class="footer-copy mono">© <span class="yr"></span> Ata Malfuzi</span>
+    <span class="footer-copy mono">© <span class="yr">2026</span> Ata Malfuzi</span>
     <div class="footer-links">
       <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
       <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>

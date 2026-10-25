@@ -11,7 +11,7 @@ if (hamburger) {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 }
 
-// Scroll reveal (also fills the skill bars, via .visible .skill-bar-fill in CSS)
+// Scroll reveal
 const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });

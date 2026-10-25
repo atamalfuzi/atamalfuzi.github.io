@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Population change in BC municipalities | Ata Malfuzi</title>
-  <meta name="description" content="Maps of estimated (2003-2023) and projected (2023-2046) population change across British Columbia's municipalities, made in R from open data." />
+  <meta name="description" content="Maps of percent population change in every British Columbia municipality: estimated 2003-2023 and projected 2023-2046, made in R from open data." />
   <meta property="og:title" content="Population change in BC municipalities | Ata Malfuzi" />
-  <meta property="og:description" content="Maps of estimated (2003-2023) and projected (2023-2046) population change across British Columbia's municipalities, made in R from open data." />
+  <meta property="og:description" content="Maps of percent population change in every British Columbia municipality: estimated 2003-2023 and projected 2023-2046, made in R from open data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bc-population-change.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
@@ -59,23 +59,33 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>Population change in BC municipalities</h1>
-    <p class="lead">Maps of absolute population change across British Columbia's municipalities: estimated change from 2003 to 2023, and projected change from 2023 to 2046. Each map has an inset on Metro Vancouver, where most of the growth is.</p>
+    <p class="lead">Where has British Columbia's population grown, and where is it projected to shrink? These maps show the percent change in population for every municipality: estimated change from 2003 to 2023, and BC Stats' projection from 2023 to 2046. Each map has an inset on Metro Vancouver.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/bc_pop_change_map" target="_blank">Code on GitHub</a></div>
   </div>
 
   <figure>
-    <img src="img/bc-population-2003-2023.png" srcset="img/bc-population-2003-2023-800.png 800w, img/bc-population-2003-2023.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Map of British Columbia shading each municipality by estimated population change from 2003 to 2023, with a Metro Vancouver inset." width="1600" height="1067" />
-    <figcaption>Estimated population change by municipality, 2003-2023.</figcaption>
+    <img src="img/bc-population-2003-2023.png" srcset="img/bc-population-2003-2023-800.png 800w, img/bc-population-2003-2023.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Map of British Columbia shading each municipality by percent population change from 2003 to 2023, brown for loss and teal for growth, with a Metro Vancouver inset. Most areas grew; losses are mostly small northern and coastal communities." width="1600" height="1147" />
+    <figcaption>Estimated percent change in population by municipality, 2003-2023.</figcaption>
   </figure>
 
+  <section class="section">
+    <h2>What it shows</h2>
+    <ul>
+      <li>Growth was widespread: 147 of 191 areas grew between 2003 and 2023. Langford more than doubled (+160%). Most of the areas that lost people are small communities in the north and along the coast.</li>
+      <li>Growth is still concentrated in absolute numbers: Metro Vancouver gained 61% of BC's added residents from 2003 to 2023 and is projected to gain 65% of them by 2046.</li>
+      <li>The projection is less even: 66 of 191 areas are projected to shrink by 2046, across most of the north and the central interior.</li>
+    </ul>
+  </section>
+
   <figure>
-    <img src="img/bc-population-2023-2046.png" srcset="img/bc-population-2023-2046-800.png 800w, img/bc-population-2023-2046.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Map of British Columbia shading each municipality by projected population change from 2023 to 2046, with a Metro Vancouver inset." width="1600" height="1067" loading="lazy" />
-    <figcaption>Projected population change by municipality, 2023-2046.</figcaption>
+    <img src="img/bc-population-2023-2046.png" srcset="img/bc-population-2023-2046-800.png 800w, img/bc-population-2023-2046.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Map of British Columbia shading each municipality by projected percent population change from 2023 to 2046, brown for loss and teal for growth, with a Metro Vancouver inset. Much of the north and central interior is projected to shrink." width="1600" height="1147" loading="lazy" />
+    <figcaption>Projected percent change in population by municipality, 2023-2046.</figcaption>
   </figure>
 
   <section class="section">
     <h2>How it was made</h2>
     <p>The script downloads the BC Sub-Provincial Population Estimates and Projections for municipalities (census subdivisions) and takes boundaries from the bcmaps package (2021 census subdivisions, clipped to the coastline).</p>
+    <p>Percent change is shown so that a small town and a big city read on the same scale; colours run brown for loss and teal for growth, centred on zero. Percentages swing more where few people live, as in the large unincorporated areas of the north.</p>
     <p>Areas outside municipalities are published as one "Unincorporated Areas" total per regional district, so the script merges those census subdivisions into one polygon per regional district before joining the data to the map.</p>
     <p>Made in R with sf, bcmaps, ggplot2 and cowplot; code under the MIT licence.</p>
   </section>

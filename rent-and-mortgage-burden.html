@@ -73,6 +73,7 @@
     <ul>
       <li>Rent takes a bigger share of the median family's income than in 2008 in 23 of 25 areas. Vancouver is highest at 24%, up from 20%. Only Fort St. John and Dawson Creek moved the other way.</li>
       <li>Owning was already more expensive than renting, and the 2022-2023 rate increases widened the gap. The payment on a median-priced home went from about 38% to 50% of the median family's income in Vancouver, and from about 30% to over 40% in Victoria and Kelowna.</li>
+      <li>The two periods had different causes. From 2016 to 2021, higher prices added 11 to 12 points in all three cities, and rising incomes took back half to two thirds of that. From 2021 to 2023, higher mortgage rates added 10 to 12 points, most of the rise in each city.</li>
     </ul>
   </section>
 
@@ -81,10 +82,16 @@
     <figcaption>Mortgage payment on a median-priced home and average rent, as a share of median family income, 2016-2023.</figcaption>
   </figure>
 
+  <figure>
+    <img src="img/housing-own-cost-drivers.png" srcset="img/housing-own-cost-drivers-800.png 800w, img/housing-own-cost-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Bar chart for Vancouver, Victoria and Kelowna: from 2016 to 2021 house prices added about 11 to 12 points to the ownership cost and rising incomes took back part of it; from 2021 to 2023 mortgage rates added about 10 to 12 points." width="1600" height="655" loading="lazy" />
+    <figcaption>What changed the ownership cost: the change in the mortgage payment as a share of median family income, split into house price, mortgage rate and family income, 2016-2021 and 2021-2023.</figcaption>
+  </figure>
+
   <section class="section">
     <h2>How it is measured</h2>
     <p>Rent-to-income is 12 times the average two-bedroom rent, divided by the median total income of census families. It covers 25 metropolitan areas and agglomerations from 2008, the first year with income data for every smaller city.</p>
     <p>Ownership cost-to-income is 12 times the monthly payment on a mortgage for 80% of the median sale price, over 25 years at that year's average 5-year conventional rate, divided by the same income. It covers Vancouver, Victoria and Kelowna from 2016, when the property transfer data start.</p>
+    <p>The ownership ratio is proportional to price times the payment factor for the rate, divided by income, so its change in logs splits exactly into a price, a rate and an income part. Each part's share of the log change is applied to the change in percentage points, so the three parts add up to the net change.</p>
   </section>
 
   <section class="section">

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electricity load, weather and next-day peaks in BC | Ata Malfuzi</title>
+  <meta name="description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
+  <meta property="og:title" content="Electricity load, weather and next-day peaks in BC | Ata Malfuzi" />
+  <meta property="og:description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-load.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bc-electricity-load.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="index.html" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Lab, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Electricity load, weather and next-day peaks in BC</h1>
+    <p class="lead">An independent look at British Columbia's electricity load since 2002, built from public data in Python. It asks how much of the growth comes from the weather, and how well tomorrow's peak can be forecast from what is known today.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/bc_electricity_load" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/annual_load.csv" target="_blank">Annual table (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/backtest_summary.csv" target="_blank">Backtest table (CSV)</a></div>
+  </div>
+
+  <figure>
+    <img src="img/load-temperature-response.png" srcset="img/load-temperature-response-800.png 800w, img/load-temperature-response.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of average workday load against daily mean temperature at Vancouver airport for 2002-2009, 2010-2017 and 2018-2026. Load rises as it gets colder in every period, and in 2018-2026 it also rises clearly on hot days." width="1600" height="1067" />
+    <figcaption>Average workday load by daily mean temperature at Vancouver airport, for three periods.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>What it shows</h2>
+    <ul>
+      <li>Growth is structural, not weather. Weather-normalised load rose from 56.6 TWh in 2002 to 67.4 TWh in 2025 (+19%). Weather moved any single year by less than 0.8 TWh.</li>
+      <li>Cold drives load, and hot days now matter too. A day 1 °C colder at all four airports (below 18 °C) adds about 92 MW in 2018-2026, up from 78 MW in 2002-2009. A day 1 °C hotter (above 18 °C) adds about 193 MW, up from 91 MW. This fits the spread of air conditioning and heat pumps, though the data cannot show the cause.</li>
+      <li>Next-day peaks can be forecast to within about 2.3%. Over 2021 to September 2026, gradient boosting and a linear regression on the same inputs both missed the daily peak by 2.3% on average, against 5.4% for the peak a week earlier. The linear model does as well as the boosted trees, and the 80% intervals covered 78% of days.</li>
+    </ul>
+  </section>
+
+  <figure>
+    <img src="img/load-annual.png" srcset="img/load-annual-800.png 800w, img/load-annual.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of BC annual electricity load, actual and weather-normalised, 2002 to 2025. The two lines track each other closely and rise from about 57 to 67 TWh." width="1600" height="978" loading="lazy" />
+    <figcaption>Annual load, actual and with each year's weather replaced by the average weather of all years, 2002-2025.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>How it works</h2>
+    <p>Hourly load is turned into each day's average and peak. A least-squares regression of daily average load on a separate level for each year, heating and cooling degrees below and above 18 °C at the Vancouver, Victoria, Kamloops and Prince George airports (with separate effects for 2002-2009, 2010-2017 and 2018-2026), and calendar effects explains 96% of the daily variation. Each year's weather-normalised load replaces that year's weather effect with the effect of the average weather over 2002-2025.</p>
+    <p>The forecast test is a rolling-origin backtest: each year from 2021 to 2026 is forecast by models trained only on earlier years, using what is known the evening before. It compares the peak on the same day last week, a linear regression and gradient boosting. The 80% interval is the forecast plus or minus the 80th percentile of the errors the model made the year before.</p>
+  </section>
+
+  <figure>
+    <img src="img/load-forecast-backtest.png" srcset="img/load-forecast-backtest-800.png 800w, img/load-forecast-backtest.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: forecast error by test year, about 2.3% for the linear regression and gradient boosting against about 5% for last week's peak; and daily peaks in winter 2025-26 with the forecast and its 80% interval." width="1600" height="733" loading="lazy" />
+    <figcaption>Next-day peak forecast error by test year, and winter 2025-26 forecasts with their 80% interval.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>The backtest uses each day's actual temperatures, so it is optimistic. With the previous day's temperatures instead, the average error rises from 2.3% to 2.5%; a real day-ahead forecast would fall between the two.</li>
+      <li>Four airports stand in for the province, with no population weighting.</li>
+      <li>"Structural" is everything that is not weather: population and economic growth, the 2009 recession, the pandemic, industrial customers opening and closing, and electrification. The year levels do not separate these.</li>
+      <li>Days above 18 °C are rare in BC, and 2018-2026 includes the 2021 heat dome, so the hot-weather effects are less precise than the cold-weather ones.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Hourly balancing authority load from BC Hydro's historical transmission data, 2002 to September 2026. BC Hydro's data is not openly licensed, so the repository and this page show only charts and summaries made from it. Daily mean temperatures at four airports from Government of Canada daily climate data. Analysis in Python with pandas and scikit-learn; code under the MIT licence.</p>
+    <p>Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

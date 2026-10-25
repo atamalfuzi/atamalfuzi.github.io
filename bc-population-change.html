@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Population change in BC municipalities | Ata Malfuzi</title>
+  <meta name="description" content="Maps of estimated (2003-2023) and projected (2023-2046) population change across British Columbia's municipalities, made in R from open data." />
+  <meta property="og:title" content="Population change in BC municipalities | Ata Malfuzi" />
+  <meta property="og:description" content="Maps of estimated (2003-2023) and projected (2023-2046) population change across British Columbia's municipalities, made in R from open data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bc-population-change.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bc-population-change.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="index.html" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="container">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Population change in BC municipalities</h1>
+    <p class="lead">Maps of absolute population change across British Columbia's municipalities: estimated change from 2003 to 2023, and projected change from 2023 to 2046. Each map has an inset on Metro Vancouver, where most of the growth is.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/bc_pop_change_map" target="_blank">Code on GitHub</a></div>
+  </div>
+
+  <figure>
+    <img src="img/bc-population-2003-2023.png" alt="Map of British Columbia shading each municipality by estimated population change from 2003 to 2023, with a Metro Vancouver inset." width="1600" height="1067" />
+    <figcaption>Estimated population change by municipality, 2003-2023.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="img/bc-population-2023-2046.png" alt="Map of British Columbia shading each municipality by projected population change from 2023 to 2046, with a Metro Vancouver inset." width="1600" height="1067" loading="lazy" />
+    <figcaption>Projected population change by municipality, 2023-2046.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>How it was made</h2>
+    <p>The script downloads the BC Sub-Provincial Population Estimates and Projections for municipalities (census subdivisions) and takes boundaries from the bcmaps package (2021 census subdivisions, clipped to the coastline).</p>
+    <p>Areas outside municipalities are published as one "Unincorporated Areas" total per regional district, so the script merges those census subdivisions into one polygon per regional district before joining the data to the map.</p>
+    <p>Made in R with sf, bcmaps, ggplot2 and cowplot; code under the MIT licence.</p>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Contains information licensed under the Open Government Licence - British Columbia.</p>
+  </section>
+</article>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <div class="footer-links">
+      <a href="mailto:atamalfuzi@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
+      <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank">Google Scholar</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

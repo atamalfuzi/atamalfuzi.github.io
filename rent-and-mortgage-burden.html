@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rent and mortgage burden in BC cities | Ata Malfuzi</title>
+  <meta name="description" content="How much of a family's income goes to rent or a mortgage in British Columbia's cities, 2008 to 2023, built from open data in R." />
+  <meta property="og:title" content="Rent and mortgage burden in BC cities | Ata Malfuzi" />
+  <meta property="og:description" content="How much of a family's income goes to rent or a mortgage in British Columbia's cities, 2008 to 2023, built from open data in R." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/rent-and-mortgage-burden.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/rent-and-mortgage-burden.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="index.html" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="container">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Rent and mortgage burden in BC cities</h1>
+    <p class="lead">An independent look at how much of a family's income goes to housing in British Columbia's cities, if they rent and if they buy. Built entirely from open data in R.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/bc_housing_affordability" target="_blank">Code and data on GitHub</a><a href="https://github.com/atamalfuzi/bc_housing_affordability/blob/main/output/affordability_index.csv" target="_blank">Results table (CSV)</a></div>
+  </div>
+
+  <figure class="narrow">
+    <img src="img/housing-rent-to-income.png" alt="Dot chart: average two-bedroom rent as a share of median family income in 25 BC urban areas, 2008 and 2023. Vancouver is highest, at about 24 percent." width="1400" height="1400" />
+    <figcaption>Average two-bedroom rent as a share of median census family income, 2008 and 2023.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>What it shows</h2>
+    <ul>
+      <li>Rent takes a bigger share of the median family's income than in 2008 in 23 of 25 areas. Vancouver is highest at 24%, up from 20%. Only Fort St. John and Dawson Creek moved the other way.</li>
+      <li>Owning was already more expensive than renting, and the 2022-2023 rate increases widened the gap. The payment on a median-priced home went from about 38% to 50% of the median family's income in Vancouver, and from about 30% to over 40% in Victoria and Kelowna.</li>
+    </ul>
+  </section>
+
+  <figure>
+    <img src="img/housing-own-vs-rent.png" alt="Line charts for Vancouver, Victoria and Kelowna, 2016 to 2023: the mortgage payment on a median-priced home rises to 40 to 50 percent of family income by 2023, while rent stays near 20 percent." width="1600" height="873" loading="lazy" />
+    <figcaption>Mortgage payment on a median-priced home and average rent, as a share of median family income, 2016-2023.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>How it is measured</h2>
+    <p>Rent-to-income is 12 times the average two-bedroom rent, divided by the median total income of census families. It covers 25 metropolitan areas and agglomerations from 2008, the first year with income data for every smaller city.</p>
+    <p>Ownership cost-to-income is 12 times the monthly payment on a mortgage for 80% of the median sale price, over 25 years at that year's average 5-year conventional rate, divided by the same income. It covers Vancouver, Victoria and Kelowna from 2016, when the property transfer data start.</p>
+  </section>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>Income is for all families, not renters or buyers. Renter families usually earn less than the median, so their real rent burden is higher.</li>
+      <li>Rents are what sitting tenants pay in purpose-built rental buildings. Asking rents for vacant units are often higher.</li>
+      <li>The ownership cost leaves out property tax, insurance, strata fees and maintenance, and the hurdle of saving a down payment.</li>
+      <li>The rental survey covers few units in small cities, so their averages can swing from year to year.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Statistics Canada tables 11-10-0009-01 (family income), 34-10-0133-01 (CMHC average rents) and 34-10-0145-01 (CMHC 5-year mortgage rate), and BC Property Transfer Tax Data. Analysis in R with dplyr, tidyr and ggplot2; code under the MIT licence.</p>
+    <p>Adapted from Statistics Canada, tables 11-10-0009-01, 34-10-0133-01 and 34-10-0145-01. This does not constitute an endorsement by Statistics Canada of this product.</p>
+    <p>Adapted from Canada Mortgage and Housing Corporation, Rental Market Survey average rents (October 2008-2023) and conventional 5-year mortgage lending rate (2008-2023). This does not constitute an endorsement by Canada Mortgage and Housing Corporation of this product.</p>
+    <p>Contains information licensed under the Open Government Licence - British Columbia.</p>
+  </section>
+</article>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <div class="footer-links">
+      <a href="mailto:atamalfuzi@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
+      <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank">Google Scholar</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

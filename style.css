@@ -598,27 +598,8 @@ ul { list-style: none; }
 .open-to-item { display: flex; align-items: center; gap: .7rem; font-size: .85rem; color: var(--text-2); }
 .open-to-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
-/* Form */
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { margin-bottom: 1.2rem; }
-.form-group label { display: block; font-size: .68rem; font-family: var(--ff-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); margin-bottom: .5rem; }
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%; padding: .75rem 1rem;
-  background: var(--bg-3); border: 1px solid var(--rule-2);
-  color: var(--text); font-family: var(--ff-body); font-size: .9rem;
-  outline: none; transition: border-color .2s;
-}
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus { border-color: var(--accent); }
-.form-group textarea { min-height: 140px; resize: vertical; }
-.form-group select option { background: var(--bg-3); }
-
 @media (max-width: 860px) {
   .contact-layout { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
 }
 
 /* ═══════════════════════════════════════════════════

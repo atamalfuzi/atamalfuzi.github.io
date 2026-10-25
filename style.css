@@ -14,18 +14,15 @@
   --text-3:     #5c5a55;
   --accent:     #00d4a0;      /* electric teal */
   --accent-dim: rgba(0,212,160,.12);
-  --accent-2:   #ff6b35;      /* warm orange — secondary highlight */
 
   /* Type */
   --ff-display: 'Outfit ', Georgia, serif;
-  --ff-serif:   'Outfit ', Georgia, serif;
   --ff-mono:    'IBM Plex Mono', monospace;
   --ff-body:    'Inter', system-ui, sans-serif;
 
   /* Layout */
   --max:        1140px;
   --gap:        clamp(3rem, 6vw, 6rem);
-  --r:          4px;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -57,7 +54,7 @@ ul { list-style: none; }
    TYPOGRAPHY UTILITIES
 ═══════════════════════════════════════════════════ */
 .mono    { font-family: var(--ff-mono); }
-.italic-serif { font-family: var(--ff-serif); font-style: italic; }
+.italic-serif { font-family: var(--ff-display); font-style: italic; }
 
 /* ═══════════════════════════════════════════════════
    NAV
@@ -213,47 +210,9 @@ ul { list-style: none; }
   background: var(--bg-4);
 }
 
-/* Deco bars */
-.deco-bars {
-  display: flex; align-items: flex-end; gap: 4px;
-  height: 52px; padding: 0 2px;
-}
-.dbar {
-  flex: 1; height: var(--h);
-  background: var(--bg-4); border-top: 1px solid var(--rule-2);
-  transition: height .4s ease;
-}
-.dbar.accent { background: var(--accent-dim); border-top-color: var(--accent); }
-
 @media (max-width: 860px) {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-h1 { font-size: clamp(3.5rem, 12vw, 6rem); }
-}
-
-/* ═══════════════════════════════════════════════════
-   HIGHLIGHTS STRIP
-═══════════════════════════════════════════════════ */
-.highlights {
-  background: var(--bg-3);
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding-block: 2rem;
-}
-.highlights-grid {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0; flex-wrap: wrap;
-}
-.hl-item { text-align: center; padding: .8rem 2.5rem; }
-.hl-num {
-  font-family: var(--ff-display);
-  font-size: 2.2rem; font-weight: 800;
-  color: var(--accent); line-height: 1;
-}
-.hl-label { font-size: .75rem; color: var(--text-2); margin-top: .25rem; letter-spacing: .03em; }
-.hl-sep { width: 1px; height: 3rem; background: var(--rule-2); }
-@media (max-width: 600px) {
-  .hl-sep { display: none; }
-  .hl-item { flex: 0 0 50%; border-bottom: 1px solid var(--rule); }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -331,7 +290,7 @@ ul { list-style: none; }
 }
 .pub-date { font-size: .72rem; color: var(--text-3); }
 .pub-title {
-  font-family: var(--ff-serif);
+  font-family: var(--ff-display);
   font-size: 1.35rem; line-height: 1.4;
   margin-bottom: .9rem;
 }
@@ -395,16 +354,6 @@ ul { list-style: none; }
 /* ═══════════════════════════════════════════════════
    ABOUT PAGE
 ═══════════════════════════════════════════════════ */
-.about-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
-.about-sidebar { position: sticky; top: 5rem; }
-.about-photo-box {
-  width: 100%; aspect-ratio: 3/4; background: var(--bg-3);
-  border: 1px solid var(--rule-2); margin-bottom: 1.5rem;
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: .5rem;
-  color: var(--text-3); font-size: .8rem; text-align: center;
-}
-.about-photo-box img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .about-sidebar-links { display: flex; flex-direction: column; gap: .6rem; }
 .sidebar-link {
   display: flex; align-items: center; justify-content: space-between;
@@ -450,7 +399,8 @@ ul { list-style: none; }
 .skill-row { display: grid; grid-template-columns: 160px 1fr; gap: 1rem; align-items: center; }
 .skill-name { font-size: .8rem; font-family: var(--ff-mono); color: var(--text-2); }
 .skill-bar-bg { background: var(--bg-4); height: 4px; }
-.skill-bar-fill { height: 100%; background: var(--accent); transition: width 1s ease; }
+.skill-bar-fill { width: 0; height: 100%; background: var(--accent); transition: width 1s ease; }
+.visible .skill-bar-fill { width: var(--w); }
 
 /* Education */
 .edu-grid { display: grid; gap: 1rem; }
@@ -472,9 +422,6 @@ ul { list-style: none; }
 .cert-issuer { font-size: .72rem; color: var(--text-3); font-family: var(--ff-mono); margin-left: auto; }
 
 @media (max-width: 860px) {
-  .about-layout { grid-template-columns: 1fr; }
-  .about-sidebar { position: static; }
-  .about-photo-box { aspect-ratio: 4/3; max-width: 360px; }
   .skill-row { grid-template-columns: 120px 1fr; }
 }
 
@@ -550,7 +497,7 @@ ul { list-style: none; }
 .pub-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: .7rem; }
 .pub-card-journal { font-size: .7rem; font-family: var(--ff-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
 .pub-card-date { font-size: .7rem; color: var(--text-3); font-family: var(--ff-mono); }
-.pub-card-title { font-family: var(--ff-serif); font-size: 1.3rem; line-height: 1.4; margin-bottom: .7rem; }
+.pub-card-title { font-family: var(--ff-display); font-size: 1.3rem; line-height: 1.4; margin-bottom: .7rem; }
 .pub-card-abstract { font-size: .88rem; color: var(--text-2); line-height: 1.7; margin-bottom: 1rem; }
 .pub-card-authors { font-size: .75rem; color: var(--text-3); font-family: var(--ff-mono); margin-bottom: 1rem; }
 .pub-card-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
@@ -572,11 +519,6 @@ ul { list-style: none; }
   white-space: nowrap; align-self: center;
 }
 .work-status.active { border-color: var(--accent); color: var(--accent); }
-
-/* Courses grid */
-.courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .5rem; }
-.course-item { padding: .7rem .9rem; background: var(--bg-3); border: 1px solid var(--rule); font-size: .82rem; }
-.course-code { font-size: .65rem; font-family: var(--ff-mono); color: var(--text-3); }
 
 /* ═══════════════════════════════════════════════════
    CONTACT PAGE
@@ -614,18 +556,3 @@ ul { list-style: none; }
 .reveal:nth-child(3) { transition-delay: .16s; }
 .reveal:nth-child(4) { transition-delay: .24s; }
 .reveal:nth-child(5) { transition-delay: .32s; }
-
-/* ═══════════════════════════════════════════════════
-   MISC UTILITIES
-═══════════════════════════════════════════════════ */
-.divider { border: none; border-top: 1px solid var(--rule); margin-block: var(--gap); }
-.text-accent { color: var(--accent); }
-.text-muted { color: var(--text-2); }
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
-.mb-3 { margin-bottom: 3rem; }
-.tag-sm {
-  font-size: .65rem; font-family: var(--ff-mono);
-  letter-spacing: .08em; text-transform: uppercase;
-  padding: .2rem .6rem; border: 1px solid var(--rule-2); color: var(--text-3);
-}

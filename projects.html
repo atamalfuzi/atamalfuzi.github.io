@@ -34,7 +34,26 @@
   </div>
 </nav>
 
-<main id="main" class="container">
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="ata-malfuzi.jpg" alt="Ata Malfuzi" width="1200" height="1200" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Lab, University of Victoria</span></li>
+    </ul>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+  </aside>
+
+<main id="main">
 <div class="page-top">
   <h1>Portfolio</h1>
   <p class="lead">Open projects you can read and rerun, then the government and academic work. Government work is internal, so it is listed without detail.</p>
@@ -42,29 +61,35 @@
 
 <section class="section">
   <h2>Open work</h2>
-  <div class="showcase">
-    <article class="work-card">
-      <a href="rent-and-mortgage-burden.html" tabindex="-1" aria-hidden="true"><img src="img/housing-rent-to-income.png" alt="" width="1400" height="1400" loading="lazy" /></a>
-      <h3><a href="rent-and-mortgage-burden.html">Rent and mortgage burden in BC cities</a></h3>
-      <p class="meta">Open data, R, 2026</p>
-      <p>Rent's share of family income rose in 23 of 25 BC urban areas between 2008 and 2023.</p>
-      <div class="links-row"><a href="rent-and-mortgage-burden.html">Project page</a><a href="https://github.com/atamalfuzi/bc_housing_affordability" target="_blank">Code</a></div>
-    </article>
-    <article class="work-card">
-      <a href="bc-population-change.html" tabindex="-1" aria-hidden="true"><img src="img/bc-population-2023-2046.png" alt="" width="1600" height="1067" loading="lazy" /></a>
-      <h3><a href="bc-population-change.html">Population change in BC municipalities</a></h3>
-      <p class="meta">Open data, R and sf, 2024</p>
-      <p>Estimated change from 2003 to 2023 and projected change to 2046, mapped for every municipality.</p>
-      <div class="links-row"><a href="bc-population-change.html">Project page</a><a href="https://github.com/atamalfuzi/bc_pop_change_map" target="_blank">Code</a></div>
-    </article>
-    <article class="work-card">
-      <a href="https://econlaunch.ca" target="_blank" tabindex="-1" aria-hidden="true"><img src="img/econlaunch.jpg" alt="" width="1200" height="750" loading="lazy" /></a>
-      <h3><a href="https://econlaunch.ca" target="_blank">EconLaunch</a></h3>
-      <p class="meta">Website and data pipeline, 2026</p>
-      <p>A free job board for economics, policy and data roles in Canada. It checks employer and government career sites every day and screens new postings for relevance.</p>
-      <div class="links-row"><a href="https://econlaunch.ca" target="_blank">Visit econlaunch.ca</a></div>
-    </article>
-  </div>
+  <ul class="work-rows">
+    <li>
+      <a href="rent-and-mortgage-burden.html" tabindex="-1" aria-hidden="true"><img src="img/thumb-housing.jpg" alt="" width="400" height="267" /></a>
+      <div>
+        <h3><a href="rent-and-mortgage-burden.html">Rent and mortgage burden in BC cities</a></h3>
+        <p class="meta">Open data analysis in R, 2026</p>
+        <p>Rent's share of family income rose in 23 of 25 BC urban areas between 2008 and 2023.</p>
+        <div class="links-row"><a href="rent-and-mortgage-burden.html">Project page</a><a href="https://github.com/atamalfuzi/bc_housing_affordability" target="_blank">Code</a></div>
+      </div>
+    </li>
+    <li>
+      <a href="bc-population-change.html" tabindex="-1" aria-hidden="true"><img src="img/thumb-population.jpg" alt="" width="400" height="267" /></a>
+      <div>
+        <h3><a href="bc-population-change.html">Population change in BC municipalities</a></h3>
+        <p class="meta">Open data maps in R, 2024</p>
+        <p>Estimated change from 2003 to 2023 and projected change to 2046, for every municipality.</p>
+        <div class="links-row"><a href="bc-population-change.html">Project page</a><a href="https://github.com/atamalfuzi/bc_pop_change_map" target="_blank">Code</a></div>
+      </div>
+    </li>
+    <li>
+      <a href="https://econlaunch.ca" target="_blank" tabindex="-1" aria-hidden="true"><img src="img/thumb-econlaunch.jpg" alt="" width="400" height="267" /></a>
+      <div>
+        <h3><a href="https://econlaunch.ca" target="_blank">EconLaunch</a></h3>
+        <p class="meta">Website and data pipeline, 2026</p>
+        <p>A free job board for economics, policy and data roles in Canada. It checks employer and government career sites every day and screens new postings for relevance.</p>
+        <div class="links-row"><a href="https://econlaunch.ca" target="_blank">Visit econlaunch.ca</a></div>
+      </div>
+    </li>
+  </ul>
 </section>
 
 <section class="section">
@@ -88,16 +113,12 @@
   </ul>
 </section>
 </main>
+</div>
 
 <footer class="footer">
   <div class="container footer-inner">
     <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
-    <div class="footer-links">
-      <a href="mailto:atamalfuzi@gmail.com">Email</a>
-      <a href="https://linkedin.com/in/ata-malfuzi" target="_blank">LinkedIn</a>
-      <a href="https://github.com/atamalfuzi" target="_blank">GitHub</a>
-      <a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank">Google Scholar</a>
-    </div>
+    <span>Economist and data scientist</span>
   </div>
 </footer>
 

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>Electricity load, weather and next-day peaks in BC | Ata Malfuzi</title>
-  <meta name="description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
+  <meta name="description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, how load's response to temperature has changed, and how well next-day peaks can be forecast with real weather forecasts. Built in Python from public data." />
   <meta property="og:title" content="Electricity load, weather and next-day peaks in BC | Ata Malfuzi" />
-  <meta property="og:description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
+  <meta property="og:description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, how load's response to temperature has changed, and how well next-day peaks can be forecast with real weather forecasts. Built in Python from public data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-load.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/img/og-electricity.png" />
@@ -63,21 +63,21 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>Electricity load, weather and next-day peaks in BC</h1>
-    <p class="lead">An independent look at British Columbia's electricity load since 2002, built from public data in Python. It asks how much of the growth comes from the weather, and how well tomorrow's peak can be forecast from what is known today.</p>
-    <div class="links-row"><a href="https://github.com/atamalfuzi/bc_electricity_load" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/annual_load.csv" target="_blank">Annual table (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/backtest_summary.csv" target="_blank">Backtest table (CSV)</a></div>
+    <p class="lead">An independent look at British Columbia's electricity load since 2002, built from public data in Python. It asks how much of the growth comes from the weather, how load's response to temperature has changed, and how well tomorrow's peak can be forecast with the weather forecast a forecaster would actually have.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/bc_electricity_load" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/annual_load.csv" target="_blank">Annual table (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/temperature_effect.csv" target="_blank">Temperature effect table (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_load/blob/main/output/backtest_summary.csv" target="_blank">Backtest table (CSV)</a></div>
   </div>
 
   <figure>
-    <img src="img/load-temperature-response.png" srcset="img/load-temperature-response-800.png 800w, img/load-temperature-response.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of average workday load against daily mean temperature at Vancouver airport for 2002-2009, 2010-2017 and 2018-2026. Load rises as it gets colder in every period, and in 2018-2026 it also rises clearly on hot days." width="1600" height="1067" />
-    <figcaption>Average workday load by daily mean temperature at Vancouver airport, for three periods.</figcaption>
+    <img src="img/load-temperature-effect.png" srcset="img/load-temperature-effect-800.png 800w, img/load-temperature-effect.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of the effect of 1 °C at all four airports on daily load, 2002 to 2026, with 90% bands. The effect of a degree colder rises from about 73 MW in 2002-2006 to about 97 MW in 2021-2025; the effect of a degree hotter rises from about 131 MW to about 307 MW." width="1600" height="733" />
+    <figcaption>Effect of 1 °C at all four airports on daily average load, estimated month by month with a Kalman filter, with yearly averages, 90% bands and fixed-period estimates for comparison.</figcaption>
   </figure>
 
   <section class="section">
     <h2>What it shows</h2>
     <ul>
       <li>Growth is structural, not weather. Weather-normalised load rose from 56.6 TWh in 2002 to 67.4 TWh in 2025 (+19%). Weather moved any single year by less than 0.8 TWh.</li>
-      <li>Cold drives load, and hot days now matter too. A day 1 °C colder at all four airports (below 18 °C) adds about 92 MW in 2018-2026, up from 78 MW in 2002-2009. A day 1 °C hotter (above 18 °C) adds about 193 MW, up from 91 MW. This fits the spread of air conditioning and heat pumps, though the data cannot show the cause.</li>
-      <li>Next-day peaks can be forecast to within about 2.3%. Over 2021 to September 2026, gradient boosting and a linear regression on the same inputs both missed the daily peak by 2.3% on average, against 5.4% for the peak a week earlier. The linear model does as well as the boosted trees, and the 80% intervals covered 78% of days.</li>
+      <li>Load responds more to temperature than it used to, especially to heat. A sustained degree colder at all four airports (below 18 °C) adds about 97 MW to daily load in 2021-2025 (90% band 86-107), up from 73 MW in 2002-2006. A degree hotter (above 18 °C) adds about 307 MW (220-395), up from about 131 MW, though the early estimate is imprecise. This fits the spread of air conditioning and heat pumps, though the data cannot show the cause.</li>
+      <li>Next-day peaks can be forecast to within about 2.4% with real weather forecasts. Over 2022 to September 2026, gradient boosting fed the day-ahead temperature forecast missed the daily peak by 2.4% on average, against 5.4% for the peak a week earlier. A perfect weather forecast would only improve that to 2.3%: most of the error is not the weather. The 80% intervals covered 80% of days.</li>
     </ul>
   </section>
 
@@ -89,28 +89,29 @@
   <section class="section">
     <h2>How it works</h2>
     <p>Hourly load is turned into each day's average and peak. A least-squares regression of daily average load on a separate level for each year, heating and cooling degrees below and above 18 °C at the Vancouver, Victoria, Kamloops and Prince George airports (with separate effects for 2002-2009, 2010-2017 and 2018-2026), and calendar effects explains 96% of the daily variation. Each year's weather-normalised load replaces that year's weather effect with the effect of the average weather over 2002-2025.</p>
-    <p>The forecast test is a rolling-origin backtest: each year from 2021 to 2026 is forecast by models trained only on earlier years, using what is known the evening before. It compares the peak on the same day last week, a linear regression and gradient boosting. The 80% interval is the forecast plus or minus the 80th percentile of the errors the model made the year before.</p>
+    <p>The change in the temperature response is estimated with a state-space model of daily load: a smooth trend for the structural level, heating and cooling effects that follow random walks and can move once a month, fixed calendar effects and an error that carries over from day to day. The Kalman smoother traces each effect with a 90% band. It uses effective temperatures (today's weighted 1/2, yesterday's 1/4, and so on), because buildings respond to the last few days of weather: with same-day temperatures, the carry-over error absorbs multi-day cold spells and the heating effect is understated by about a third.</p>
+    <p>The forecast test is a rolling-origin backtest: each year from 2022 to 2026 is forecast by models trained only on earlier years, using what is known the evening before. It compares the peak on the same day last week, a linear regression and gradient boosting. The models are fed archived day-ahead temperature forecasts (the GFS weather model, run about 24 hours ahead), corrected for each airport against the year before, and also the day's actual temperatures and the previous day's for comparison. The 80% interval is the forecast plus or minus the 80th percentile of the errors the model made the year before, and is also scored by its width plus a penalty for each miss.</p>
   </section>
 
   <figure>
-    <img src="img/load-forecast-backtest.png" srcset="img/load-forecast-backtest-800.png 800w, img/load-forecast-backtest.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: forecast error by test year, about 2.3% for the linear regression and gradient boosting against about 5% for last week's peak; and daily peaks in winter 2025-26 with the forecast and its 80% interval." width="1600" height="733" loading="lazy" />
-    <figcaption>Next-day peak forecast error by test year, and winter 2025-26 forecasts with their 80% interval.</figcaption>
+    <img src="img/load-forecast-backtest.png" srcset="img/load-forecast-backtest-800.png 800w, img/load-forecast-backtest.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: forecast error by test year with day-ahead weather forecasts, about 2.4% for gradient boosting and the linear regression against about 5.4% for last week's peak; and daily peaks in winter 2025-26 with the forecast and its 80% interval." width="1600" height="733" loading="lazy" />
+    <figcaption>Next-day peak forecast error by test year using day-ahead weather forecasts, and winter 2025-26 forecasts with their 80% interval.</figcaption>
   </figure>
 
   <section class="section">
     <h2>Limits</h2>
     <ul>
-      <li>The backtest uses each day's actual temperatures, so it is optimistic. With the previous day's temperatures instead, the average error rises from 2.3% to 2.5%; a real day-ahead forecast would fall between the two.</li>
+      <li>The forecast archive starts in 2021 and has gaps: 22 of 1,733 test days, mostly in January 2024, have no archived forecast and are left out of the day-ahead results.</li>
       <li>Four airports stand in for the province, with no population weighting.</li>
-      <li>"Structural" is everything that is not weather: population and economic growth, the 2009 recession, the pandemic, industrial customers opening and closing, and electrification. The year levels do not separate these.</li>
-      <li>Days above 18 °C are rare in BC, and 2018-2026 includes the 2021 heat dome, so the hot-weather effects are less precise than the cold-weather ones.</li>
+      <li>"Structural" is everything that is not weather: population and economic growth, the 2009 recession, the pandemic, industrial customers opening and closing, and electrification. Neither the year levels nor the smooth trend separate these.</li>
+      <li>Days above 18 °C are rare in BC, and recent years include the 2021 heat dome, so the hot-weather effects are much less precise than the cold-weather ones, as the wide bands show.</li>
     </ul>
   </section>
 
   <section class="section notes">
     <h2>Data</h2>
-    <p>Hourly balancing authority load from BC Hydro's historical transmission data, 2002 to September 2026. BC Hydro's data is not openly licensed, so the repository and this page show only charts and summaries made from it. Daily mean temperatures at four airports from Government of Canada daily climate data. Analysis in Python with pandas and scikit-learn; code under the MIT licence.</p>
-    <p>Contains information licensed under the Open Government Licence - Canada.</p>
+    <p>Hourly balancing authority load from BC Hydro's historical transmission data, 2002 to September 2026. BC Hydro's data is not openly licensed, so the repository and this page show only charts and summaries made from it. Daily mean temperatures at four airports from Government of Canada daily climate data. Day-ahead temperature forecasts from Open-Meteo's archive of past forecast runs (CC BY 4.0). Analysis in Python with pandas, statsmodels and scikit-learn, with automated tests; code under the MIT licence.</p>
+    <p>Contains information licensed under the Open Government Licence - Canada. Weather forecast data by Open-Meteo.com.</p>
   </section>
 </article>
 </main>

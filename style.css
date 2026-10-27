@@ -169,6 +169,7 @@ figure.narrow img { max-width: min(100%, 620px); }
 figcaption { font-size: .9rem; color: var(--text-3); margin-top: .6rem; max-width: var(--measure); }
 .notes { font-size: .875rem; color: var(--text-3); }
 .notes p + p { margin-top: .5rem; }
+p.notes { margin-bottom: 1rem; }
 
 /* ═══════════════════════════════════════════════════
    ABOUT AND CONTACT

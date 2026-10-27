@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>Rent and mortgage burden in BC cities | Ata Malfuzi</title>
   <meta name="description" content="How much of a family's income goes to rent or a mortgage in British Columbia's cities, 2008 to 2023, built from open data in R." />
   <meta property="og:title" content="Rent and mortgage burden in BC cities | Ata Malfuzi" />
   <meta property="og:description" content="How much of a family's income goes to rent or a mortgage in British Columbia's cities, 2008 to 2023, built from open data in R." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/rent-and-mortgage-burden.html" />
-  <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-housing.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart: the mortgage payment on a median-priced home rose past 40% of median family income in Vancouver, Victoria and Kelowna, while rent stayed near 20%." />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://atamalfuzi.github.io/rent-and-mortgage-burden.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
@@ -21,12 +25,12 @@
 
 <nav class="nav">
   <div class="nav-inner container">
-    <a href="index.html" class="nav-logo">Ata Malfuzi</a>
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
       <li><a href="research.html">Research</a></li>

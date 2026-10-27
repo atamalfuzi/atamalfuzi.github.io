@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>Electricity load, weather and next-day peaks in BC | Ata Malfuzi</title>
   <meta name="description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
   <meta property="og:title" content="Electricity load, weather and next-day peaks in BC | Ata Malfuzi" />
   <meta property="og:description" content="How much of British Columbia's electricity load growth since 2002 comes from the weather, and how well next-day peaks can be forecast. Built in Python from public data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-load.html" />
-  <meta property="og:image" content="https://atamalfuzi.github.io/ata-malfuzi.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-electricity.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart of BC annual electricity load, actual and weather-normalised, 2002-2025: load grew 11 TWh and weather explains almost none of it." />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://atamalfuzi.github.io/bc-electricity-load.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="style.css" />
@@ -21,12 +25,12 @@
 
 <nav class="nav">
   <div class="nav-inner container">
-    <a href="index.html" class="nav-logo">Ata Malfuzi</a>
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
       <li><a href="research.html">Research</a></li>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>How households respond to gas prices in BC, Ontario and Alberta | Ata Malfuzi</title>
+  <meta name="description" content="How much a higher natural gas price reduces household gas use in British Columbia, Ontario and Alberta, in the short and long run, how that has changed since 1981, and two traps that overstate it. Econometrics in Python from public data." />
+  <meta property="og:title" content="How households respond to gas prices in BC, Ontario and Alberta | Ata Malfuzi" />
+  <meta property="og:description" content="How much a higher natural gas price reduces household gas use in British Columbia, Ontario and Alberta, in the short and long run, how that has changed since 1981, and two traps that overstate it. Econometrics in Python from public data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/canada-gas-demand.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-gas.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart of price elasticities of household gas use in BC, Ontario and Alberta, showing that two common estimation traps make households look more responsive to gas prices than they are." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/canada-gas-demand.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>How households respond to gas prices in BC, Ontario and Alberta</h1>
+    <p class="lead">An independent look at residential natural gas demand since 1981, built from public data in Python. It asks how much a higher price reduces gas use, how that differs between the first year and the long run, and whether the response has changed, and shows two traps that make households look more price-sensitive than they are.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/canada_gas_demand" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/elasticities.csv" target="_blank">Elasticities (CSV)</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/elasticity_over_time.csv" target="_blank">Elasticity over time (CSV)</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/annual.csv" target="_blank">Annual series (CSV)</a></div>
+  </div>
+
+  <figure>
+    <img src="img/gas-two-traps.png" srcset="img/gas-two-traps-800.png 800w, img/gas-two-traps.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of price elasticities with 90% intervals for British Columbia, Ontario and Alberta. Using the month's average price gives larger responses than using the past year's price; leaving out an efficiency trend makes BC's long-run response look 2.2 times larger and gives Ontario's the wrong sign." width="1600" height="733" />
+    <figcaption>Price elasticity of gas use per customer, estimated with and without each trap, with 90% intervals.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>What it shows</h2>
+    <ul>
+      <li>Households respond only a little to gas prices. In BC, a 10% higher real price cuts gas use per customer by about 1.2% within the year and 1.8% once households have adjusted (elasticities of −0.12 and −0.18). Ontario's response is smaller (about −0.05), and Alberta's, with cheap gas and cold winters, is indistinguishable from zero.</li>
+      <li>Trap 1: the month's average price. The only price in the data is revenue per cubic metre, which includes fixed monthly charges. In a cold month the fixed charge is spread over more gas, so the average price falls just as use rises, and a regression reads the weather as a price response. Using the average price over the previous 12 months removes this: the month's price overstates the response by 52% in BC and 63% in Ontario.</li>
+      <li>Trap 2: leaving out efficiency gains. Gas use per customer fell 40% in BC from 1981 to 2025 and 37% in Ontario, about 7-10% a decade. Prices rose over much of that time, so a model without a trend credits the price for the efficiency gains: BC's long-run response looks 2.2 times too large, and Ontario's comes out with the wrong sign.</li>
+      <li>The response has faded since about 2010. Estimated year by year, BC's short-run elasticity was strongest around 1995 (−0.16) and averaged −0.12 over 1990-2005, but has been close to zero since 2011; Ontario's moved from about −0.09 to −0.03. The change is statistically clear in BC and Ontario (p &lt; 0.001). The data cannot show why.</li>
+    </ul>
+  </section>
+
+  <figure>
+    <img src="img/gas-elasticity-over-time.png" srcset="img/gas-elasticity-over-time-800.png 800w, img/gas-elasticity-over-time.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three panels of the short-run price elasticity estimated year by year, with 90% bands. BC's is strongest around 1995 at about −0.16 and close to zero after 2010; Ontario's moves from about −0.09 to −0.03; Alberta's stays near zero." width="1600" height="714" loading="lazy" />
+    <figcaption>Short-run price elasticity estimated year by year with a Kalman filter, with 90% bands and the constant estimate for comparison.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>How it works</h2>
+    <p>Monthly residential gas volume, revenue and customers come from two Statistics Canada tables, one ending in 2015 and one starting in 2016. Use per customer is volume over customers; the price is revenue per cubic metre, deflated by the provincial consumer price index; heating degree days come from daily temperatures at Vancouver, Toronto and Calgary airports. Three problems in the tables are handled explicitly: Alberta's reported price covers only the gas commodity from November 2014, so Alberta is analysed to 2013; Ontario's 1998-2000 data are incomplete and left out; and Ontario's 2016-2018 customer counts are undercounted and interpolated. Each period between reporting changes gets its own level, after the data showed that without one, the jump across Ontario's gap was read as a price response.</p>
+    <p>The monthly model regresses log use per customer on a log real price, heating degree days, calendar month and a linear trend, with standard errors robust to a year of autocorrelation, once with the month's own price and once with the previous 12 months' average. The annual partial-adjustment model adds last year's use, so households close part of the gap to their long-run level each year: the short-run elasticity is the price coefficient and the long-run one divides it by one minus the coefficient on last year's use, with a delta-method standard error.</p>
+    <p>For change over time, the same annual model is written as a state space in which the short-run elasticity follows a random walk. Its variance is estimated by maximum likelihood and the Kalman smoother traces the elasticity with a 90% band. A likelihood-ratio test compares it with a constant elasticity, halving the p-value because the variance being tested sits on its boundary. Tests check the data handling and confirm the models recover known elasticities from simulated data.</p>
+  </section>
+
+  <figure>
+    <img src="img/gas-use-and-price.png" srcset="img/gas-use-and-price-800.png 800w, img/gas-use-and-price.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: gas use per customer falling in all three provinces since 1981, BC by 40%; and the real price per cubic metre rising sharply around 2000-2008 and falling after." width="1600" height="733" loading="lazy" />
+    <figcaption>Gas use per customer and the real average price, full calendar years.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>The price is an average, not the price of the next cubic metre, and includes the taxes and charges in force at the time, including carbon charges where they applied. The project estimates the response to the total price only and does not evaluate any carbon pricing or other policy.</li>
+      <li>Customers, not households, and aggregate data: the estimates are averages across very different homes, heating systems and incomes. One airport per province stands in for the weather where customers live.</li>
+      <li>Rates are regulated and follow wholesale markets, so they respond little to one province's demand within a year, but the estimates are associations under the model's assumptions, not proof of cause.</li>
+      <li>The annual models have 32-44 years, and how much the elasticity appears to change depends on including the efficiency trend.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Monthly residential natural gas sales, revenue and customers from Statistics Canada tables 25-10-0033-01 (1980-2015) and 25-10-0086-01 (2016 onward); provincial consumer price index from table 18-10-0004-01; daily mean temperatures from Government of Canada daily climate data. Analysis in Python with pandas and statsmodels, with automated tests; code under the MIT licence.</p>
+    <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

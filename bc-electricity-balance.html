@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi</title>
+  <meta name="description" content="Why British Columbia imported so much electricity in 2023-2025, what the trade cost, how much of the growth in demand since 1980 is weather, and how demand's response to temperature has changed. Open data analysis in Python, with a monthly dashboard." />
+  <meta property="og:title" content="BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi" />
+  <meta property="og:description" content="Why British Columbia imported so much electricity in 2023-2025, what the trade cost, how much of the growth in demand since 1980 is weather, and how demand's response to temperature has changed. Open data analysis in Python, with a monthly dashboard." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-balance.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-balance.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart of BC's annual electricity generation and demand since 1990, with the 2023-2025 rise in net imports split into lower hydro output and demand growth." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bc-electricity-balance.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>BC's electricity balance: the drought, imports and demand since 1980</h1>
+    <p class="lead">An independent look at British Columbia's electricity since 1980, built from open data in Python. It asks why BC imported so much power in 2023-2025, what that trade cost, how much of the growth in demand is weather, and how demand's response to temperature has changed. The results below are as of October 2026, with data through July 2026; the live dashboard updates them each month.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
+    <div class="links-row"><a href="bc_electricity_balance/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/annual.csv" target="_blank">Annual series (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/drought.csv" target="_blank">Import swing (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/trade.csv" target="_blank">Trade (CSV)</a></div>
+  </div>
+
+  <figure>
+    <img src="img/balance-drought.png" srcset="img/balance-drought-800.png 800w, img/balance-drought.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels. Left: BC's annual generation and demand since 1990, with net exports shaded green in most years and net imports shaded red in 2023-2025, when hydro output fell. Right: the rise in net imports over the 2013-2022 average, mostly lower hydro output in 2023 and mostly demand growth by 2025." width="1600" height="800" />
+    <figcaption>Annual generation, hydro output and demand, and each year's change in net imports from the 2013-2022 average split into its parts.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>What it shows</h2>
+    <ul>
+      <li>In 2023 low water cut BC's hydro output by 19%, to 49.1 TWh against 60.4 TWh a year in 2013-2022, and BC imported 17% of the power it used (11.2 TWh net, against average net exports of 3.1 TWh). Of the 14.3 TWh swing, lower hydro output accounts for 11.3 TWh and growth in weather-normalised demand for 3.5 TWh.</li>
+      <li>By 2025 demand growth, not water, kept imports high: net imports were still 8.7 TWh above the 2013-2022 average, 6.0 TWh of it from demand growth and 3.1 TWh from lower hydro output. In the 12 months to July 2026, with hydro output 9% above that average, BC was back to net exports of 2.7 TWh.</li>
+      <li>BC still sells high and buys low, but the drought turned trade into a cost. In 2023 it paid $1.52 billion for US power ($92 per MWh) and earned $1.11 billion for its exports ($168 per MWh): a $411 million deficit, against a $972 million surplus in 2022.</li>
+      <li>Demand has grown two thirds since 1980, from 42.3 to 70.2 TWh a year after removing the weather, which moved any single year by at most 1.2 TWh.</li>
+      <li>A month that is a degree colder every day now adds about 143 MW of average load (90% band 129-158), three times the 44 MW of 1980, while demand grew 1.7 times; a degree hotter adds about 455 MW, up from about 210 MW around 2000. Both changes are statistically clear (p &lt; 0.001). The data cannot show the cause.</li>
+    </ul>
+  </section>
+
+  <figure>
+    <img src="img/balance-trade.png" srcset="img/balance-trade-800.png 800w, img/balance-trade.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: the value of BC's electricity exports to and imports from the United States since 1990, with imports peaking at $1.5 billion in 2023, and the average price received for exports staying above the price paid for imports." width="1600" height="693" loading="lazy" />
+    <figcaption>BC's electricity trade with the United States: value and average prices, current dollars.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>How it works</h2>
+    <p>Monthly generation, hydro output, receipts, deliveries and electricity available for use in BC come from Statistics Canada's monthly electric power tables (one for 1950-2007, two from 2008); electricity available for use, generation plus receipts minus deliveries, stands in for demand. The value of trade with the United States comes from the Canada Energy Regulator, whose volumes match Statistics Canada's. Heating and cooling degree days come from daily temperatures at the Vancouver, Victoria, Kamloops and Prince George airports.</p>
+    <p>Weather-normalised demand comes from a monthly regression of average load on a level for each year, calendar month, and heating and cooling degrees with separate effects for three periods, which explains 97% of the monthly variation; each month's degree days are then replaced by the 1991-2020 normal. Because net imports equal demand minus generation, each year's change from the 2013-2022 average splits exactly into demand growth, weather, lower hydro output and other generation. This is accounting, not cause: BC Hydro chooses how much to generate and how much to buy.</p>
+    <p>For change over time, a state-space model lets the heating and cooling effects follow random walks that can move each January, alongside a smooth trend, fixed calendar-month effects and an error that carries over from month to month. The Kalman smoother traces each effect with a 90% band, and likelihood-ratio tests compare them with constant effects. Tests check the data handling and the model recovering a known drifting effect from simulated data, and a monthly workflow rebuilds the dashboard once it passes checks on the new data.</p>
+  </section>
+
+  <figure>
+    <img src="img/balance-annual-demand.png" srcset="img/balance-annual-demand-800.png 800w, img/balance-annual-demand.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="BC's annual electricity demand since 1980, actual and weather-normalised, rising from about 42 TWh to 70 TWh, with a dip in 2015 flagged as a problem in the source data." width="1600" height="693" loading="lazy" />
+    <figcaption>Electricity available for use in BC, actual and with normal weather.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="img/balance-temperature-effect.png" srcset="img/balance-temperature-effect-800.png 800w, img/balance-temperature-effect.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of the effect of a degree colder and a degree hotter on BC's demand, estimated year by year since 1980 with 90% bands. The heating effect rises from about 44 MW to about 143 MW; the cooling effect rises from near zero to about 455 MW." width="1600" height="693" loading="lazy" />
+    <figcaption>Effect of a degree colder or hotter on average load, estimated year by year with a Kalman filter, with the fixed effect for each period for comparison.</figcaption>
+  </figure>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>Statistics Canada's 2015 figure for electricity available for use is about 4 TWh below the years either side; weather does not explain it and I have not found the cause, so it is kept as reported and flagged.</li>
+      <li>Monthly, not hourly: there is no openly licensed hourly demand data for BC, so the analysis cannot speak to peaks or to when in the day power flows each way.</li>
+      <li>Demand is a residual that includes losses and industry's own generation, and it moves with industry; the year levels and the trend do not separate those changes from others.</li>
+      <li>Four airports, equally weighted, stand in for the province. The cooling effect rests on few hot months and is much less precise than the heating effect.</li>
+      <li>Trade values are in current dollars and cover the United States only; trade with Alberta appears in the volumes but not the values.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Monthly electric power statistics from Statistics Canada tables 25-10-0001-01 (1950-2007), 25-10-0015-01 and 25-10-0016-01 (2008 onward); monthly electricity exports and imports from the Canada Energy Regulator; daily mean temperatures from Government of Canada daily climate data. Analysis in Python with pandas and statsmodels, with automated tests; code under the MIT licence.</p>
+    <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

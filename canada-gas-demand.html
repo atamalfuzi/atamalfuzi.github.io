@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
-  <title>How households respond to gas prices in BC, Ontario and Alberta | Ata Malfuzi</title>
-  <meta name="description" content="How much a higher natural gas price reduces household gas use in British Columbia, Ontario and Alberta, in the short and long run, how that has changed since 1981, and two traps that overstate it. Econometrics in Python from public data." />
-  <meta property="og:title" content="How households respond to gas prices in BC, Ontario and Alberta | Ata Malfuzi" />
-  <meta property="og:description" content="How much a higher natural gas price reduces household gas use in British Columbia, Ontario and Alberta, in the short and long run, how that has changed since 1981, and two traps that overstate it. Econometrics in Python from public data." />
+  <title>Household gas demand in Canada since 1981: price, efficiency and forecasts | Ata Malfuzi</title>
+  <meta name="description" content="How much a higher natural gas price reduces household use in six Canadian provinces, where the long fall in use came from, how well demand can be forecast, and what machine learning sees. Econometrics, heating-curve models, calibrated forecasts and gradient boosting in Python from public data, with interactive charts and a monthly dashboard." />
+  <meta property="og:title" content="Household gas demand in Canada since 1981: price, efficiency and forecasts | Ata Malfuzi" />
+  <meta property="og:description" content="How much a higher natural gas price reduces household use in six Canadian provinces, where the long fall in use came from, how well demand can be forecast, and what machine learning sees. Econometrics, heating-curve models, calibrated forecasts and gradient boosting in Python from public data, with interactive charts and a monthly dashboard." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/canada-gas-demand.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/img/og-gas.png" />
@@ -62,43 +62,126 @@
 <article class="project">
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
-    <h1>How households respond to gas prices in BC, Ontario and Alberta</h1>
-    <p class="lead">An independent look at residential natural gas demand since 1981, built from public data in Python. It asks how much a higher price reduces gas use, how that differs between the first year and the long run, and whether the response has changed, and shows two traps that make households look more price-sensitive than they are. The results below are as of October 2026; the live dashboard re-estimates them each month.</p>
+    <h1>Household gas demand in Canada since 1981: price, efficiency and forecasts</h1>
+    <p class="lead">Five questions about residential natural gas, each answered with public data and a method suited to it, from regressions and partial pooling to heating-curve models, calibrated forecasts and machine learning. The price response is measured in BC, Ontario and Alberta; the other questions add Saskatchewan, Manitoba and Quebec. The results are as of October 2026, with data through August 2026; the live dashboard updates the main series and the forecast each month.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
-    <div class="links-row"><a href="canada_gas_demand/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/canada_gas_demand" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/elasticities.csv" target="_blank">Elasticities (CSV)</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/elasticity_over_time.csv" target="_blank">Elasticity over time (CSV)</a><a href="https://github.com/atamalfuzi/canada_gas_demand/blob/main/output/annual.csv" target="_blank">Annual series (CSV)</a></div>
+    <div class="links-row"><a href="canada_gas_demand/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/canada_gas_demand" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_gas_demand/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
 
-  <figure>
-    <img src="img/gas-two-traps.png" srcset="img/gas-two-traps-800.png 800w, img/gas-two-traps.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of price elasticities with 90% intervals for British Columbia, Ontario and Alberta. Using the month's average price gives larger responses than using the past year's price; leaving out an efficiency trend makes BC's long-run response look 2.2 times larger and gives Ontario's the wrong sign." width="1600" height="733" />
-    <figcaption>Price elasticity of gas use per customer, estimated with and without each trap, with 90% intervals.</figcaption>
-  </figure>
-
   <section class="section">
-    <h2>What it shows</h2>
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#price">How much do households respond to price?</a></td><td>Regression, partial adjustment, Kalman filter</td><td>A little: in BC a 10% higher price cuts use 1.2% within the year and 1.8% in the long run; two traps overstate it.</td></tr>
+        <tr><td><a href="#provinces">Is BC different from other provinces?</a></td><td>Random effects (partial pooling), recursive bootstrap</td><td>Across six provinces the response averages −0.07; BC's −0.15 moves to −0.10 once its noise is allowed for.</td></tr>
+        <tr><td><a href="#heating">Where did the fall in use come from?</a></td><td>Heating-curve (balance-point) regression, bootstrap, segmented trends</td><td>In BC, 45% of it from year-round use such as water heating, which fell 38% against 28% for space heating; the decline began in 2000.</td></tr>
+        <tr><td><a href="#forecast">How well can demand be forecast?</a></td><td>Seasonal ARIMA, exponential smoothing, conformal prediction</td><td>A year ahead to within 4.7% in BC and 6.7% in Ontario; given the weather, 2.1% and 2.6%.</td></tr>
+        <tr><td><a href="#ml">What does machine learning see?</a></td><td>Gradient boosting, permutation importance, partial dependence</td><td>Better predictions than a linear model and the heating curve, but no consistent price effect.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="price">
+    <h2>1. How much do households respond to price?</h2>
+    <ul class="tags"><li>BC, Ontario and Alberta, 1981-2026</li><li>Least squares, Newey-West errors</li><li>Partial adjustment</li><li>Kalman filter</li></ul>
+    <figure>
+      <img src="img/gas-two-traps.png" srcset="img/gas-two-traps-800.png 800w, img/gas-two-traps.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of price elasticities with 90% intervals for British Columbia, Ontario and Alberta. Using the month's average price gives larger responses than using the past year's price; leaving out an efficiency trend makes BC's long-run response look 2.2 times larger and gives Ontario's the wrong sign." width="1600" height="733" />
+      <figcaption>Price elasticity of gas use per customer, estimated with and without each trap, with 90% intervals.</figcaption>
+    </figure>
     <ul>
       <li>Households respond only a little to gas prices. In BC, a 10% higher real price cuts gas use per customer by about 1.2% within the year and 1.8% once households have adjusted (elasticities of −0.12 and −0.18). Ontario's response is smaller (about −0.05), and Alberta's, with cheap gas and cold winters, is indistinguishable from zero.</li>
       <li>Trap 1: the month's average price. The only price in the data is revenue per cubic metre, which includes fixed monthly charges. In a cold month the fixed charge is spread over more gas, so the average price falls just as use rises, and a regression reads the weather as a price response. Using the average price over the previous 12 months removes this: the month's price overstates the response by 52% in BC and 63% in Ontario.</li>
       <li>Trap 2: leaving out efficiency gains. Gas use per customer fell 40% in BC from 1981 to 2025 and 37% in Ontario, about 7-10% a decade. Prices rose over much of that time, so a model without a trend credits the price for the efficiency gains: BC's long-run response looks 2.2 times too large, and Ontario's comes out with the wrong sign.</li>
       <li>The response has faded since about 2010. Estimated year by year, BC's short-run elasticity was strongest around 1995 (−0.16) and averaged −0.12 over 1990-2005, but has been close to zero since 2011; Ontario's moved from about −0.09 to −0.03. The change is statistically clear in BC and Ontario (p &lt; 0.001). The data cannot show why.</li>
     </ul>
+    <figure>
+      <img src="img/gas-elasticity-over-time.png" srcset="img/gas-elasticity-over-time-800.png 800w, img/gas-elasticity-over-time.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three panels of the short-run price elasticity estimated year by year, with 90% bands. BC's is strongest around 1995 at about −0.16 and close to zero after 2010; Ontario's moves from about −0.09 to −0.03; Alberta's stays near zero." width="1600" height="714" loading="lazy" />
+      <figcaption>Short-run price elasticity estimated year by year with a Kalman filter, with 90% bands and the constant estimate for comparison.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/gas-use-and-price.png" srcset="img/gas-use-and-price-800.png 800w, img/gas-use-and-price.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: gas use per customer falling in all three provinces since 1981, BC by 40%; and the real price per cubic metre rising sharply around 2000-2008 and falling after." width="1600" height="733" loading="lazy" />
+      <figcaption>Gas use per customer and the real average price, full calendar years.</figcaption>
+    </figure>
   </section>
 
-  <figure>
-    <img src="img/gas-elasticity-over-time.png" srcset="img/gas-elasticity-over-time-800.png 800w, img/gas-elasticity-over-time.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three panels of the short-run price elasticity estimated year by year, with 90% bands. BC's is strongest around 1995 at about −0.16 and close to zero after 2010; Ontario's moves from about −0.09 to −0.03; Alberta's stays near zero." width="1600" height="714" loading="lazy" />
-    <figcaption>Short-run price elasticity estimated year by year with a Kalman filter, with 90% bands and the constant estimate for comparison.</figcaption>
-  </figure>
+  <section class="section" id="provinces">
+    <h2>2. Is BC different from other provinces?</h2>
+    <ul class="tags"><li>Six provinces, 1981-2026</li><li>Random effects, REML</li><li>Empirical Bayes shrinkage</li><li>Recursive residual bootstrap</li></ul>
+    <p>The same monthly model in BC, Alberta, Saskatchewan, Manitoba, Ontario and Quebec gives six price elasticities with very different precision, from −0.01 in Alberta to −0.28 in Quebec. A random-effects model estimates the average (−0.067, SE 0.028) and the real spread between provinces (a standard deviation of 0.04), and moves each province toward the average by as much as its own noise warrants. BC's −0.15 becomes −0.10, still the largest, and Quebec's −0.28, the noisiest, becomes −0.08. For the long run, a bootstrap that rebuilds each series year by year gives a range close to the delta method's for BC (−0.28 to −0.07) and a narrower one for Quebec (−0.95 to −0.15, against −1.08 to −0.05).</p>
+    <figure>
+      <img src="img/gas-provinces-pooled.png" srcset="img/gas-provinces-pooled-800.png 800w, img/gas-provinces-pooled.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Monthly price elasticities for six provinces on their own and partially pooled, with 90% intervals; the pooled estimates sit between −0.04 and −0.10 around an average of −0.07, with BC's the largest." width="1600" height="720" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="heating">
+    <h2>3. Where did the fall in use come from?</h2>
+    <ul class="tags"><li>Six provinces, monthly since 1981</li><li>Balance-point regression</li><li>Bootstrap by year</li><li>Segmented trends, LWZ criterion</li></ul>
+    <p>Each month's gas use per customer against its average temperature traces a heating curve: a floor of year-round use (water heating, cooking, dryers), and a slope below a balance point of about 14-15 °C in BC and Ontario. Fitted for each decade, the curves move down in two ways: the floor drops and the slope flattens.</p>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Province">
+        <button type="button" data-province="British Columbia">BC</button>
+        <button type="button" data-province="Alberta">Alberta</button>
+        <button type="button" data-province="Saskatchewan">Saskatchewan</button>
+        <button type="button" data-province="Manitoba">Manitoba</button>
+        <button type="button" data-province="Ontario">Ontario</button>
+        <button type="button" data-province="Quebec">Quebec</button>
+      </div>
+      <canvas id="viz-heating" role="img" aria-label="Monthly gas use per customer per day against the month's mean temperature, with a fitted heating curve for each decade since 1981; later curves sit lower, with a lower floor and a flatter slope."></canvas>
+      <div class="viz-key" role="group" aria-label="Highlight one period">
+        <button type="button" data-period="0"><span class="swatch swatch-p0"></span>1981-1990</button>
+        <button type="button" data-period="1"><span class="swatch swatch-p1"></span>1991-2000</button>
+        <button type="button" data-period="2"><span class="swatch swatch-p2"></span>2001-2010</button>
+        <button type="button" data-period="3"><span class="swatch swatch-p3"></span>2011-2019</button>
+        <button type="button" data-period="4"><span class="swatch swatch-p4"></span>Since 2020</button>
+      </div>
+      <p class="viz-readout" id="viz-heating-readout" aria-live="polite"></p>
+      <p class="hint">Pick a province, or a period to highlight it; hover or tap a dot for the month. Use is m³ per customer per day. Alberta's series ends in 2014.</p>
+    </div>
+    <p>In 1991-2020 normal weather, BC's use per customer fell from 2,939 m³ a year in 1981-1990 to 1,996 since 2020 (90% range 1,939-2,047). Year-round use fell 38% and space heating 28%, so year-round use, about a third of the total, accounts for 45% of the fall. In Ontario year-round use fell 41% and heating 35%. Split into straight-line segments, with the number of breaks chosen by the LWZ criterion because BIC found breaks in simulated straight lines too often, BC's weather-normalised use is flat until 1999 and falls 1.4% a year from 2000. Ontario's decline starts in 1992 (90% range 1988-1996) and Saskatchewan's in 1991, both at about 1.7% a year.</p>
+    <figure>
+      <img src="img/gas-heating-split.png" srcset="img/gas-heating-split-800.png 800w, img/gas-heating-split.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Bars for six provinces splitting normal-weather gas use per customer into year-round use and space heating, in the 1980s and now, with 90% ranges; year-round use falls proportionally more in most provinces." width="1600" height="747" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="forecast">
+    <h2>4. How well can demand be forecast?</h2>
+    <ul class="tags"><li>164 forecast origins, 2012-2026</li><li>Seasonal ARIMA with heating degree days</li><li>Exponential smoothing</li><li>Conformal prediction</li></ul>
+    <p>Each month since December 2012, a seasonal ARIMA with heating degree days forecast the next 12 months of residential gas volume from earlier data only, assuming normal weather. Month by month it missed by about 9% in BC and 9-12% in Ontario. The weather is most of that: told the weather that came, the same model misses a year's total by 2.1% in BC and 2.6% in Ontario, against 4.7% and 6.7%. Ranges built from the model's own earlier errors held 86% and 81% of outcomes at a stated 80%; the model's own ranges held only 62% in Ontario. For a year's total in BC, repeating last year did as well; what the model adds is the monthly shape, ranges that hold and the split into weather and the rest.</p>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Province">
+        <button type="button" data-forecast="British Columbia">BC</button>
+        <button type="button" data-forecast="Ontario">Ontario</button>
+      </div>
+      <canvas id="viz-forecast" role="img" aria-label="Residential gas volume by month, with a 12-month forecast and its 80% range from a chosen month; the slider moves the month the forecast was made."></canvas>
+      <label for="viz-forecast-origin">Month the forecast was made</label>
+      <input type="range" id="viz-forecast-origin" min="0" max="0" step="1" value="0" />
+      <p class="viz-readout" id="viz-forecast-readout" aria-live="polite"></p>
+      <p class="hint">Black: actual. Blue dashed: forecast with normal weather, shaded 80% range. Grey: the same model told the weather that came. Million m³ a month.</p>
+    </div>
+    <figure>
+      <img src="img/gas-forecast-weather.png" srcset="img/gas-forecast-weather-800.png 800w, img/gas-forecast-weather.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Bars of each year's forecast error for BC and Ontario since 2013, larger with normal weather assumed than when told the actual weather." width="1600" height="720" loading="lazy" />
+    </figure>
+    <figure>
+      <img src="img/gas-forecast.png" srcset="img/gas-forecast-800.png 800w, img/gas-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Residential gas volume over the last three years in BC and Ontario, with the forecast for the next 12 months and its 80% range: 1,989 million cubic metres in BC and 8,115 million in Ontario." width="1600" height="720" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="ml">
+    <h2>5. What does machine learning see?</h2>
+    <ul class="tags"><li>Six provinces, 3,104 province-months</li><li>scikit-learn</li><li>Gradient boosting</li><li>Permutation importance</li><li>Partial dependence</li></ul>
+    <p>Gradient boosting on the month's temperature, last month's, the share of very cold days, calendar month, year, the past year's price and the province predicts each year from 2011, trained on earlier years only, with an error of 8.5% against 11.0% for a linear model of each province. It leans mostly on temperature, and its partial dependence on temperature redraws the heating curve, flattening in the coldest months. It finds no consistent price effect: price moves slowly with the year and differs by province, and a model built to predict credits that movement to the year and the province. That is why the price response comes from the econometric models, not this one.</p>
+    <figure>
+      <img src="img/gas-ml-drivers.png" srcset="img/gas-ml-drivers-800.png 800w, img/gas-ml-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Permutation importance dominated by the month's temperature; partial dependence on temperature shaped like a heating curve; partial dependence on price wobbling with no trend, against the econometric estimate's gentle downward slope." width="1600" height="640" loading="lazy" />
+    </figure>
+  </section>
 
   <section class="section">
     <h2>How it works</h2>
-    <p>Monthly residential gas volume, revenue and customers come from two Statistics Canada tables, one ending in 2015 and one starting in 2016. Use per customer is volume over customers; the price is revenue per cubic metre, deflated by the provincial consumer price index; heating degree days come from daily temperatures at Vancouver, Toronto and Calgary airports. Three problems in the tables are handled explicitly: Alberta's reported price covers only the gas commodity from November 2014, so Alberta is analysed to 2013; Ontario's 1998-2000 data are incomplete and left out; and Ontario's 2016-2018 customer counts are undercounted and interpolated. Each period between reporting changes gets its own level, after the data showed that without one, the jump across Ontario's gap was read as a price response.</p>
+    <p>Monthly residential gas volume, revenue and customers come from two Statistics Canada tables, one ending in 2015 and one starting in 2016. Use per customer is volume over customers; the price is revenue per cubic metre, deflated by the provincial consumer price index; heating degree days come from daily temperatures at Vancouver, Calgary, Regina, Winnipeg, Toronto and Montreal airports. Three problems in the tables are handled explicitly: Alberta's reported price covers only the gas commodity from November 2014, so Alberta is analysed to 2013; Ontario's 1998-2000 data are incomplete and left out; and Ontario's 2016-2018 customer counts are undercounted and interpolated. Each period between reporting changes gets its own level, after the data showed that without one, the jump across Ontario's gap was read as a price response. The same test gives Manitoba a level from 2007 and Quebec one from 2019.</p>
     <p>The monthly model regresses log use per customer on a log real price, heating degree days, calendar month and a linear trend, with standard errors robust to a year of autocorrelation, once with the month's own price and once with the previous 12 months' average. The annual partial-adjustment model adds last year's use, so households close part of the gap to their long-run level each year: the short-run elasticity is the price coefficient and the long-run one divides it by one minus the coefficient on last year's use, with a delta-method standard error.</p>
-    <p>For change over time, the same annual model is written as a state space in which the short-run elasticity follows a random walk. Its variance is estimated by maximum likelihood and the Kalman smoother traces the elasticity with a 90% band. A likelihood-ratio test compares it with a constant elasticity, halving the p-value because the variance being tested sits on its boundary. Tests check the data handling and confirm the models recover known elasticities from simulated data.</p>
+    <p>For change over time, the same annual model is written as a state space in which the short-run elasticity follows a random walk. Its variance is estimated by maximum likelihood and the Kalman smoother traces the elasticity with a 90% band. A likelihood-ratio test compares it with a constant elasticity, halving the p-value because the variance being tested sits on its boundary. Tests on simulated data check that the models recover known elasticities, a known heating curve, a known average and spread across provinces and a planted trend break, and that conformal ranges use only errors known at the time.</p>
   </section>
-
-  <figure>
-    <img src="img/gas-use-and-price.png" srcset="img/gas-use-and-price-800.png 800w, img/gas-use-and-price.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: gas use per customer falling in all three provinces since 1981, BC by 40%; and the real price per cubic metre rising sharply around 2000-2008 and falling after." width="1600" height="733" loading="lazy" />
-    <figcaption>Gas use per customer and the real average price, full calendar years.</figcaption>
-  </figure>
 
   <section class="section">
     <h2>Limits</h2>
@@ -107,12 +190,14 @@
       <li>Customers, not households, and aggregate data: the estimates are averages across very different homes, heating systems and incomes. One airport per province stands in for the weather where customers live.</li>
       <li>Rates are regulated and follow wholesale markets, so they respond little to one province's demand within a year, but the estimates are associations under the model's assumptions, not proof of cause.</li>
       <li>The annual models have 32-44 years, and how much the elasticity appears to change depends on including the efficiency trend.</li>
+      <li>Manitoba's 2007 and Quebec's 2019 reporting levels are inferred from jumps in the data, and the six-province results depend on them. Year-round use is whatever does not follow the temperature, so a changing mix of customers moves it as well as more efficient appliances.</li>
+      <li>Forecasts assume normal weather, which is most of their error. Partial dependence shows what a model learned from the data, not what would happen if one input changed alone.</li>
     </ul>
   </section>
 
   <section class="section notes">
     <h2>Data</h2>
-    <p>Monthly residential natural gas sales, revenue and customers from Statistics Canada tables 25-10-0033-01 (1980-2015) and 25-10-0086-01 (2016 onward); provincial consumer price index from table 18-10-0004-01; daily mean temperatures from Government of Canada daily climate data. Analysis in Python with pandas and statsmodels, with automated tests; code under the MIT licence.</p>
+    <p>Monthly residential natural gas sales, revenue and customers from Statistics Canada tables 25-10-0033-01 (1980-2015) and 25-10-0086-01 (2016 onward); provincial consumer price index from table 18-10-0004-01; daily mean temperatures from Government of Canada daily climate data. Analysis in Python with pandas, statsmodels and scikit-learn, with automated tests; interactive charts drawn in plain JavaScript; code under the MIT licence.</p>
     <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
   </section>
 </article>
@@ -127,5 +212,7 @@
 </footer>
 
 <script src="main.js"></script>
+<script src="gas-data.js"></script>
+<script src="charts.js"></script>
 </body>
 </html>

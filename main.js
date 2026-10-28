@@ -1,9 +1,6 @@
-/* main.js: shared across all pages */
-
-// Year in footer
 document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
 
-// Mobile nav toggle (aria-expanded drives the CSS); Escape closes it
+// aria-expanded drives the menu's CSS
 const hamburger = document.getElementById('hamburger');
 if (hamburger) {
   const setMenu = open => hamburger.setAttribute('aria-expanded', open);

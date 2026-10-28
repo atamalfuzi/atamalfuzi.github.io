@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi</title>
-  <meta name="description" content="Why British Columbia imported so much electricity in 2023-2025, what the trade cost, how much of the growth in demand since 1980 is weather, and how demand's response to temperature has changed. Open data analysis in Python, with a monthly dashboard." />
+  <meta name="description" content="How rare British Columbia's 2023-2024 drought was, how much hydro output it cost, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Open data analysis in Python with statsmodels and scikit-learn, with interactive charts and a monthly dashboard." />
   <meta property="og:title" content="BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi" />
-  <meta property="og:description" content="Why British Columbia imported so much electricity in 2023-2025, what the trade cost, how much of the growth in demand since 1980 is weather, and how demand's response to temperature has changed. Open data analysis in Python, with a monthly dashboard." />
+  <meta property="og:description" content="How rare British Columbia's 2023-2024 drought was, how much hydro output it cost, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Open data analysis in Python with statsmodels and scikit-learn, with interactive charts and a monthly dashboard." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-balance.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/img/og-balance.png" />
@@ -63,77 +63,136 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>BC's electricity balance: the drought, imports and demand since 1980</h1>
-    <p class="lead">An independent look at British Columbia's electricity since 1980, built from open data in Python. It asks why BC imported so much power in 2023-2025, how hard its hydro fleet ran and when in the day the power flowed, what that trade cost, how much of the growth in demand is weather, and how demand's response to temperature has changed. The results below are as of October 2026, with data through July 2026; the live dashboard updates them each month.</p>
+    <p class="lead">Six questions about British Columbia's electricity, each answered with open data and a method suited to it, from extreme-value statistics and regime models to machine learning and calibrated forecasts. The results are as of October 2026, with data through July 2026; the live dashboard updates the main series each month.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
-    <div class="links-row"><a href="bc_electricity_balance/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/annual.csv" target="_blank">Annual series (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/drought.csv" target="_blank">Import swing (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/trade.csv" target="_blank">Trade (CSV)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/blob/main/output/flows_by_hour.csv" target="_blank">Hourly flows (CSV)</a></div>
+    <div class="links-row"><a href="bc_electricity_balance/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
 
-  <figure>
-    <img src="img/balance-drought.png" srcset="img/balance-drought-800.png 800w, img/balance-drought.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels. Left: BC's annual generation and demand since 1990, with net exports shaded green in most years and net imports shaded red in 2023-2025, when hydro output fell. Right: the rise in net imports over the 2013-2022 average, mostly lower hydro output in 2023 and mostly demand growth by 2025." width="1600" height="800" />
-    <figcaption>Annual generation, hydro output and demand, and each year's change in net imports from the 2013-2022 average split into its parts.</figcaption>
-  </figure>
-
   <section class="section">
-    <h2>What it shows</h2>
-    <ul>
-      <li>In 2023 low water cut BC's hydro output by 19%, to 49.1 TWh against 60.4 TWh a year in 2013-2022, and BC imported 17% of the power it used (11.2 TWh net, against average net exports of 3.1 TWh). Of the 14.3 TWh swing, lower hydro output accounts for 11.3 TWh and growth in weather-normalised demand for 3.5 TWh.</li>
-      <li>By 2025 demand growth, not water, kept imports high: net imports were still 8.7 TWh above the 2013-2022 average, 6.0 TWh of it from demand growth and 3.1 TWh from lower hydro output. In the 12 months to July 2026, with hydro output 9% above that average, BC was back to net exports of 2.7 TWh.</li>
-      <li>The hydro fleet ran at its lowest in 20 years, and BC imported rather than burning more gas. In 2023 hydro output was 34% of what the installed hydro capacity could produce running all year, the least of any year since 2006, against 45% on average in 2013-2022. Thermal plants ran within their usual range, and generation from fossil fuels fell to 1.46 TWh, from 1.61-2.11 TWh in 2020-2022.</li>
-      <li>Even in the drought, BC imported least at the morning and evening peaks. In normal years it exports most from 5 to 9 pm (575 MW out on average in 2018-2022). In 2023 it was importing in 85% of hours, but least in the evening: 760 MW in from 5 to 9 pm, against 1,070 MW overnight and 1,270 MW from 10 am to 3 pm. In the busiest 1% of hours of 2023 and 2024, imports reached 2,420-2,440 MW, close to the most this connection has carried into BC since 2017.</li>
-      <li>BC still sells high and buys low, but the drought turned trade into a cost. In 2023 it paid $1.52 billion for US power ($92 per MWh) and earned $1.11 billion for its exports ($168 per MWh): a $411 million deficit, against a $972 million surplus in 2022.</li>
-      <li>Demand has grown two thirds since 1980, from 42.3 to 70.2 TWh a year after removing the weather, which moved any single year by at most 1.2 TWh.</li>
-      <li>A month that is a degree colder every day now adds about 143 MW of average load (90% band 129-158), three times the 44 MW of 1980, while demand grew 1.7 times; a degree hotter adds about 455 MW, up from about 210 MW around 2000. Both changes are statistically clear (p &lt; 0.001). The data cannot show the cause.</li>
-    </ul>
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#rare">How rare was the drought?</a></td><td>Lognormal return periods, bootstrap, Theil-Sen trend</td><td>2023 was a once-in-about-100-years low on the Fraser; 2023-2024 its driest two years since 1913.</td></tr>
+        <tr><td><a href="#water">How much hydro did it cost?</a></td><td>Regression on reservoir inflows, leave-one-year-out</td><td>Low inflows explain 7.1 TWh (90%: 5.4-8.7) of the 11.3 TWh fall in hydro output in 2023.</td></tr>
+        <tr><td><a href="#supply">Where did the power come from?</a></td><td>Accounting identity, weather normalisation</td><td>Imports: net imports rose 14.3 TWh while fossil-fuel generation fell.</td></tr>
+        <tr><td><a href="#patterns">How does trade move hour by hour?</a></td><td>k-means, principal components, Markov switching</td><td>Three kinds of trading day; a heavy-import regime from September 2022 to August 2025.</td></tr>
+        <tr><td><a href="#forecast-flow">Can the hourly flow be forecast?</a></td><td>Ridge and gradient boosting, expanding-window tests, partial dependence</td><td>A day ahead, 8% better than repeating yesterday; BC's own water matters most.</td></tr>
+        <tr><td><a href="#demand">How well can demand be forecast?</a></td><td>Seasonal ARIMA, conformal intervals, Kalman filter</td><td>To within 3.1-3.8% one to six months out, with ranges that hold as often as stated.</td></tr>
+      </tbody>
+    </table>
   </section>
 
-  <figure>
-    <img src="img/balance-hydro-capacity.png" srcset="img/balance-hydro-capacity-800.png 800w, img/balance-hydro-capacity.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: BC's hydro output as a share of installed hydro capacity each year since 2006, usually 44-50% and lowest at 34% in 2023; and installed capacity by type, mostly hydro, rising from about 15 to 19 GW." width="1600" height="693" loading="lazy" />
-    <figcaption>Hydro output as a share of what the installed hydro capacity would produce running all year, and installed capacity by type.</figcaption>
-  </figure>
-
-  <figure>
-    <img src="img/balance-trade.png" srcset="img/balance-trade-800.png 800w, img/balance-trade.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: the value of BC's electricity exports to and imports from the United States since 1990, with imports peaking at $1.5 billion in 2023, and the average price received for exports staying above the price paid for imports." width="1600" height="693" loading="lazy" />
-    <figcaption>BC's electricity trade with the United States: value and average prices, current dollars.</figcaption>
-  </figure>
-
-  <figure>
-    <img src="img/balance-hourly-flows.png" srcset="img/balance-hourly-flows-800.png 800w, img/balance-hourly-flows.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels. Left: average hourly power flow between BC and the United States by hour of the day; in 2018-2022 BC exports most in the evening, and in 2023-2024 it imports every hour but least in the morning and evening. Right: the share of hours BC was importing, 85% in 2023 and 18% in 2026 so far." width="1600" height="773" loading="lazy" />
-    <figcaption>Hourly flow between the Bonneville Power Administration and BC Hydro by hour of the day, and the share of hours BC was importing each year.</figcaption>
-  </figure>
-
-  <section class="section">
-    <h2>How it works</h2>
-    <p>Monthly generation, hydro output, receipts, deliveries and electricity available for use in BC come from Statistics Canada's monthly electric power tables (one for 1950-2007, two from 2008); electricity available for use, generation plus receipts minus deliveries, stands in for demand. The value of trade with the United States comes from the Canada Energy Regulator, whose volumes match Statistics Canada's. Heating and cooling degree days come from daily temperatures at the Vancouver, Victoria, Kamloops and Prince George airports.</p>
-    <p>Weather-normalised demand comes from a monthly regression of average load on a level for each year, calendar month, and heating and cooling degrees with separate effects for three periods, which explains 97% of the monthly variation; each month's degree days are then replaced by the 1991-2020 normal. Because net imports equal demand minus generation, each year's change from the 2013-2022 average splits exactly into demand growth, weather, lower hydro output and other generation. This is accounting, not cause: BC Hydro chooses how much to generate and how much to buy.</p>
-    <p>Installed capacity by type comes from Statistics Canada's annual table, and a capacity factor divides a year's output by what that capacity would produce running all year. Hourly flows come from the US Energy Information Administration's Form EIA-930, which reports the flow between BC Hydro and the Bonneville Power Administration, its only reported US neighbour, from May 2017. Their monthly totals match the Canada Energy Regulator's net trade closely (correlation 0.997).</p>
-    <p>For change over time, a state-space model lets the heating and cooling effects follow random walks that can move each January, alongside a smooth trend, fixed calendar-month effects and an error that carries over from month to month. The Kalman smoother traces each effect with a 90% band, and likelihood-ratio tests compare them with constant effects. Tests check the data handling and the model recovering a known drifting effect from simulated data, and a monthly workflow rebuilds the dashboard once it passes checks on the new data.</p>
+  <section class="section" id="rare">
+    <h2>1. How rare was the drought?</h2>
+    <ul class="tags"><li>Water Survey of Canada, 1913-2024</li><li>Lognormal return periods</li><li>Bootstrap, 2,000 resamples</li><li>Theil-Sen slope, Kendall test</li></ul>
+    <p>The Fraser at Hope carried 1,954 m³/s on average in 2023, 28% below its median and the second-lowest of 112 years. A year that low comes about once in 100 years (90% range 55-259 years). 2024 was the fourth-lowest, so 2023-2024 were the driest two years in a row on record. There is no long-run trend (p = 0.58): the drought was rare weather, not a drying river.</p>
+    <div class="viz">
+      <canvas id="viz-river" role="img" aria-label="Annual mean flow of the Fraser River at Hope, 1913-2024, with the five lowest years marked; 2023 and 2024 are among them."></canvas>
+      <p class="hint">Hover or tap for any year's flow and rank. Dashed line: median.</p>
+    </div>
+    <figure>
+      <img src="img/balance-river-history.png" srcset="img/balance-river-history-800.png 800w, img/balance-river-history.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: the Fraser River's mean flow each year since 1913, with no trend and 2023 and 2024 among the five lowest. Right: return periods, with 2023 at about 1 in 100 years and 2024 at about 1 in 29." width="1600" height="720" loading="lazy" />
+    </figure>
   </section>
 
-  <figure>
-    <img src="img/balance-annual-demand.png" srcset="img/balance-annual-demand-800.png 800w, img/balance-annual-demand.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="BC's annual electricity demand since 1980, actual and weather-normalised, rising from about 42 TWh to 70 TWh, with a dip in 2015 flagged as a problem in the source data." width="1600" height="693" loading="lazy" />
-    <figcaption>Electricity available for use in BC, actual and with normal weather.</figcaption>
-  </figure>
+  <section class="section" id="water">
+    <h2>2. How much hydro output did low water cost?</h2>
+    <ul class="tags"><li>Inflows to Kinbasket and Williston lakes</li><li>Least squares, Newey-West errors</li><li>Leave-one-year-out validation</li><li>Counterfactual with 90% range</li></ul>
+    <p>Inflows to BC Hydro's two largest reservoirs ran at 79% of normal in 2023 and 84% in 2024. A model of annual hydro output on this year's and last year's inflows and demand explains two thirds of the variation since 1980 and misses a held-out year by 3.8 TWh on average. With normal inflows it puts 2023's output 7.1 TWh higher, most of the 11.3 TWh fall. The other 4.7 TWh is output the inflows alone would not have cut, consistent with BC Hydro holding water back and buying instead, though the data cannot show it.</p>
+    <figure>
+      <img src="img/balance-water-to-power.png" srcset="img/balance-water-to-power-800.png 800w, img/balance-water-to-power.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: BC's annual hydro output since 1980 against the model's held-out predictions. Right: in 2023 and 2024, the fall in hydro output, the part explained by low inflows, and the rise in net imports." width="1600" height="747" loading="lazy" />
+    </figure>
+    <p>The hydro fleet ran at 34% of what its installed capacity could produce running all year in 2023, the least since 2006, against 45% on average in 2013-2022.</p>
+    <figure>
+      <img src="img/balance-hydro-capacity.png" srcset="img/balance-hydro-capacity-800.png 800w, img/balance-hydro-capacity.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: BC's hydro output as a share of installed hydro capacity each year since 2006, usually 44-50% and lowest at 34% in 2023; and installed capacity by type, mostly hydro." width="1600" height="693" loading="lazy" />
+    </figure>
+  </section>
 
-  <figure>
-    <img src="img/balance-temperature-effect.png" srcset="img/balance-temperature-effect-800.png 800w, img/balance-temperature-effect.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of the effect of a degree colder and a degree hotter on BC's demand, estimated year by year since 1980 with 90% bands. The heating effect rises from about 44 MW to about 143 MW; the cooling effect rises from near zero to about 455 MW." width="1600" height="693" loading="lazy" />
-    <figcaption>Effect of a degree colder or hotter on average load, estimated year by year with a Kalman filter, with the fixed effect for each period for comparison.</figcaption>
-  </figure>
+  <section class="section" id="supply">
+    <h2>3. Where did the power come from?</h2>
+    <ul class="tags"><li>Statistics Canada, 1980-2026</li><li>Accounting identity</li><li>Weather normalisation</li></ul>
+    <p>Net imports equal demand minus generation, so their change splits exactly into parts. In 2023 net imports were 14.3 TWh above the 2013-2022 average: 11.3 TWh from lower hydro output and 3.5 TWh from demand growth. BC imported rather than burning more gas, and paid $1.52 billion for US power ($92 per MWh) while still selling its own exports for more ($168 per MWh). By 2025 demand growth, not water, kept net imports 8.7 TWh above the average.</p>
+    <figure>
+      <img src="img/balance-drought.png" srcset="img/balance-drought-800.png 800w, img/balance-drought.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels. Left: BC's annual generation and demand since 1990, with net imports shaded red in 2023-2025. Right: the rise in net imports over the 2013-2022 average, mostly lower hydro output in 2023 and mostly demand growth by 2025." width="1600" height="800" loading="lazy" />
+    </figure>
+    <figure>
+      <img src="img/balance-trade.png" srcset="img/balance-trade-800.png 800w, img/balance-trade.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels: the value of BC's electricity exports to and imports from the United States since 1990, with imports peaking at $1.5 billion in 2023, and the average price received for exports staying above the price paid for imports." width="1600" height="693" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="patterns">
+    <h2>4. How does trade move hour by hour?</h2>
+    <ul class="tags"><li>EIA-930, 80,000 hours</li><li>k-means on 24-hour profiles</li><li>Principal components</li><li>Markov-switching regimes</li></ul>
+    <p>Every hour since May 2017 in one picture: blue is power leaving BC, red is power arriving.</p>
+    <div class="viz">
+      <canvas id="viz-heat" role="img" aria-label="Weekly average flow between BC and the US by hour of the day since 2017: mostly red, importing, from late 2022 to 2025, and mostly blue, exporting, in 2020-2022 and 2026."></canvas>
+      <div class="viz-scale"><span>2,500 MW out</span><span class="bar"></span><span>2,500 MW in</span></div>
+      <p class="hint">Each column is a week, each row an hour of the day. Hover or tap for the week's average flow at that hour.</p>
+    </div>
+    <p>Grouping the 3,447 days by the shape of their 24-hour flow gives three kinds of day: exporting all day, importing all day, and a two-way day that imports about 330 MW by day and exports about 370 MW in the evening. In 2023, 67% of days were importing all day; in 2026 so far, 67% are exporting all day.</p>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Highlight one kind of day">
+        <button type="button" data-pattern="0" aria-pressed="false"><span class="swatch swatch-0"></span>Exporting all day</button>
+        <button type="button" data-pattern="1" aria-pressed="false"><span class="swatch swatch-1"></span>Two-way</button>
+        <button type="button" data-pattern="2" aria-pressed="false"><span class="swatch swatch-2"></span>Importing all day</button>
+      </div>
+      <canvas id="viz-calendar" role="img" aria-label="Calendar of each day since May 2017 coloured by its trading pattern: 2023 and 2024 mostly importing all day, 2020 and 2026 mostly exporting."></canvas>
+      <p class="hint">One row per year. Pick a kind of day to highlight it; hover or tap for any day.</p>
+    </div>
+    <figure>
+      <img src="img/balance-trading-patterns.png" srcset="img/balance-trading-patterns-800.png 800w, img/balance-trading-patterns.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="The average 24-hour flow for each of the three kinds of day, with bands, and the calendar of days." width="1600" height="747" loading="lazy" />
+    </figure>
+    <p>A two-regime Markov-switching model of weekly flows, against the usual for the month, finds a heavy-import regime about 1,350 MW above the other. It dates the drought's spell from 12 September 2022 to 17 August 2025, 153 weeks, after shorter spells in the dry years 2018-2019.</p>
+    <figure>
+      <img src="img/balance-import-regime.png" srcset="img/balance-import-regime-800.png 800w, img/balance-import-regime.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Weekly flow against the usual for the month since 2017, and the model's probability of the heavy-import regime, near 100% from September 2022 to August 2025." width="1600" height="773" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="forecast-flow">
+    <h2>5. Can the hourly flow be forecast?</h2>
+    <ul class="tags"><li>scikit-learn</li><li>Ridge regression</li><li>Gradient boosting</li><li>Expanding-window tests</li><li>Permutation importance</li><li>Partial dependence</li></ul>
+    <p>Forecasting each midnight for the next 24 hours, a linear model misses by 425 MW on average in years it was not trained on: 8% better than repeating yesterday (461 MW) and far better than the usual for the month and hour (984 MW). Gradient boosting does no better (449 MW), and in 2023 nothing beat repeating yesterday, because the drought took the flows outside anything in the training years.</p>
+    <figure>
+      <img src="img/balance-flow-forecast.png" srcset="img/balance-flow-forecast-800.png 800w, img/balance-flow-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: the last two weeks of hourly flow with the day-ahead forecast and yesterday's flow. Right: each model's average error by year since 2021." width="1600" height="773" loading="lazy" />
+    </figure>
+    <p>Read through permutation importance and partial dependence, a model of same-hour conditions leans most on BC's own water: at 78% of normal hydro output it expects about 810 MW into BC, at 111% about 460 MW out. Higher demand across the border pulls power out of BC. These conditions alone improve on the usual for the month and hour by only 9%, because trading also turns on prices and reservoir plans that are not in open data.</p>
+    <figure>
+      <img src="img/balance-flow-drivers.png" srcset="img/balance-flow-drivers-800.png 800w, img/balance-flow-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Permutation importance led by BC's hydro output over the past year, and partial dependence curves for BC's hydro, Bonneville demand, hour of the day and Vancouver temperature." width="1600" height="827" loading="lazy" />
+    </figure>
+  </section>
+
+  <section class="section" id="demand">
+    <h2>6. How much is weather, and how well can demand be forecast?</h2>
+    <ul class="tags"><li>Seasonal ARIMA with degree days</li><li>Exponential smoothing</li><li>Conformal prediction intervals</li><li>Newey-West ranges</li><li>Kalman filter</li></ul>
+    <p>Tested from every month since 2014 with only earlier data, a seasonal ARIMA with heating and cooling degree days forecasts monthly demand to within 3.1% a month ahead and 3.8% six months ahead, beating exponential smoothing and the same month last year. Its own 80% ranges held only 66% of outcomes, because they treat the weather ahead as known; ranges set from its past errors held 81%.</p>
+    <figure>
+      <img src="img/balance-demand-forecast.png" srcset="img/balance-demand-forecast-800.png 800w, img/balance-demand-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: BC's monthly demand over three years and the forecast for the next six months with 80% and 95% ranges. Right: average forecast error by months ahead for three methods." width="1600" height="747" loading="lazy" />
+    </figure>
+    <p>Weather moves a year's demand by at most 1.2 TWh, and the effect is clear of zero in most years. Demand has grown two thirds since 1980 after removing it, and a degree colder now adds about three times the load it did in 1980 (Kalman filter, p &lt; 0.001).</p>
+    <figure>
+      <img src="img/balance-weather-effect.png" srcset="img/balance-weather-effect-800.png 800w, img/balance-weather-effect.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Each year's weather effect on demand since 1980 with 90% ranges, at most 1.2 TWh either way." width="1600" height="693" loading="lazy" />
+    </figure>
+    <figure>
+      <img src="img/balance-temperature-effect.png" srcset="img/balance-temperature-effect-800.png 800w, img/balance-temperature-effect.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of the effect of a degree colder and a degree hotter on BC's demand, estimated year by year since 1980 with 90% bands. The heating effect rises from about 44 MW to about 143 MW; the cooling effect from near zero to about 455 MW." width="1600" height="693" loading="lazy" />
+    </figure>
+  </section>
 
   <section class="section">
     <h2>Limits</h2>
     <ul>
-      <li>Statistics Canada's 2015 figure for electricity available for use is about 4 TWh below the years either side; weather does not explain it and I have not found the cause, so it is kept as reported and flagged.</li>
-      <li>Hourly flows cover the BC Hydro-Bonneville connection only; there is no openly licensed hourly data for BC's demand or its trade with Alberta, so the analysis cannot speak to demand peaks.</li>
-      <li>Site C does not yet appear in Statistics Canada's capacity data, so the 2024-2025 hydro capacity factors may be overstated.</li>
-      <li>Demand is a residual that includes losses and industry's own generation, and it moves with industry; the year levels and the trend do not separate those changes from others.</li>
-      <li>Four airports, equally weighted, stand in for the province. The cooling effect rests on few hot months and is much less precise than the heating effect.</li>
-      <li>Trade values are in current dollars and cover the United States only; trade with Alberta appears in the volumes but not the values.</li>
+      <li>Two gauges stand in for inflows to BC Hydro's reservoirs, and the river archive runs only to early 2025, updated about once a year.</li>
+      <li>Hourly flows cover the BC Hydro-Bonneville connection only; prices, Alberta trade and BC's hourly demand are not in open data, which caps how well the flow can be explained.</li>
+      <li>The day-ahead forecast uses the day's actual Vancouver temperature in place of a forecast, so it is slightly optimistic.</li>
+      <li>Partial dependence shows associations in the data, not what would happen if one input changed alone.</li>
+      <li>Statistics Canada's 2015 demand figure is about 4 TWh below the years either side and is kept as reported.</li>
+      <li>Site C does not yet appear in the capacity data, so the 2024-2025 hydro capacity factors may be overstated.</li>
     </ul>
   </section>
 
   <section class="section notes">
     <h2>Data</h2>
-    <p>Monthly electric power statistics from Statistics Canada tables 25-10-0001-01 (1950-2007), 25-10-0015-01 and 25-10-0016-01 (2008 onward), and installed capacity from table 25-10-0022-01; monthly electricity exports and imports from the Canada Energy Regulator; hourly flows from the US Energy Information Administration's Form EIA-930 (public domain); daily mean temperatures from Government of Canada daily climate data. Analysis in Python with pandas and statsmodels, with automated tests; code under the MIT licence.</p>
+    <p>Statistics Canada tables 25-10-0001-01, 25-10-0015-01, 25-10-0016-01 and 25-10-0022-01; the Canada Energy Regulator's monthly electricity trade; the Water Survey of Canada's daily river flows (HYDAT); Government of Canada daily climate data; and the US Energy Information Administration's Form EIA-930 (public domain). Analysis in Python with pandas, statsmodels and scikit-learn, with automated tests; interactive charts drawn in plain JavaScript; code under the MIT licence.</p>
     <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
   </section>
 </article>
@@ -148,5 +207,7 @@
 </footer>
 
 <script src="main.js"></script>
+<script src="balance-data.js"></script>
+<script src="charts.js"></script>
 </body>
 </html>

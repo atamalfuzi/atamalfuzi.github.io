@@ -1,6 +1,4 @@
-/* ═══════════════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════════════ */
+/* Tokens */
 :root {
   /* Palette: white paper, ink, one deep teal-green accent */
   --bg:           #ffffff;
@@ -22,9 +20,7 @@
   --tap:     44px;
 }
 
-/* ═══════════════════════════════════════════════════
-   BASE
-═══════════════════════════════════════════════════ */
+/* Base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { background: var(--bg); color: var(--text); font: 1rem/1.7 var(--ff-body); }
@@ -48,9 +44,7 @@ cite { font-style: italic; }
 .section-head a { font-size: .95rem; font-weight: 600; display: inline-flex; align-items: center; min-height: var(--tap); }
 .lead { font-size: 1.12rem; color: var(--text-2); max-width: var(--measure); }
 
-/* ═══════════════════════════════════════════════════
-   HEADER AND FOOTER
-═══════════════════════════════════════════════════ */
+/* Header and footer */
 .nav { border-bottom: 1px solid var(--rule); background: var(--bg); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
 .nav-logo { font: 700 1.15rem var(--ff-display); color: var(--text); text-decoration: none; display: inline-flex; align-items: center; min-height: var(--tap); }
@@ -76,9 +70,7 @@ cite { font-style: italic; }
 .footer { border-top: 1px solid var(--rule); margin-top: 4rem; }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; min-height: 72px; font-size: .9rem; color: var(--text-3); }
 
-/* ═══════════════════════════════════════════════════
-   LAYOUT: profile sidebar beside the page
-═══════════════════════════════════════════════════ */
+/* Layout: profile sidebar beside the page */
 .layout { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); gap: 4rem; align-items: start; padding-top: 3rem; }
 /* the sidebar stays in view while scrolling only on screens tall enough to show all of it */
 @media (min-width: 861px) and (min-height: 580px) { .profile { position: sticky; top: 1.5rem; } }
@@ -107,16 +99,12 @@ cite { font-style: italic; }
   .inner .profile { order: 2; border-bottom: 0; border-top: 1px solid var(--rule); padding: 1.2rem 0 0; }
 }
 
-/* ═══════════════════════════════════════════════════
-   PAGE TOP
-═══════════════════════════════════════════════════ */
+/* Page top */
 .page-top h1 { margin-bottom: .7rem; }
 .home-head h1 { font-size: clamp(1.7rem, 3vw, 2.2rem); max-width: 24ch; margin-bottom: .8rem; }
 .home-head p { color: var(--text-2); max-width: var(--measure); }
 
-/* ═══════════════════════════════════════════════════
-   WORK ROWS: thumbnail beside a short description
-═══════════════════════════════════════════════════ */
+/* Work rows: thumbnail beside a short description */
 .work-rows > li { display: grid; grid-template-columns: 184px 1fr; gap: 1.4rem; padding: 1.2rem 0; border-top: 1px solid var(--rule); }
 .work-rows > li:last-child { border-bottom: 1px solid var(--rule); }
 .work-rows img { width: 184px; height: 123px; object-fit: cover; object-position: top; border: 1px solid var(--rule); }
@@ -142,9 +130,7 @@ cite { font-style: italic; }
   .plain-list .status { grid-column: 1; grid-row: auto; text-align: left; }
 }
 
-/* ═══════════════════════════════════════════════════
-   ENTRIES: publications, experience, education
-═══════════════════════════════════════════════════ */
+/* Entries: publications, experience, education */
 .entries > li { padding: 1.2rem 0; border-top: 1px solid var(--rule); }
 .entries > li:last-child { border-bottom: 1px solid var(--rule); }
 .entries .meta { font-size: .9rem; color: var(--text-3); margin: .15rem 0 .4rem; }
@@ -154,9 +140,7 @@ cite { font-style: italic; }
 .citation { font-size: .95rem; color: var(--text-2); max-width: var(--measure); }
 .citation strong { color: var(--text); font-weight: 600; }
 
-/* ═══════════════════════════════════════════════════
-   PROJECT PAGES
-═══════════════════════════════════════════════════ */
+/* Project pages */
 .project p, .project li { max-width: var(--measure); }
 .project p + p { margin-top: .8rem; }
 .project .section ul { list-style: disc; padding-left: 1.2rem; }
@@ -198,9 +182,7 @@ p.notes { margin-bottom: 1rem; }
 .viz input[type="range"] { width: 100%; min-height: var(--tap); accent-color: var(--accent); }
 .viz-readout { font-size: .95rem; color: var(--text-2); margin-top: .4rem; max-width: var(--measure); }
 
-/* ═══════════════════════════════════════════════════
-   ABOUT AND CONTACT
-═══════════════════════════════════════════════════ */
+/* About and contact */
 .facts { display: grid; gap: .6rem; }
 .facts div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; }
 .facts dt { font-weight: 600; }

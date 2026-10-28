@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi</title>
-  <meta name="description" content="How rare British Columbia's 2023-2024 drought was, how much hydro output it cost, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Open data analysis in Python with statsmodels and scikit-learn, with interactive charts and a monthly dashboard." />
+  <meta name="description" content="How rare BC's 2023-2024 drought was, what it cost in hydro output, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Python, open data." />
   <meta property="og:title" content="BC's electricity balance: the drought, imports and demand since 1980 | Ata Malfuzi" />
-  <meta property="og:description" content="How rare British Columbia's 2023-2024 drought was, how much hydro output it cost, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Open data analysis in Python with statsmodels and scikit-learn, with interactive charts and a monthly dashboard." />
+  <meta property="og:description" content="How rare BC's 2023-2024 drought was, what it cost in hydro output, how trade with the US moves hour by hour, and how well demand and trade can be forecast. Python, open data." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bc-electricity-balance.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/img/og-balance.png" />
@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>BC's electricity balance: the drought, imports and demand since 1980</h1>
-    <p class="lead">Six questions about British Columbia's electricity, each answered with open data and a method suited to it, from extreme-value statistics and regime models to machine learning and calibrated forecasts. The results are as of October 2026, with data through July 2026; the live dashboard updates the main series each month.</p>
+    <p class="lead">Six questions about British Columbia's electricity, answered with open data. Results are as of October 2026, with data through July 2026; the live dashboard updates the main series each month.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
     <div class="links-row"><a href="bc_electricity_balance/">Live dashboard (updated monthly)</a><a href="https://github.com/atamalfuzi/bc_electricity_balance" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_electricity_balance/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -75,7 +75,7 @@
       <tbody>
         <tr><td><a href="#rare">How rare was the drought?</a></td><td>Lognormal return periods, bootstrap, Theil-Sen trend</td><td>2023 was a once-in-about-100-years low on the Fraser; 2023-2024 its driest two years since 1913.</td></tr>
         <tr><td><a href="#water">How much hydro did it cost?</a></td><td>Regression on reservoir inflows, leave-one-year-out</td><td>Low inflows explain 7.1 TWh (90%: 5.4-8.7) of the 11.3 TWh fall in hydro output in 2023.</td></tr>
-        <tr><td><a href="#supply">Where did the power come from?</a></td><td>Accounting identity, weather normalisation</td><td>Imports: net imports rose 14.3 TWh while fossil-fuel generation fell.</td></tr>
+        <tr><td><a href="#supply">Where did the power come from?</a></td><td>Accounting identity, weather normalisation</td><td>Imports. Net imports rose 14.3 TWh while fossil-fuel generation fell.</td></tr>
         <tr><td><a href="#patterns">How does trade move hour by hour?</a></td><td>k-means, principal components, Markov switching</td><td>Three kinds of trading day; a heavy-import regime from September 2022 to August 2025.</td></tr>
         <tr><td><a href="#forecast-flow">Can the hourly flow be forecast?</a></td><td>Ridge and gradient boosting, expanding-window tests, partial dependence</td><td>A day ahead, 8% better than repeating yesterday; BC's own water matters most.</td></tr>
         <tr><td><a href="#demand">How well can demand be forecast?</a></td><td>Seasonal ARIMA, conformal intervals, Kalman filter</td><td>To within 3.1-3.8% one to six months out, with ranges that hold as often as stated.</td></tr>
@@ -156,7 +156,7 @@
     <figure>
       <img src="img/balance-flow-forecast.png" srcset="img/balance-flow-forecast-800.png 800w, img/balance-flow-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: the last two weeks of hourly flow with the day-ahead forecast and yesterday's flow. Right: each model's average error by year since 2021." width="1600" height="773" loading="lazy" />
     </figure>
-    <p>Read through permutation importance and partial dependence, a model of same-hour conditions leans most on BC's own water: at 78% of normal hydro output it expects about 810 MW into BC, at 111% about 460 MW out. Higher demand across the border pulls power out of BC. These conditions alone improve on the usual for the month and hour by only 9%, because trading also turns on prices and reservoir plans that are not in open data.</p>
+    <p>Permutation importance and partial dependence show that a model of same-hour conditions leans most on BC's own water: at 78% of normal hydro output it expects about 810 MW into BC, at 111% about 460 MW out. Higher demand across the border pulls power out of BC. These conditions alone improve on the usual for the month and hour by only 9%, because trading also turns on prices and reservoir plans that are not in open data.</p>
     <figure>
       <img src="img/balance-flow-drivers.png" srcset="img/balance-flow-drivers-800.png 800w, img/balance-flow-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Permutation importance led by BC's hydro output over the past year, and partial dependence curves for BC's hydro, Bonneville demand, hour of the day and Vancouver temperature." width="1600" height="827" loading="lazy" />
     </figure>

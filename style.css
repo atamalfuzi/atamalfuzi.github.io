@@ -47,7 +47,6 @@ cite { font-style: italic; }
 .section > h2 { margin-bottom: 1rem; }
 .section-head a { font-size: .95rem; font-weight: 600; display: inline-flex; align-items: center; min-height: var(--tap); }
 .lead { font-size: 1.12rem; color: var(--text-2); max-width: var(--measure); }
-.small { font-size: .9rem; }
 
 /* ═══════════════════════════════════════════════════
    HEADER AND FOOTER
@@ -133,7 +132,7 @@ cite { font-style: italic; }
 }
 
 /* Plain list: title and detail on the left, status on the right */
-.plain-list > li { display: grid; grid-template-columns: 1fr auto; gap: .1rem 1.5rem; padding: 1rem 0; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
+.plain-list > li { display: grid; grid-template-columns: 1fr auto; gap: .1rem 1.5rem; padding: 1rem 0; border-top: 1px solid var(--rule); }
 .plain-list > li:last-child { border-bottom: 1px solid var(--rule); }
 .plain-list h3 { font-size: 1.05rem; }
 .plain-list p { grid-column: 1; font-size: .95rem; color: var(--text-2); max-width: var(--measure); }
@@ -213,5 +212,3 @@ p.notes { margin-bottom: 1rem; }
 .contact-list span { color: var(--text-3); }
 .contact-list a { display: inline-flex; align-items: center; min-height: var(--tap); font-weight: 600; overflow-wrap: anywhere; }
 @media (max-width: 640px) { .contact-list > li { grid-template-columns: 1fr; gap: 0; } }
-.bullets { list-style: disc; padding-left: 1.2rem; color: var(--text-2); }
-.bullets li + li { margin-top: .3rem; }

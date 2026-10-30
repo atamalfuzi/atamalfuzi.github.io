@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>What minimum wage rises did to pay and jobs in Canada since 2006 | Ata Malfuzi</title>
+  <meta name="description" content="What 22 large minimum wage rises in nine provinces did to pay and jobs, from 20 million public survey records. Python, public data." />
+  <meta property="og:title" content="What minimum wage rises did to pay and jobs in Canada since 2006 | Ata Malfuzi" />
+  <meta property="og:description" content="What 22 large minimum wage rises in nine provinces did to pay and jobs, from 20 million public survey records. Python, public data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/canada-minimum-wage.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-minwage.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart of Ontario employees by hourly pay in 2017 and 2018: pay between $11 and $14 largely disappears and a tall spike appears at the new $14 minimum." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/canada-minimum-wage.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>What minimum wage rises did to pay and jobs in Canada since 2006</h1>
+    <p class="lead">Provinces have raised their minimum wages at different times, which makes each rise a natural experiment. This project follows 20 million survey records of people aged 15 to 64, from 2006 to September 2026, to see what happened to pay and jobs.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/canada_minimum_wage" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_minimum_wage/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#pay">Where do low-paid jobs go?</a></td><td>Bunching estimator, stacked difference-in-differences</td><td>Up the pay scale. Jobs below the new minimum fall by 2.4 per 100 people; total employees change by +0.1 (−0.2 to +0.6).</td></tr>
+        <tr><td><a href="#jobs">Do jobs and hours fall?</a></td><td>Event study, wild cluster bootstrap, placebo rises</td><td>No clear change. A 10% rise moves teen employment by −0.3% (−2.4% to +4.0%).</td></tr>
+        <tr><td><a href="#spillovers">How far up do raises reach?</a></td><td>Percentile panel with province trends</td><td>About a third of the way. A 1% rise lifts pay 0.83% at the 5th percentile, 0.60% at the 10th and 0.23% at the 25th.</td></tr>
+        <tr><td><a href="#who">Who is affected most?</a></td><td>Gradient boosting on demographics, subgroup estimates</td><td>The most exposed 10%, nearly all under 25: pay up 4.1% per 10% rise, employment −0.2% (−2.1% to +2.2%).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Explore the pay distribution</h2>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Province">
+        <button type="button" data-mw-province="NL">Newfoundland and Labrador</button>
+        <button type="button" data-mw-province="PE">Prince Edward Island</button>
+        <button type="button" data-mw-province="NS">Nova Scotia</button>
+        <button type="button" data-mw-province="NB">New Brunswick</button>
+        <button type="button" data-mw-province="QC">Quebec</button>
+        <button type="button" data-mw-province="ON">Ontario</button>
+        <button type="button" data-mw-province="MB">Manitoba</button>
+        <button type="button" data-mw-province="SK">Saskatchewan</button>
+        <button type="button" data-mw-province="AB">Alberta</button>
+        <button type="button" data-mw-province="BC">British Columbia</button>
+      </div>
+      <canvas id="viz-dist" role="img" aria-label="Share of employees by hourly pay in $0.50 steps for the chosen province and half-year, with the minimum wage marked. Pay reported below the minimum is orange and the rest blue."></canvas>
+      <label for="viz-dist-period">Half-year</label>
+      <input type="range" id="viz-dist-period" min="0" value="0" step="1" />
+      <div class="viz-key"><button type="button" id="viz-dist-play">Play</button></div>
+      <p class="viz-readout" id="viz-dist-readout" aria-live="polite"></p>
+      <p class="hint">Hover or tap a bar for its share. Pay is in current dollars, for employees aged 15 to 64. Small provinces are noisier. Spikes at round numbers are how people report their pay.</p>
+    </div>
+    <h3>The minimum after inflation</h3>
+    <div class="viz">
+      <canvas id="viz-real" role="img" aria-label="General minimum wage in each province since 2006 in 2025 dollars, with the chosen province highlighted and its studied rises marked with dots."></canvas>
+      <p class="hint">The province chosen above is in blue, and dots mark its rises in this study. Hover or tap a line for its value.</p>
+    </div>
+  </section>
+
+  <section class="section" id="pay">
+    <h2>1. Where do low-paid jobs go?</h2>
+    <ul class="tags"><li>22 rises in 9 provinces, 2007-2025</li><li>Bunching estimator</li><li>Stacked difference-in-differences</li><li>Wild cluster bootstrap</li></ul>
+    <p>Each rise pays at least 4% more after inflation over the following 12 months than over the previous 12, and is compared with provinces whose minimum rose less than 3%. An average rise is 7.8% above those provinces.</p>
+    <figure>
+      <img src="img/minwage-ontario-2018.png" srcset="img/minwage-ontario-2018-800.png 800w, img/minwage-ontario-2018.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Ontario pay distribution in 2017 and 2018. Employees between $11 and $14 largely disappear, and a tall spike appears at $14." width="1600" height="896" loading="lazy" />
+      <figcaption>Employees by hourly pay in Ontario, January to September of 2017 and 2018.</figcaption>
+    </figure>
+    <p>Ontario's jump from $11.60 to $14.00 in January 2018 is the clearest case. Compared with provinces that had no large rise, jobs below the new minimum fell by 7.3 per 100 people aged 15 to 64, jobs from the minimum to $4 above rose by 5.4, and all employees together changed by −0.1.</p>
+    <figure>
+      <img src="img/minwage-bunching.png" srcset="img/minwage-bunching-800.png 800w, img/minwage-bunching.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Bar chart of the change in employees by dollars from the new minimum. Bars below the minimum are negative, the largest bar is a positive spike at the minimum, and further up the changes are small." width="1600" height="896" loading="lazy" />
+      <figcaption>Change in employees by distance from the new minimum, averaged over 22 rises, with 95% ranges.</figcaption>
+    </figure>
+    <p>Across all 22 rises, jobs below the new minimum fell by 2.37 per 100 people (1.77 to 3.25) and jobs from the minimum to $4 above rose by 2.04 (1.50 to 2.84). That is 86% of the jobs lost below. The other 0.33 per 100 is not simply gone: pay further up rose by 0.44 (0.08 to 0.92), and all employees together changed by +0.11 (−0.20 to +0.57). This window can't say whether those higher jobs are the same workers or just pay growth, so the total is the number to rely on.</p>
+  </section>
+
+  <section class="section" id="jobs">
+    <h2>2. Do jobs and hours fall?</h2>
+    <ul class="tags"><li>Event study by quarter</li><li>Wild cluster bootstrap by province</li><li>Placebo rises</li><li>Annual panel check</li></ul>
+    <figure>
+      <img src="img/minwage-event-study.png" srcset="img/minwage-event-study-800.png 800w, img/minwage-event-study.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Four panels of employment around a rise for ages 15 to 19, 20 to 24, the most exposed 10% and everyone. Lines stay close to zero and the ranges include zero after each rise." width="1600" height="800" loading="lazy" />
+      <figcaption>Employment around a rise, relative to the 12 months before, with 95% ranges.</figcaption>
+    </figure>
+    <p>An elasticity of −0.03 for teens (−0.24 to 0.40) means a 10% rise changes teen employment by −0.3%, with a 95% range of −2.4% to +4.0%. For ages 20 to 24 it is −0.01 (−0.19 to 0.21), and for everyone aged 15 to 64 0.03 (−0.03 to 0.16). Teen hours per person: −0.06 (−0.31 to 0.58). Jobs in accommodation and food: −0.05 (−0.45 to 0.38). Retail: 0.04 (−0.25 to 0.43).</p>
+    <figure>
+      <img src="img/minwage-placebo.png" srcset="img/minwage-placebo-800.png 800w, img/minwage-placebo.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Comparison of employment elasticities from real rises with the range from made-up rises. The real estimates sit near zero, inside the made-up range, for all four groups." width="1600" height="672" loading="lazy" />
+      <figcaption>Employment elasticities from the real rises against the range from made-up rises.</figcaption>
+    </figure>
+    <p>To test the method, I drew 22 made-up rises from province-months with no real one, 4,000 times. For teens, 95% of those results fall between −0.29 and 0.31, so a real effect smaller than about that can't be told apart from noise. Using only the 10 rises of at least 6% gives −0.15 for teens (−0.40 to 0.29), and an annual panel using every rise gives −0.09 (−0.49 to 0.39). These data rule out large teen job losses, but not small ones.</p>
+  </section>
+
+  <section class="section" id="spillovers">
+    <h2>3. How far up do raises reach?</h2>
+    <ul class="tags"><li>Province-year panel, 2006-2025</li><li>Province and year effects</li><li>Province trends</li><li>Every rise, large or small</li></ul>
+    <figure>
+      <img src="img/minwage-spillovers.png" srcset="img/minwage-spillovers-800.png 800w, img/minwage-spillovers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of the pay response at each percentile. It starts at 0.83 at the 5th percentile, falls to 0.23 at the 25th and flattens near 0.15 from the 40th, where the range includes zero." width="1600" height="896" loading="lazy" />
+      <figcaption>Pay response at each point in the pay scale, with 95% ranges.</figcaption>
+    </figure>
+    <p>A 1% higher minimum lifts pay by 0.83% at the 5th percentile (0.78 to 0.96), 0.60% at the 10th (0.48 to 0.87) and 0.23% at the 25th (0.12 to 0.36). From the 40th percentile the range includes zero. The flat 0.13 to 0.14 near the top suggests that part of the lower numbers is general pay growth in the same provinces, not the minimum itself.</p>
+  </section>
+
+  <section class="section" id="who">
+    <h2>4. Who is affected most?</h2>
+    <ul class="tags"><li>scikit-learn</li><li>Gradient boosting</li><li>Leave-one-province-out</li><li>Permutation importance</li></ul>
+    <figure>
+      <img src="img/minwage-exposure.png" srcset="img/minwage-exposure-800.png 800w, img/minwage-exposure.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two bar charts. Left: 65% of employed teens earn within 10% of the minimum, 25% of those aged 20 to 24, and under 10% of older groups. Right: age adds the most model accuracy, followed by education and gender." width="1600" height="832" loading="lazy" />
+      <figcaption>Who earns near the minimum, and which inputs the model learns most from.</figcaption>
+    </figure>
+    <p>People without a job have no pay to measure, so looking only at low-paid workers would miss anyone who lost a job. A model trained on demographics alone scores everyone aged 15 to 64 on how likely they are to earn near the minimum, including those not working. Each province is scored by a model trained on the other nine. The most exposed 10% turn out to be 84% teens and 14% aged 20 to 24, so here the model mostly confirms what age already says.</p>
+    <figure>
+      <img src="img/minwage-groups.png" srcset="img/minwage-groups-800.png 800w, img/minwage-groups.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two panels of elasticities by group. Pay rises clearly for ages 15 to 19 and the most exposed 10%. Employment ranges include zero for every group but women." width="1600" height="992" loading="lazy" />
+      <figcaption>Pay and employment by group, with 95% ranges.</figcaption>
+    </figure>
+    <p>The most exposed 10% see average pay rise 0.41% per 1% rise (0.27 to 0.59), close to teens at 0.43% (0.29 to 0.59). Their employment moves by −0.02 (−0.21 to 0.22) and hours per person by −0.10 (−0.32 to 0.24). Women's employment is the one range clear of zero, but among this many comparisons one such result is expected by chance.</p>
+  </section>
+
+  <section class="section">
+    <h2>The 22 rises</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Province</th><th scope="col">First month</th><th scope="col">Average rate, 12 months before and after</th><th scope="col">Below new minimum</th><th scope="col">Minimum to $4 above</th><th scope="col">All employees</th></tr></thead>
+      <tbody>
+        <tr><td>Alberta</td><td>Sep 2011</td><td>$8.80 to $9.40</td><td>−0.5</td><td>+1.0</td><td>+1.4</td></tr>
+        <tr><td>Alberta</td><td>Oct 2015</td><td>$10.20 to $11.20</td><td>−0.7</td><td>+0.8</td><td>−2.0</td></tr>
+        <tr><td>Alberta</td><td>Oct 2016</td><td>$11.20 to $12.20</td><td>−1.3</td><td>+1.5</td><td>−0.4</td></tr>
+        <tr><td>Alberta</td><td>Oct 2017</td><td>$12.20 to $13.60</td><td>−2.1</td><td>+1.0</td><td>+0.4</td></tr>
+        <tr><td>Alberta</td><td>Oct 2018</td><td>$13.60 to $15.00</td><td>−3.1</td><td>+2.7</td><td>+0.0</td></tr>
+        <tr><td>British Columbia</td><td>Nov 2011</td><td>$8.38 to $9.88</td><td>−1.3</td><td>+1.5</td><td>+0.5</td></tr>
+        <tr><td>British Columbia</td><td>Jun 2018</td><td>$11.22 to $12.65</td><td>−3.5</td><td>+2.8</td><td>−0.1</td></tr>
+        <tr><td>New Brunswick</td><td>Jan 2007</td><td>$6.60 to $7.12</td><td>−1.0</td><td>+0.7</td><td>+0.2</td></tr>
+        <tr><td>New Brunswick</td><td>Apr 2010</td><td>$8.15 to $8.79</td><td>−2.2</td><td>+1.6</td><td>−1.2</td></tr>
+        <tr><td>New Brunswick</td><td>Apr 2011</td><td>$8.79 to $9.79</td><td>−1.9</td><td>+2.2</td><td>−0.5</td></tr>
+        <tr><td>Newfoundland and Labrador</td><td>Jan 2007</td><td>$6.65 to $7.12</td><td>−1.4</td><td>+0.9</td><td>+1.0</td></tr>
+        <tr><td>Newfoundland and Labrador</td><td>Jan 2010</td><td>$8.75 to $9.75</td><td>−4.3</td><td>+4.5</td><td>+1.8</td></tr>
+        <tr><td>Nova Scotia</td><td>Apr 2010</td><td>$8.60 to $9.43</td><td>−4.0</td><td>+3.6</td><td>+0.6</td></tr>
+        <tr><td>Nova Scotia</td><td>Oct 2025</td><td>$15.45 to $16.62</td><td>−1.8</td><td>+1.0</td><td>−0.4</td></tr>
+        <tr><td>Ontario</td><td>Apr 2010</td><td>$9.50 to $10.25</td><td>−2.5</td><td>+2.8</td><td>+1.1</td></tr>
+        <tr><td>Ontario</td><td>Jun 2014</td><td>$10.25 to $11.00</td><td>−1.7</td><td>+1.9</td><td>+0.1</td></tr>
+        <tr><td>Ontario</td><td>Jan 2018</td><td>$11.45 to $14.00</td><td>−7.3</td><td>+5.4</td><td>−0.1</td></tr>
+        <tr><td>Prince Edward Island</td><td>Jun 2010</td><td>$8.33 to $8.90</td><td>−2.6</td><td>+1.3</td><td>−0.4</td></tr>
+        <tr><td>Prince Edward Island</td><td>Oct 2011</td><td>$9.10 to $9.80</td><td>−3.3</td><td>+3.3</td><td>+0.9</td></tr>
+        <tr><td>Quebec</td><td>May 2018</td><td>$11.25 to $12.00</td><td>−3.1</td><td>+2.9</td><td>+0.1</td></tr>
+        <tr><td>Saskatchewan</td><td>Dec 2012</td><td>$9.50 to $10.00</td><td>−0.9</td><td>+0.3</td><td>−0.3</td></tr>
+        <tr><td>Saskatchewan</td><td>Oct 2024</td><td>$14.00 to $15.00</td><td>−1.8</td><td>+1.3</td><td>−0.0</td></tr>
+      </tbody>
+    </table>
+    <p class="hint">Changes are employees per 100 people aged 15 to 64, against comparison provinces. Single rises are noisy, especially in small provinces.</p>
+  </section>
+
+  <section class="section">
+    <h2>How it works</h2>
+    <p>The survey has no person identifier, so these are repeated samples of people, not the same people followed over time. Each rise compares the 12 months before with the 12 months after, against the average of provinces without a large rise. With about ten provinces, ordinary clustered errors are far too narrow, so ranges come from a wild cluster bootstrap with Webb weights, inverted into a 95% range.</p>
+    <p>Rises whose window touches March 2020 to December 2021 are dropped. So are rises with fewer than two clean comparison provinces, which leaves Manitoba with no rise of its own in the study and thins out 2008-2010, when many provinces moved at once.</p>
+  </section>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>Twelve months is short. Jobs that adjust over several years, through fewer new businesses or more automation, won't show up here.</li>
+      <li>Comparison provinces overlap across rises, and a province can hit its own shock at the same time. Alberta's rises came alongside the 2015-16 oil slump, though dropping Alberta leaves the result about the same.</li>
+      <li>Pay is self-reported and often rounded. Lower legal rates for students and, in some provinces, liquor servers mean some reported pay below the minimum is legal.</li>
+      <li>Provinces raise the minimum when they choose to, often in good times. Province trends help but don't remove this.</li>
+      <li>Teen employment drifts up before rises and back after. It stays inside the range, but with these data I can't tell if that is timing or noise.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Statistics Canada Labour Force Survey public use microdata files, 2006 to September 2026; consumer price index table 18-10-0004-01; general hourly minimum wage rates from the Government of Canada's minimum wage database, with five missing flags and one date typo corrected.</p>
+    <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="minwage-data.js"></script>
+<script src="charts.js"></script>
+</body>
+</html>

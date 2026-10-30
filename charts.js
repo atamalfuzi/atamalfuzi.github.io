@@ -1,9 +1,10 @@
-// Interactive charts for the BC electricity balance and household gas demand pages: canvas drawings with a readout on
-// hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in bc_electricity_balance, and
-// gas-data.js (GAS), written by forecast.py in canada_gas_demand. No libraries.
+// Interactive charts for the BC electricity balance, household gas demand and minimum wage pages: canvas drawings with a
+// readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in bc_electricity_balance,
+// gas-data.js (GAS), written by forecast.py in canada_gas_demand, and minwage-data.js (MINWAGE), written by site_data.py
+// in canada_minimum_wage. No libraries.
 (function () {
-  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined";
-  if (!hasBalance && !hasGas) return;
+  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined";
+  if (!hasBalance && !hasGas && !hasMinwage) return;
   var BLUE = [42, 120, 214], RED = [200, 65, 59];
   var PATTERN = ["#2a78d6", "#a8a7a2", "#c8413b"], FADED = "#eceeed", INK = "#17201d", MUTED = "#5f6964", RULE = "#e1e7e4";
   var GREY = "#a8a7a2", RAMP = ["#8fb8e8", "#5b97dc", "#2a78d6", "#1d5aa6", "#123b70"];  // RAMP: one blue per period, light to dark
@@ -370,5 +371,138 @@
     }, false);
     setRange();
     describe();
+  })();
+
+  // Minimum wage: pay distribution by province and half-year, and the minimum after inflation
+  if (hasMinwage) (function () {
+    var D = MINWAGE, ORANGE = "#eb6834", LINE = "#2a78d6", FAINT = "#c9c8c3";
+    var province = "ON", period = D.periods.indexOf("2018-1"), timer = null, BINS = D.dist.ON[0].length, N = D.months.length;
+    var L = 44, R = 10, T = 14, B = 34, LOW = 9, HIGH = 19;
+    function money(v) { return "$" + v.toFixed(2); }
+    function x(v, w) { return L + (v - D.start) / (BINS * D.step) * (w - L - R); }
+    function top() {
+      var m = 0;
+      D.dist[province].forEach(function (row) { row.forEach(function (v) { if (v > m) m = v; }); });
+      return Math.ceil(m / 50) * 5;
+    }
+    var renderDist = chart("viz-dist", 340, function (ctx, w, h) {
+      var hi = top(), row = D.dist[province][period], mins = D.mins[province][period];
+      function y(v) { return T + (hi - v) / hi * (h - T - B); }
+      ctx.textAlign = "right";
+      ctx.fillStyle = MUTED;
+      ctx.strokeStyle = RULE;
+      for (var g = 0; g <= hi; g += hi > 15 ? 5 : 2) {
+        ctx.beginPath(); ctx.moveTo(L, y(g)); ctx.lineTo(w - R, y(g)); ctx.stroke();
+        ctx.fillText(g + "%", L - 6, y(g));
+      }
+      var barW = (w - L - R) / BINS;
+      row.forEach(function (v, i) {
+        ctx.fillStyle = D.start + (i + 1) * D.step <= mins[1] ? ORANGE : LINE;
+        ctx.fillRect(x(D.start + i * D.step, w) + 0.5, y(v / 10), Math.max(barW - 1, 1), y(0) - y(v / 10));
+      });
+      ctx.textAlign = "center";
+      ctx.fillStyle = MUTED;
+      for (var d = 5; d <= 35; d += w < 480 ? 10 : 5) ctx.fillText("$" + d, x(d, w), h - B + 16);
+      ctx.setLineDash([4, 3]);
+      ctx.strokeStyle = INK;
+      ctx.beginPath(); ctx.moveTo(x(mins[1], w), T); ctx.lineTo(x(mins[1], w), y(0)); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = INK;
+      ctx.textAlign = x(mins[1], w) > w * 0.7 ? "right" : "left";
+      ctx.fillText("Minimum " + money(mins[1]), x(mins[1], w) + (ctx.textAlign === "left" ? 6 : -6), T + 6);
+    }, function (px, py, w, h) {
+      var i = Math.floor((px - L) / (w - L - R) * BINS);
+      if (i < 0 || i >= BINS || py < T || py > h - B) return null;
+      var lo = D.start + i * D.step;
+      return money(lo) + " to " + money(lo + D.step - 0.01) + ": " + (D.dist[province][period][i] / 10).toFixed(1) + "% of employees";
+    });
+    function rx(i, w) { return L + i / (N - 1) * (w - L - R); }
+    function ry(v, h) { return T + (HIGH - v) / (HIGH - LOW) * (h - T - B); }
+    var renderReal = chart("viz-real", 320, function (ctx, w, h) {
+      ctx.textAlign = "right";
+      ctx.strokeStyle = RULE;
+      ctx.fillStyle = MUTED;
+      for (var g = LOW + 1; g <= HIGH; g += 2) {
+        ctx.beginPath(); ctx.moveTo(L, ry(g, h)); ctx.lineTo(w - R, ry(g, h)); ctx.stroke();
+        ctx.fillText("$" + g, L - 6, ry(g, h));
+      }
+      ctx.textAlign = "center";
+      D.months.forEach(function (m, i) {
+        var year = +m.slice(0, 4);
+        if (m.slice(5) === "01" && year % (w < 480 ? 10 : 5) === 0) ctx.fillText(String(year), rx(i, w), h - B + 16);
+      });
+      function line(p, colour, width) {
+        ctx.strokeStyle = colour;
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        D.real[p].forEach(function (v, i) { if (i) ctx.lineTo(rx(i, w), ry(v, h)); else ctx.moveTo(rx(i, w), ry(v, h)); });
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+      Object.keys(D.real).forEach(function (p) { if (p !== province) line(p, FAINT, 1); });
+      line(province, LINE, 2);
+      D.events[province].forEach(function (m) {
+        var i = D.months.indexOf(m);
+        ctx.beginPath();
+        ctx.arc(rx(i, w), ry(D.real[province][i], h), 4.5, 0, 2 * Math.PI);
+        ctx.fillStyle = LINE;
+        ctx.fill();
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      });
+    }, function (px, py, w, h) {
+      var i = Math.round((px - L) / (w - L - R) * (N - 1));
+      if (i < 0 || i >= N) return null;
+      var best = null, gap = 18;
+      Object.keys(D.real).forEach(function (p) {
+        var d = Math.abs(ry(D.real[p][i], h) - py);
+        if (d < gap || (p === province && d <= gap)) { gap = d; best = p; }
+      });
+      if (!best) return null;
+      var m = D.months[i].split("-");
+      return D.names[best] + ", " + LONG[+m[1] - 1] + " " + m[0] + ": " + money(D.real[best][i]) + " in 2025 dollars";
+    });
+    var slider = document.getElementById("viz-dist-period"), readout = document.getElementById("viz-dist-readout");
+    var play = document.getElementById("viz-dist-play");
+    function periodText(i) {
+      var p = D.periods[i].split("-");
+      return (p[1] === "1" ? "January to June " : "July to December ") + p[0];
+    }
+    function update() {
+      var mins = D.mins[province][period], below = 0, near = 0;
+      D.dist[province][period].forEach(function (v, i) {
+        var lo = D.start + i * D.step;
+        if (lo + D.step <= mins[1]) below += v;
+        else if (lo < mins[1] + 1) near += v;
+      });
+      slider.value = String(period);
+      slider.setAttribute("aria-valuetext", periodText(period));
+      readout.textContent = D.names[province] + ", " + periodText(period) + ": the minimum " +
+        (mins[0] === mins[1] ? "was " + money(mins[1]) : "rose from " + money(mins[0]) + " to " + money(mins[1])) + ". About " +
+        (near / 10).toFixed(0) + "% of employees earned within $1 above it, and " + (below / 10).toFixed(0) + "% reported less than it.";
+      renderDist();
+      renderReal();
+    }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+      play.textContent = "Play";
+    }
+    picker("data-mw-province", province, function (p) { province = p; update(); }, false);
+    slider.max = String(D.periods.length - 1);
+    slider.addEventListener("input", function () { stop(); period = +slider.value; update(); });
+    play.addEventListener("click", function () {
+      if (timer) { stop(); return; }
+      play.textContent = "Pause";
+      if (period === D.periods.length - 1) period = 0;
+      timer = window.setInterval(function () {
+        period += 1;
+        update();
+        if (period === D.periods.length - 1) stop();
+      }, 450);
+    });
+    update();
   })();
 })();

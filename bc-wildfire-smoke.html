@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>How much of BC's fine-particle pollution is wildfire smoke? | Ata Malfuzi</title>
+  <meta name="description" content="How much of BC's PM2.5 is wildfire smoke since 2005, checked against BC's own list and satellite smoke maps. Python, open data." />
+  <meta property="og:title" content="How much of BC's fine-particle pollution is wildfire smoke? | Ata Malfuzi" />
+  <meta property="og:description" content="How much of BC's PM2.5 is wildfire smoke since 2005, checked against BC's own list and satellite smoke maps. Python, open data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bc-wildfire-smoke.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-smoke.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Chart of annual PM2.5 in BC from 2005 to 2025. The measured line jumps in 2017, 2018 and 2023, while the line with smoke removed stays flat and drifts down." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bc-wildfire-smoke.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>How much of BC's fine-particle pollution is wildfire smoke?</h1>
+    <p class="lead">BC's air monitors measure PM2.5 but can't tell what it came from. This project separates smoke from everything else in 21 years of verified readings, using a simple rule, then checks that rule against BC's own list of smoke days and against satellite smoke maps. Results are as of November 2026, with verified data through 2025. The dashboard follows the current season.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. It measures air at monitors and makes no claims about health.</p>
+    <div class="links-row"><a href="bc_wildfire_smoke/">Seasonal dashboard</a><a href="https://github.com/atamalfuzi/bc_wildfire_smoke" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/bc_wildfire_smoke/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#share">How much of BC's PM2.5 is smoke?</a></td><td>Rule-based detector, checked against BC's list and satellite maps; station and year effects</td><td>About a third in 2018 and 2023 (30% to 35%), and 2% to 27% in other years since 2014. Smoke explains 74% of the year-to-year swings.</td></tr>
+        <tr><td><a href="#trend">Is the rest getting cleaner, and smoke getting worse?</a></td><td>Theil-Sen trends, Kendall tests, exact permutation test</td><td>The rest is falling about 0.07 µg/m³ a year (0.03 to 0.10). Smoke has grown, but three years drive that.</td></tr>
+        <tr><td><a href="#sheds">Which places get smoke together, and who lives there?</a></td><td>Hierarchical clustering, resampled seasons, population at the nearest monitor</td><td>Seven smoke sheds that cross regional lines. The average person's days above 25 µg/m³ ran from under 1 to 12 a year.</td></tr>
+        <tr><td><a href="#sources">How much arrives from outside BC?</a></td><td>Case studies of the 15 largest episodes, with satellite fire detections and fires BC names</td><td>Sometimes nearly all of it: in September 2020, 99% of the nearby fire power was outside BC. No percentage for each year is possible from this data.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Explore each station's seasons</h2>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Year">
+        <button type="button" data-smoke-year="2014">2014</button><button type="button" data-smoke-year="2015">2015</button><button type="button" data-smoke-year="2016">2016</button><button type="button" data-smoke-year="2017">2017</button><button type="button" data-smoke-year="2018">2018</button><button type="button" data-smoke-year="2019">2019</button><button type="button" data-smoke-year="2020">2020</button><button type="button" data-smoke-year="2021">2021</button><button type="button" data-smoke-year="2022">2022</button><button type="button" data-smoke-year="2023">2023</button><button type="button" data-smoke-year="2024">2024</button><button type="button" data-smoke-year="2025">2025</button>
+      </div>
+      <div class="viz-key" role="group" aria-label="Colour the map by">
+        <button type="button" data-smoke-colour="days">Smoke days</button><button type="button" data-smoke-colour="shed">Smoke sheds</button>
+      </div>
+      <canvas id="viz-smoke-map" role="img" aria-label="Map of BC's air monitoring stations for the chosen year, coloured by the number of smoke days or by smoke shed, with fires of at least 1,000 hectares as orange circles. Select a station to see its seasons below."></canvas>
+      <p class="hint">Hover or tap a station. Orange circles are fires of at least 1,000 hectares that year, placed where they started and sized by final area. BC only: fires outside the province aren't drawn.</p>
+      <label for="viz-smoke-station">Station</label>
+      <select id="viz-smoke-station"></select>
+      <p class="viz-readout" id="viz-smoke-readout" aria-live="polite"></p>
+      <canvas id="viz-smoke-calendar" role="img" aria-label="The chosen station's daily PM2.5 from May to October for each year from 2014 to 2025. Smoke days are orange to dark red and other days grey."></canvas>
+      <p class="hint">One row per year, May to October. Orange to dark red: smoke days at under 25, 25 to 50, 50 to 100 and over 100 µg/m³. Grey: other days, darker at 10 and 25 µg/m³. White: no reading.</p>
+      <div class="viz-key" role="group" aria-label="Smoke threshold">
+        <button type="button" data-smoke-threshold="5">At least 5 µg/m³ over usual</button><button type="button" data-smoke-threshold="8">At least 8</button><button type="button" data-smoke-threshold="12">At least 12</button>
+      </div>
+      <p class="hint">The threshold changes what counts as a smoke day in the charts on this page. The choice matters more for counts of days than for smoke's share of the year.</p>
+    </div>
+  </section>
+
+  <section class="section" id="share">
+    <h2>1. How much of BC's PM2.5 is smoke?</h2>
+    <ul class="tags"><li>Rule-based detector</li><li>Independent checks</li><li>Station and year effects</li><li>2005-2025</li></ul>
+    <div class="viz">
+      <canvas id="viz-smoke-years" role="img" aria-label="Annual PM2.5 in BC from 2005 to 2025, as measured and with smoke days set back to the usual level. The measured line jumps in 2017, 2018 and 2023; the other stays near 6 to 7 µg/m³."></canvas>
+      <p class="hint">Hover or tap for a year's values. The threshold buttons above change the lower line.</p>
+    </div>
+    <p>From May to October, a station-day counts as smoke if it is at least 8 µg/m³ above that station's usual level for the time of year, and at least half of the reporting stations within 200 km are also up by 4 or more. A road, a mill or a stove rarely lifts a whole region at once; smoke does. Each smoke day is then set back to the usual level to get the year without smoke.</p>
+    <p>Smoke was 33% of annual PM2.5 in 2018 and in 2023, and 27% in 2017. Across thresholds of 5 to 12 µg/m³ those shares move only from 35% to 30%. The standard deviation of annual PM2.5 falls from 1.07 to 0.55 µg/m³ once smoke is removed.</p>
+    <figure>
+      <img src="img/smoke-validation.png" srcset="img/smoke-validation-800.png 800w, img/smoke-validation.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two charts. Left: the share of station-days under a satellite smoke polygon rises with PM2.5, to nearly all days above 25 µg/m³. Right: the amount this rule removes from annual PM2.5 each year tracks BC's own figures closely, and is slightly larger." width="1600" height="832" loading="lazy" />
+      <figcaption>Two checks the rule never sees: satellite smoke maps and BC's list of flagged days.</figcaption>
+    </figure>
+    <table class="glance">
+      <thead><tr><th scope="col">Check</th><th scope="col">Result</th></tr></thead>
+      <tbody>
+        <tr><td>Days on BC's list that the rule also flags</td><td>97% of 3,605</td></tr>
+        <tr><td>Yearly amount removed, against BC's figures</td><td>Correlation 0.99; the rule removes somewhat more, because BC's list holds almost only days above 25 µg/m³</td></tr>
+        <tr><td>Under a satellite smoke polygon, July to September</td><td>93% of the rule's days, 33% of other days (1,064 days)</td></tr>
+        <tr><td>Under a medium or heavy polygon</td><td>77% against 10%</td></tr>
+        <tr><td>PM2.5 as a share of PM10</td><td>0.77 on the rule's days, 0.45 on others (32 stations, 3 years)</td></tr>
+        <tr><td>Carbon monoxide</td><td>0.33 ppm against 0.16 ppm (19 stations, 3 years)</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="img/smoke-regions.png" srcset="img/smoke-regions-800.png 800w, img/smoke-regions.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Table of smoke's share of annual PM2.5 by region and year. Omineca-Peace reaches 65% in 2023, the Cariboo 49% in 2017, the Southern Interior 49% in 2021, and the Lower Mainland 29% in 2020." width="1600" height="832" loading="lazy" />
+      <figcaption>Smoke's share of annual PM2.5 by region. The worst place changes from year to year.</figcaption>
+    </figure>
+    <h3>Two traps</h3>
+    <figure>
+      <img src="img/smoke-station-trap.png" srcset="img/smoke-station-trap-800.png 800w, img/smoke-station-trap.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of smoke's share of annual PM2.5 from 2014 to 2025. Using all stations, 2023 reaches 33%. Using only stations that reported every year, it reaches 15%." width="1600" height="832" loading="lazy" />
+      <figcaption>Stations reporting every year are mostly in the Lower Mainland, so they miss northern smoke.</figcaption>
+    </figure>
+    <p>The obvious way to handle monitors opening and closing is to keep only those that report every year. Here that gives 37 stations, 19 of them in the Lower Mainland and none in Omineca-Peace, and cuts 2023's smoke share from 33% to 15%. So the main results use station and year effects with each region counted equally, which keeps every station and compares each only with itself.</p>
+    <figure>
+      <img src="img/smoke-instruments.png" srcset="img/smoke-instruments-800.png 800w, img/smoke-instruments.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot and range chart of how far instruments read from the SHARP. The TEOM reads about 2 to 2.6 µg/m³ lower. The BAM is close. The T640 is a little higher, mostly in the cold months." width="1600" height="704" loading="lazy" />
+      <figcaption>Instrument gaps from stations that changed instrument, with 90% ranges.</figcaption>
+    </figure>
+    <p>Instruments changed too. From stations that switched, the older TEOM reads about 2 µg/m³ below the SHARP that replaced it, nearly a third of a typical year's level, and the new T640 rolled out by 2025 reads slightly above it. Without a correction the older years would look cleaner than they were. All readings here are put on the SHARP's footing first.</p>
+  </section>
+
+  <section class="section" id="trend">
+    <h2>2. Is the rest getting cleaner, and smoke getting worse?</h2>
+    <ul class="tags"><li>Theil-Sen trends</li><li>Kendall tests</li><li>Exact permutation test</li></ul>
+    <p>As measured, annual PM2.5 has no trend since 2005 (−0.01 µg/m³ a year, 95% range −0.06 to +0.06). With smoke removed it falls 0.07 a year (0.03 to 0.10), and 0.11 a year since 2014 (0.05 to 0.19), when the instrument correction matters least. Smoke has been hiding a slow improvement in the rest of the air.</p>
+    <figure>
+      <img src="img/smoke-days.png" srcset="img/smoke-days-800.png 800w, img/smoke-days.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Bar chart of smoke days per station from 2005 to 2025. Bars average about 7 up to 2016, then 21 and 26 in 2017 and 2018, 26 in 2023, and 5 to 14 in other recent years." width="1600" height="800" loading="lazy" />
+      <figcaption>Smoke days per station each year, at the 8 µg/m³ threshold.</figcaption>
+    </figure>
+    <p>Is smoke getting worse? Smoke's share of annual PM2.5 rose 0.6 points a year since 2005 (0.2 to 1.3), and smoke days averaged 14 a year from 2017 on against 7 before. An exact permutation test gives p = 0.005 for that gap, but I picked 2017 after seeing the data, so that is generous. Leave out the three worst years and the trend in smoke days is +0.15 a year (−0.13 to +0.46), which includes no change. Twenty-one seasons with three extreme ones can't separate a lasting shift from a run of bad years.</p>
+  </section>
+
+  <section class="section" id="sheds">
+    <h2>3. Which places get smoke together, and who lives there?</h2>
+    <ul class="tags"><li>Hierarchical clustering</li><li>Resampled seasons</li><li>Population at the nearest monitor</li></ul>
+    <figure>
+      <img src="img/smoke-sheds.png" srcset="img/smoke-sheds-800.png 800w, img/smoke-sheds.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Map of BC's stations in seven colours: south coast, mid-island and Sunshine Coast, Southern Interior and Kootenays, Central Interior, Peace and Nechako, Bulkley Valley, and north coast." width="1600" height="1120" loading="lazy" />
+      <figcaption>Seven smoke sheds: stations that get smoke on the same days. Choose Smoke sheds on the map above to explore them.</figcaption>
+    </figure>
+    <p>Clustering stations on how their summer readings move together gives seven groups, stable when the seasons are resampled (adjusted Rand index 0.93 against the full data). They overlap only partly with BC's monitoring regions (0.61). Greater Victoria and the south island go with Vancouver and the Fraser Valley, not with Nanaimo or Courtenay. Prince George goes with Quesnel, not the Peace.</p>
+    <figure>
+      <img src="img/smoke-people.png" srcset="img/smoke-people-800.png 800w, img/smoke-people.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Table of days above 25 µg/m³ for the average person by smoke shed and year. Peace and Nechako reaches 57 in 2023, the Central Interior 37 in 2017, and the Southern Interior and Kootenays 26 in 2021." width="1600" height="832" loading="lazy" />
+      <figcaption>Days above 25 µg/m³ for the average person, at the nearest monitor, on days the rule calls smoke.</figcaption>
+    </figure>
+    <p>Weighting by where people live changes which years stand out. The average British Columbian's nearest monitor had 12 smoke days above 25 µg/m³ in 2017 and 11 in 2018, but 7 in 2023, even though 2023 was as bad as any year across stations. In 2023 the smoke sat over the Peace and the north, where few people live. 2020 reached 7 days, mostly from one September episode. This counts air at a monitor, not what anyone breathed: most time is spent indoors, and the nearest monitor can be far away.</p>
+  </section>
+
+  <section class="section" id="sources">
+    <h2>4. How much arrives from outside BC?</h2>
+    <ul class="tags"><li>Case studies</li><li>Satellite fire detections</li><li>Fires named on BC's list</li></ul>
+    <figure>
+      <img src="img/smoke-burned.png" srcset="img/smoke-burned-800.png 800w, img/smoke-burned.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Scatter of area burned inside BC against smoke days per station by year. They rise together, but 2020 and 2022 sit well above the rest for how little burned in BC." width="1600" height="896" loading="lazy" />
+      <figcaption>Area burned inside BC against smoke days, 2014 to 2025.</figcaption>
+    </figure>
+    <p>Area burned in BC and smoke days rank closely together (0.72), but with exceptions. In 2020 about 14,000 hectares burned in BC, the smallest area of these twelve years, yet smoke was 19% of annual PM2.5. In 2022, 132,000 hectares burned, and BC's own list names the NW Pasayten Complex in Washington for 165 of its 296 flagged station-days.</p>
+    <figure>
+      <img src="img/smoke-episodes.png" srcset="img/smoke-episodes-800.png 800w, img/smoke-episodes.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Stacked bars of where satellite fire power was during the 15 largest smoke episodes. August 2018 is mostly BC. September 2020 is almost all Oregon, California, Washington, Idaho and Montana. Several 2023 episodes are mostly Alberta and the Northwest Territories." width="1600" height="1184" loading="lazy" />
+      <figcaption>The 15 largest episodes by total excess. Bars show where fires burned, not where a day's smoke came from.</figcaption>
+    </figure>
+    <p>Of the 15 largest episodes, 4 had most of the fire power within reach in the US: September 2017, September and October 2022, and September 2020, the second largest of all, when 99% was outside BC. BC led in 3, including August 2018, the largest. In the other 8, most of it was in Alberta, the Northwest Territories or spread across several places, which doesn't settle whether that smoke reached BC.</p>
+    <p>That is as far as this data goes. A regression of each region's smoke on fire power by province failed on held-out seasons (median R² −0.05), because it knows nothing of the wind. Splitting smoke by source properly needs transport modelling.</p>
+  </section>
+
+  <section class="section">
+    <h2>Tried and dropped</h2>
+    <p>A next-day forecast seemed the obvious machine-learning piece, so I tested it on 12 held-out seasons. Gradient boosting on the monitor network cut average error only 6% against simply assuming tomorrow equals today (3.00 against 3.20 µg/m³). It caught fewer days above 25 µg/m³ (46% against 65%) with fewer false alarms (26% against 35%). On the first day of high readings, the day a forecast is for, it caught 8%. Adding satellite fire power by distance raised that to 10%. Conformal 90% ranges covered 90% of all days but only 44% of days above 25, when they matter most. Smoke arrives on the wind, and existing smoke forecast models already use it, so I dropped this.</p>
+    <p>I also considered measuring whether people avoid smoke using bike-share trips, the one economic question here. Mobi's licence limits publishing its data and says that accessing the data accepts its terms, so it isn't open data in the sense this project uses, and I left it out.</p>
+  </section>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>The rule uses PM2.5 alone. Spring and fall open burning, dust and regional pollution can pass as smoke, and light smoke can be missed. There is no ground truth for lighter days: 14% of May to October days at 10 to 15 µg/m³ get flagged, with little to confirm them.</li>
+      <li>Satellite polygons show smoke anywhere overhead. About 51% of station-days under one had less than 2 µg/m³ of excess at the ground, so they are strong evidence that a flagged day is real and weak evidence that an unflagged day is clean.</li>
+      <li>Counts of smoke days depend on the threshold: 5,517 flagged station-days at 12 µg/m³ since 2014, 8,278 at 8 and 13,203 at 5. Shares are far steadier, so they are the headline.</li>
+      <li>Usual levels come from the same readings they are tested against. A median resists smoke, but long smoke seasons can still raise it a little.</li>
+      <li>Instrument gaps are estimated on seasonal medians and applied as flat offsets. How instruments compare in heavy smoke isn't tested, and the T640 has only one or two years behind it at most stations.</li>
+      <li>The north has few monitors, and one station can stand for a very large area. Regions are weighted equally to offset the crowding in the Lower Mainland, which is a choice: a population-weighted view (above) tells a different story.</li>
+      <li>Fire perimeters are final footprints with one date, so they can't show when a fire burned. Satellites miss fires under cloud or thick smoke, and their sensors changed over the years.</li>
+      <li>Nothing here estimates illness, deaths or costs, or says what any level means for a person's health.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>BC Ministry of Environment verified hourly air quality data, 2005 to 2025, station list, station history, list of transboundary flows and exceptional events, and annual results; unverified year-to-date data for the dashboard; BC Wildfire Service historical fire perimeters and incident locations; BC Stats sub-provincial population estimates; census subdivision boundaries; natural resource region boundaries for the map. Satellite hotspots from Natural Resources Canada's Canadian Wildland Fire Information System, and smoke polygons from NOAA's Hazard Mapping System.</p>
+    <p>Contains information licensed under the Open Government Licence - British Columbia and the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="smoke-data.js"></script>
+<script src="charts.js"></script>
+</body>
+</html>

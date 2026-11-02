@@ -1,10 +1,11 @@
-// Interactive charts for the BC electricity balance, household gas demand, minimum wage and Bank of Canada pages: canvas
-// drawings with a readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in
+// Interactive charts for the BC electricity balance, household gas demand, minimum wage, Bank of Canada and wildfire smoke
+// pages: canvas drawings with a readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in
 // bc_electricity_balance, gas-data.js (GAS), written by forecast.py in canada_gas_demand, minwage-data.js (MINWAGE), written
-// by site_data.py in canada_minimum_wage, and boc-data.js (BOC), written by site_data.py in boc_statements. No libraries.
+// by site_data.py in canada_minimum_wage, boc-data.js (BOC), written by site_data.py in boc_statements, and smoke-data.js
+// (SMOKE), written by site_data.py in bc_wildfire_smoke. No libraries.
 (function () {
-  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined", hasBoc = typeof BOC !== "undefined";
-  if (!hasBalance && !hasGas && !hasMinwage && !hasBoc) return;
+  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined", hasBoc = typeof BOC !== "undefined", hasSmoke = typeof SMOKE !== "undefined";
+  if (!hasBalance && !hasGas && !hasMinwage && !hasBoc && !hasSmoke) return;
   var BLUE = [42, 120, 214], RED = [200, 65, 59];
   var PATTERN = ["#2a78d6", "#a8a7a2", "#c8413b"], FADED = "#eceeed", INK = "#17201d", MUTED = "#5f6964", RULE = "#e1e7e4";
   var GREY = "#a8a7a2", RAMP = ["#8fb8e8", "#5b97dc", "#2a78d6", "#1d5aa6", "#123b70"];  // RAMP: one blue per period, light to dark
@@ -41,9 +42,10 @@
   function chart(id, height, draw, hover) {
     var canvas = document.getElementById(id);
     if (!canvas) return null;
-    var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d"), fixed = height;
     function render() {
       var w = canvas.clientWidth, ratio = window.devicePixelRatio || 1;
+      if (typeof fixed === "function") height = fixed(w);  // a height that follows the width
       canvas.style.height = height + "px";
       canvas.width = Math.round(w * ratio);
       canvas.height = Math.round(height * ratio);
@@ -567,5 +569,198 @@
     picker("data-boc-window", day, function (d) { day = d; update(); }, false);
     render = chart("viz-boc", 380, draw, near);
     update();
+  })();
+
+  // Wildfire smoke: a map of stations for a chosen year, one station's seasons day by day, and BC's year with and without smoke
+  if (hasSmoke) (function () {
+    var D = SMOKE, year = 2023, threshold = 8, colourBy = "days", ORANGE = "#eb6834";
+    var SHEDS = { "South coast": "#2a78d6", "Mid-island and Sunshine Coast": "#6250d6", "Southern Interior and Kootenays": "#eb6834", "Central Interior": "#eda100", "Peace and Nechako": "#1baf7a", "Bulkley Valley": "#e87ba4", "North coast": "#008300" };
+    var DAY_RAMP = ["#e6e8e6", "#8fb8e8", "#5b97dc", "#1d5aa6", "#123b70"], DAY_LABELS = ["0", "1 to 9", "10 to 19", "20 to 39", "40 or more"];
+    var LON = [-139.4, -114], LAT = [48.15, 60.1], SQUEEZE = Math.cos(54 * Math.PI / 180);
+    var station = D.stations.filter(function (s) { return s.name === "Kamloops Federal Building"; })[0] || D.stations[0];
+    var minFlag = { 5: "1", 8: "2", 12: "3" };
+    function flagged(code) { return code !== "-" && code >= minFlag[threshold]; }
+    function smokeDays(s, y) {
+      var f = s.flags[y];
+      if (!f) return null;
+      var n = 0;
+      for (var i = 0; i < f.length; i++) if (flagged(f.charAt(i))) n++;
+      return n;
+    }
+    function bin(n) { return n === 0 ? 0 : n < 10 ? 1 : n < 20 ? 2 : n < 40 ? 3 : 4; }
+    function dayDate(y, i) { return dateText(Date.UTC(y, 4, 1 + i)); }
+
+    // Map
+    function fit(w, h) {
+      var span = (LON[1] - LON[0]) * SQUEEZE, k = Math.min(w / span, h / (LAT[1] - LAT[0]));
+      var ox = (w - span * k) / 2, oy = (h - (LAT[1] - LAT[0]) * k) / 2;
+      return { x: function (lon) { return ox + (lon - LON[0]) * SQUEEZE * k; }, y: function (lat) { return oy + (LAT[1] - lat) * k; } };
+    }
+    var mapCanvas = document.getElementById("viz-smoke-map");
+    var renderMap = chart("viz-smoke-map", function (w) { return Math.max(300, Math.min(520, Math.round(w / 1.24))); }, function (ctx, w, h) {
+      var m = fit(w, h);
+      ctx.fillStyle = "#eef0ee";
+      D.outline.forEach(function (ring) {
+        ctx.beginPath();
+        ring.forEach(function (p, i) { if (i) ctx.lineTo(m.x(p[0]), m.y(p[1])); else ctx.moveTo(m.x(p[0]), m.y(p[1])); });
+        ctx.closePath();
+        ctx.fill();
+      });
+      if (colourBy === "days") (D.fires[year] || []).forEach(function (f) {
+        ctx.beginPath();
+        ctx.arc(m.x(f[1]), m.y(f[0]), Math.max(2, Math.sqrt(f[2]) * 0.035 * Math.min(1, w / 665)), 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(235,104,52,0.28)";
+        ctx.fill();
+      });
+      D.stations.forEach(function (s) {
+        var n = smokeDays(s, year);
+        if (n === null && colourBy === "days") return;
+        ctx.beginPath();
+        ctx.arc(m.x(s.lon), m.y(s.lat), s === station ? 6.5 : 4.5, 0, 2 * Math.PI);
+        ctx.fillStyle = colourBy === "days" ? DAY_RAMP[bin(n)] : SHEDS[s.shed];
+        ctx.fill();
+        ctx.lineWidth = s === station ? 2 : 1;
+        ctx.strokeStyle = s === station ? INK : "#fff";
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      });
+      // Legend in the open water at the lower left
+      var labels = colourBy === "days" ? DAY_LABELS : Object.keys(SHEDS), lx = 4, ly = h - 16 * labels.length - 4 - 18;
+      ctx.textAlign = "left";
+      ctx.fillStyle = MUTED;
+      ctx.fillText(colourBy === "days" ? "Smoke days" : "Smoke shed", lx, ly);
+      labels.forEach(function (label, i) {
+        var y = ly + 18 + i * 16;
+        ctx.beginPath();
+        ctx.arc(lx + 5, y, 4.5, 0, 2 * Math.PI);
+        ctx.fillStyle = colourBy === "days" ? DAY_RAMP[i] : SHEDS[label];
+        ctx.fill();
+        ctx.fillStyle = MUTED;
+        ctx.fillText(label, lx + 15, y);
+      });
+    }, function (px, py, w, h) {
+      var s = nearestStation(px, py, w, h);
+      if (s) {
+        var n = smokeDays(s, year);
+        return s.name + "\n" + (colourBy === "days" ? (n === null ? "No readings in " + year : year + ": " + n + " smoke days") : s.shed) + "\nTap to see its seasons";
+      }
+      if (colourBy !== "days") return null;
+      var m = fit(w, h), best = null, gap = 10;
+      (D.fires[year] || []).forEach(function (f) {
+        var d = Math.hypot(m.x(f[1]) - px, m.y(f[0]) - py);
+        if (d < gap) { gap = d; best = f; }
+      });
+      return best ? best[3] + " fire, " + year + "\n" + number.format(best[2]) + " hectares" : null;
+    });
+    function nearestStation(px, py, w, h) {
+      var m = fit(w, h), best = null, gap = 14;
+      D.stations.forEach(function (s) {
+        if (colourBy === "days" && smokeDays(s, year) === null) return;
+        var d = Math.hypot(m.x(s.lon) - px, m.y(s.lat) - py);
+        if (d < gap) { gap = d; best = s; }
+      });
+      return best;
+    }
+    mapCanvas.addEventListener("click", function (e) {
+      var r = mapCanvas.getBoundingClientRect(), s = nearestStation(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+      if (s) { station = s; sync(); }
+    });
+
+    // One station's seasons, one row per year
+    var L = 40, R = 4, T = 4, B = 22, ROW = 19, N = 184, MONTH_DAYS = [0, 31, 61, 92, 123, 153];
+    function cellColour(pm, isSmoke) {
+      if (pm < 0) return "#fff";
+      if (isSmoke) return pm < 25 ? "#f6c7b2" : pm < 50 ? ORANGE : pm < 100 ? "#c24a1b" : "#7f2a0b";
+      return pm < 10 ? "#eceeed" : pm < 25 ? "#c9c8c3" : "#8f8e89";
+    }
+    var renderCalendar = chart("viz-smoke-calendar", T + B + ROW * D.years.length, function (ctx, w) {
+      var cw = (w - L - R) / N;
+      D.years.forEach(function (y, r) {
+        ctx.textAlign = "right";
+        ctx.fillStyle = y === year ? INK : MUTED;
+        ctx.fillText(String(y), L - 6, T + (r + 0.5) * ROW);
+        var pm = station.pm[y], f = station.flags[y];
+        if (!pm) return;
+        for (var i = 0; i < N; i++) {
+          ctx.fillStyle = cellColour(pm[i], flagged(f.charAt(i)));
+          ctx.fillRect(L + i * cw, T + r * ROW + 1, cw + 0.4, ROW - 2);
+        }
+      });
+      ctx.textAlign = "left";
+      ctx.fillStyle = MUTED;
+      ["May", "Jun", "Jul", "Aug", "Sep", "Oct"].forEach(function (m, i) { ctx.fillText(m, L + MONTH_DAYS[i] * cw + 2, T + ROW * D.years.length + 12); });
+    }, function (px, py, w) {
+      var cw = (w - L - R) / N, i = Math.floor((px - L) / cw), r = Math.floor((py - T) / ROW);
+      if (i < 0 || i >= N || r < 0 || r >= D.years.length) return null;
+      var y = D.years[r], pm = station.pm[y];
+      if (!pm) return y + ": no readings";
+      if (pm[i] < 0) return dayDate(y, i) + ": no reading";
+      return dayDate(y, i) + "\n" + pm[i] + " µg/m³" + (flagged(station.flags[y].charAt(i)) ? ", smoke day" : "");
+    });
+
+    // BC's year as measured and with smoke set back
+    var YL = 44, YR = 12, YT = 12, YB = 26, Y = D.byYear, TOP = 12;
+    function without(i) { return Y.measured[i] * (1 - Y["share" + threshold][i]); }
+    function yx(i, w) { return YL + i / (Y.years.length - 1) * (w - YL - YR); }
+    function yy(v, h) { return YT + (TOP - v) / TOP * (h - YT - YB); }
+    var renderYears = chart("viz-smoke-years", 340, function (ctx, w, h) {
+      ctx.textAlign = "right";
+      ctx.strokeStyle = RULE;
+      ctx.fillStyle = MUTED;
+      for (var g = 0; g <= TOP; g += 2) {
+        ctx.beginPath(); ctx.moveTo(YL, yy(g, h)); ctx.lineTo(w - YR, yy(g, h)); ctx.stroke();
+        ctx.fillText(String(g), YL - 6, yy(g, h));
+      }
+      ctx.textAlign = "center";
+      Y.years.forEach(function (v, i) { if (v % (w < 480 ? 5 : 2) === 1) ctx.fillText(String(v), yx(i, w), h - YB + 16); });
+      ctx.beginPath();
+      Y.years.forEach(function (v, i) { if (i) ctx.lineTo(yx(i, w), yy(Y.measured[i], h)); else ctx.moveTo(yx(i, w), yy(Y.measured[i], h)); });
+      for (var i = Y.years.length - 1; i >= 0; i--) ctx.lineTo(yx(i, w), yy(without(i), h));
+      ctx.closePath();
+      ctx.fillStyle = "rgba(235,104,52,0.14)";
+      ctx.fill();
+      function line(value, colour) {
+        ctx.strokeStyle = colour;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        Y.years.forEach(function (v, i) { if (i) ctx.lineTo(yx(i, w), yy(value(i), h)); else ctx.moveTo(yx(i, w), yy(value(i), h)); });
+        ctx.stroke();
+        ctx.lineWidth = 1;
+      }
+      line(function (i) { return Y.measured[i]; }, ORANGE);
+      line(without, PATTERN[0]);
+      ctx.textAlign = "left";
+      ctx.fillStyle = INK;
+      ctx.fillText("As measured", yx(0, w) + 4, yy(9.4, h));
+      ctx.fillText("Smoke days set back to the usual level", yx(0, w) + 4, yy(5, h));
+    }, function (px, py, w) {
+      var i = Math.round((px - YL) / (w - YL - YR) * (Y.years.length - 1));
+      if (i < 0 || i >= Y.years.length) return null;
+      return Y.years[i] + "\nAs measured: " + Y.measured[i].toFixed(1) + " µg/m³\nSmoke set back: " + without(i).toFixed(1) + " µg/m³\nSmoke: " + Math.round(Y["share" + threshold][i] * 100) + "% of the year's PM2.5";
+    });
+
+    var readout = document.getElementById("viz-smoke-readout"), select = document.getElementById("viz-smoke-station");
+    D.stations.slice().sort(function (a, b) { return a.name < b.name ? -1 : 1; }).forEach(function (s) {
+      var o = document.createElement("option");
+      o.value = o.textContent = s.name;
+      select.appendChild(o);
+    });
+    select.addEventListener("change", function () {
+      station = D.stations.filter(function (s) { return s.name === select.value; })[0];
+      sync();
+    });
+    function sync() {
+      select.value = station.name;
+      var n = smokeDays(station, year), pm = station.pm[year], hi = pm ? Math.max.apply(null, pm) : null;
+      var all = D.stations.map(function (s) { return smokeDays(s, year); }).filter(function (v) { return v !== null; }).sort(function (a, b) { return a - b; });
+      readout.textContent = station.name + " (" + station.shed + "), " + year + ": " + (n === null ? "no readings." : n + " smoke days from May to October, highest day " + hi + " µg/m³. The median station had " + all[Math.floor(all.length / 2)] + ".");
+      renderMap();
+      renderCalendar();
+      renderYears();
+    }
+    picker("data-smoke-year", String(year), function (v) { year = +v; sync(); }, false);
+    picker("data-smoke-threshold", String(threshold), function (v) { threshold = +v; sync(); }, false);
+    picker("data-smoke-colour", colourBy, function (v) { colourBy = v; sync(); }, false);
+    sync();
   })();
 })();

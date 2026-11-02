@@ -1,10 +1,10 @@
-// Interactive charts for the BC electricity balance, household gas demand and minimum wage pages: canvas drawings with a
-// readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in bc_electricity_balance,
-// gas-data.js (GAS), written by forecast.py in canada_gas_demand, and minwage-data.js (MINWAGE), written by site_data.py
-// in canada_minimum_wage. No libraries.
+// Interactive charts for the BC electricity balance, household gas demand, minimum wage and Bank of Canada pages: canvas
+// drawings with a readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in
+// bc_electricity_balance, gas-data.js (GAS), written by forecast.py in canada_gas_demand, minwage-data.js (MINWAGE), written
+// by site_data.py in canada_minimum_wage, and boc-data.js (BOC), written by site_data.py in boc_statements. No libraries.
 (function () {
-  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined";
-  if (!hasBalance && !hasGas && !hasMinwage) return;
+  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined", hasBoc = typeof BOC !== "undefined";
+  if (!hasBalance && !hasGas && !hasMinwage && !hasBoc) return;
   var BLUE = [42, 120, 214], RED = [200, 65, 59];
   var PATTERN = ["#2a78d6", "#a8a7a2", "#c8413b"], FADED = "#eceeed", INK = "#17201d", MUTED = "#5f6964", RULE = "#e1e7e4";
   var GREY = "#a8a7a2", RAMP = ["#8fb8e8", "#5b97dc", "#2a78d6", "#1d5aa6", "#123b70"];  // RAMP: one blue per period, light to dark
@@ -503,6 +503,69 @@
         if (period === D.periods.length - 1) stop();
       }, 450);
     });
+    update();
+  })();
+
+  // Change in tone against the 2-year yield's move on holds, by period and day
+  if (hasBoc) (function () {
+    var period = "2009-2026", day = "day", COLUMN = { day: 3, before: 4, after: 5 };
+    var NAMES = { day: "on the day", before: "the day before (placebo)", after: "the day after (placebo)" };
+    var L = 44, R = 8, T = 8, B = 40, XMAX = 1.8, YMAX = 22, render;
+    var readout = document.getElementById("viz-boc-readout");
+    function visible() {
+      var from = +period.slice(0, 4), to = +period.slice(5);
+      return BOC.points.filter(function (p) { var y = +p[0].slice(0, 4); return y >= from && y <= to && p[COLUMN[day]] !== null; });
+    }
+    function px(v, w) { return L + (w - L - R) * (v + XMAX) / (2 * XMAX); }
+    function py(v, h) { return T + (h - T - B) * (YMAX - Math.max(-YMAX, Math.min(YMAX, v))) / (2 * YMAX); }
+    function signed(v) { return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(2); }
+    function draw(ctx, w, h) {
+      ctx.strokeStyle = RULE;
+      ctx.fillStyle = MUTED;
+      ctx.textAlign = "right";
+      [-20, -10, 0, 10, 20].forEach(function (v) {
+        ctx.beginPath(); ctx.moveTo(L, py(v, h)); ctx.lineTo(w - R, py(v, h)); ctx.stroke();
+        ctx.fillText(minus(v > 0 ? "+" + v : v), L - 6, py(v, h));
+      });
+      ctx.textAlign = "center";
+      [-1.5, -1, -0.5, 0, 0.5, 1, 1.5].forEach(function (v) { ctx.fillText(minus(v), px(v, w), h - B + 14); });
+      ctx.fillText("Change in tone score from the previous statement", (L + w - R) / 2, h - 8);
+      ctx.strokeStyle = MUTED;
+      ctx.beginPath(); ctx.moveTo(L, py(0, h)); ctx.lineTo(w - R, py(0, h)); ctx.moveTo(px(0, w), T); ctx.lineTo(px(0, w), h - B); ctx.stroke();
+      ctx.save();
+      ctx.translate(11, (T + h - B) / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("2-year move (bp)", 0, 0);
+      ctx.restore();
+      ctx.fillStyle = "#2a78d6";
+      ctx.strokeStyle = "#fff";
+      visible().forEach(function (p) {
+        ctx.beginPath();
+        ctx.arc(px(p[2], w), py(p[COLUMN[day]], h), 4, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+      });
+    }
+    function near(x, y, w, h) {
+      var best = null, gap = 400;
+      visible().forEach(function (p) {
+        var d = Math.pow(px(p[2], w) - x, 2) + Math.pow(py(p[COLUMN[day]], h) - y, 2);
+        if (d < gap) { gap = d; best = p; }
+      });
+      if (!best) return null;
+      var v = best[COLUMN[day]];
+      return dateText(utc(best[0])) + "\n" + best[1] + "\nTone change " + signed(best[2]) + ", move " + minus((v > 0 ? "+" : "") + v.toFixed(1)) + " bp";
+    }
+    function update() {
+      var s = BOC.stats[period][day];
+      readout.textContent = "Holds, " + period + ", " + NAMES[day] + ": rank correlation " + signed(s.rho) + " (" + signed(s.lo) + " to " + signed(s.hi) + "), " + s.n + " statements." +
+        (period === "2001-2008" && day === "day" ? " This is the test kept back until the plan was committed." : "") +
+        (period === "2018-2026" || period === "2009-2017" ? " This split came after seeing the full result." : "");
+      if (render) render();
+    }
+    picker("data-boc-period", period, function (p) { period = p; update(); }, false);
+    picker("data-boc-window", day, function (d) { day = d; update(); }, false);
+    render = chart("viz-boc", 380, draw, near);
     update();
   })();
 })();

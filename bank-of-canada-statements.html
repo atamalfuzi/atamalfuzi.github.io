@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>How the Bank of Canada's language changed, and when bond markets respond | Ata Malfuzi</title>
+  <meta name="description" content="207 Bank of Canada rate statements since 2001 compared with bond yield moves: how the language changed, which yields respond and how far wording matters. Python, public data." />
+  <meta property="og:title" content="How the Bank of Canada's language changed, and when bond markets respond | Ata Malfuzi" />
+  <meta property="og:description" content="207 Bank of Canada rate statements since 2001 compared with bond yield moves: how the language changed, which yields respond and how far wording matters. Python, public data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bank-of-canada-statements.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-boc.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Scatter chart of Bank of Canada decisions: the size of the rate change against the 2-year yield's move that day. Points at each size spread widely above and below zero." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bank-of-canada-statements.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>How the Bank of Canada's language changed, and when bond markets respond</h1>
+    <p class="lead">The Bank of Canada has published a statement with each scheduled rate decision since 2001. This project reads all 207 of them to October 2026, tracks how the language has changed, and compares them with bond yield moves on the day. Results are as of November 2026.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. It describes communication and markets. It is not investment advice, and it gives no trading signals, forecasts of decisions or verdicts on policy.</p>
+    <div class="links-row"><a href="boc_statements/">Statement explorer (updated weekly)</a><a href="https://github.com/atamalfuzi/boc_statements" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/boc_statements/blob/main/output/tests.csv" target="_blank">Every comparison (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#language">How has the language changed?</a></td><td>Phrase counts, TF-IDF similarity, topic model, reading grade</td><td>Longer and easier to read: 444 median words and grade 14.6 in 2009, 581 and 11.7 in 2026. Topics follow events.</td></tr>
+        <tr><td><a href="#yields">Which yields respond, and when?</a></td><td>Event study, US yield control, bootstrap</td><td>On holds, the 2-year moves most. That shape also appears in 2001-2008 statements kept back as a test. Which holds stand out changes over time.</td></tr>
+        <tr><td><a href="#priced">How much is already priced in?</a></td><td>Regression on decision size, bill move, survey</td><td>Most of it. Decision size explains 3% of the 2-year move.</td></tr>
+        <tr><td><a href="#wording">Does a change in wording line up with the reaction?</a></td><td>Fixed word list, placebo days, kept-back test, walk-forward</td><td>Not established. On holds, +0.08 in 2009-2026 and +0.35 in the 2001-2008 test, whose range includes zero.</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">Ranges are 95%. A basis point (bp) is a hundredth of a percentage point.</p>
+  </section>
+
+  <section class="section" id="language">
+    <h2>1. How has the language changed?</h2>
+    <ul class="tags"><li>143 statements since 2009</li><li>TF-IDF similarity</li><li>Topic model (NMF)</li><li>Flesch-Kincaid grade</li></ul>
+    <figure>
+      <img src="img/boc-language.png" srcset="img/boc-language-800.png 800w, img/boc-language.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three line charts by year from 2009. Median words rise from 444 to 581, reading grade falls from 14.6 to 11.7, and similarity to the previous statement falls to about 0.15 by 2019, jumps to 0.30 in 2021, then eases to 0.18." width="1600" height="704" loading="lazy" />
+      <figcaption>Medians by year, for scheduled statements since 2009.</figcaption>
+    </figure>
+    <p>Statements have grown from a median of 444 words in 2009 to 581 so far in 2026, with a high of 650 in 2025. The reading grade fell from 14.6 to 11.7, so they are longer but simpler.</p>
+    <figure>
+      <img src="img/boc-phrases.png" srcset="img/boc-phrases-800.png 800w, img/boc-phrases.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Heatmap of ten phrases by year. Tariff is dark in 2025 and 2026, quantitative is dark from 2021 to 2023, and commodity fades after 2023." width="1600" height="896" loading="lazy" />
+      <figcaption>Share of each year's statements using a phrase.</figcaption>
+    </figure>
+    <p>Phrases follow events. Tariffs appear in every statement in 2025 and 2026. "Quantitative" appears in nearly all from 2021 to 2023 and fades after that.</p>
+    <figure>
+      <img src="img/boc-topics.png" srcset="img/boc-topics-800.png 800w, img/boc-topics.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Six small line charts of themes by year. The inflation theme rises from about 18% in 2018 and 2019 to about 30% in 2022 to 2024. The others change less." width="1600" height="896" loading="lazy" />
+      <figcaption>Six themes found in the statements' sentences, named by their three strongest words.</figcaption>
+    </figure>
+    <p>A topic model finds six themes in the sentences. The inflation theme rises from about 18% of a statement's sentences in 2018-2019 to about 30% in 2022-2024.</p>
+  </section>
+
+  <section class="section" id="yields">
+    <h2>2. Which yields respond, and when?</h2>
+    <ul class="tags"><li>Event study</li><li>US yield control</li><li>Bootstrap ranges</li><li>2001-2008 kept back as a test</li></ul>
+    <figure>
+      <img src="img/boc-maturity.png" srcset="img/boc-maturity-800.png 800w, img/boc-maturity.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three bar charts of variance relative to ordinary days at 3-month, 2-year, 5-year and 10-year maturities. For all announcements bars fall from 7 to 1.6. For holds in 2009-2026 and in 2001-2008 the 2-year bar is tallest, near 2.5." width="1600" height="896" loading="lazy" />
+      <figcaption>Variance of the day's move relative to days without an announcement, with 95% ranges. 1 means no different from an ordinary day.</figcaption>
+    </figure>
+    <p>Across all announcements, the shorter the maturity, the bigger the response relative to an ordinary day: 7.0 times the variance for the 3-month bill and 1.6 times for the 10-year bond. Holds look different: the 3-month barely stands out (1.4), and the 2-year moves most (2.5, range 1.5 to 3.6). A hold says little about today's rate, so a response there is about the expected path of rates. The 2001-2008 statements show the same shape (1.3, 2.4, 1.7, 1.1), though their ranges are wide on 29 holds.</p>
+    <figure>
+      <img src="img/boc-report-days.png" srcset="img/boc-report-days-800.png 800w, img/boc-report-days.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot chart of the 2-year variance ratio on holds. 2009-2026 with no report: 1.2. 2009-2012 with the report a day or more later: 5.7. 2013-2026 with the report the same day: 3.1. 2001-2008 with no report: 3.6. 2001-2008 with the report later: 1.0." width="1600" height="800" loading="lazy" />
+      <figcaption>Holds grouped by whether a Monetary Policy Report came out, with 95% ranges.</figcaption>
+    </figure>
+    <p>In the first look, holds with a Monetary Policy Report stood out and others didn't. That doesn't hold up as a general rule. Holds outside report months look ordinary since 2009 (1.2, range 0.6 to 1.9). Holds in report months stand out both when the report came out the same day (3.1) and in 2009-2012, when it came a day or more later (5.7), so the report's own publication isn't the whole story. In 2001-2008 the pattern reverses: holds outside report months have the larger ratio (3.6 against 1.0), with wide ranges.</p>
+  </section>
+
+  <section class="section" id="priced">
+    <h2>3. How much is already priced in?</h2>
+    <ul class="tags"><li>Regression</li><li>3-month bill move</li><li>Market Participants Survey</li></ul>
+    <figure>
+      <img src="img/boc-priced-in.png" srcset="img/boc-priced-in-800.png 800w, img/boc-priced-in.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Scatter of the change in the policy rate against the 2-year move. Points at each decision size spread widely both above and below zero. A 50 bp hike in October 2022 came with a 28 bp fall." width="1600" height="896" loading="lazy" />
+      <figcaption>Each scheduled decision since April 2009.</figcaption>
+    </figure>
+    <p>The size of a decision explains 3% of the 2-year move after removing the US move. A 50 bp hike on 26 October 2022 came with a 28 bp fall, and a 25 bp hike on 28 October 2026 came with a 5 bp rise. Adding the same day's move in the 3-month bill raises the share explained to 37%, which suggests that surprise matters more than size, though the two yields respond to the same news.</p>
+    <p>The Bank's Market Participants Survey gives another view of expectations. The median in the latest survey matched the actual rate at 18 of 30 meetings since 2023, and the gap between survey and outcome doesn't line up with the 2-year move (+0.09, range −0.27 to +0.45). The survey is quarterly and often months old by the meeting, so this is a weak measure of surprise.</p>
+  </section>
+
+  <section class="section" id="wording">
+    <h2>4. Does a change in wording line up with the reaction?</h2>
+    <ul class="tags"><li>Fixed word list</li><li>Spearman rank correlation</li><li>Placebo days</li><li>Walk-forward check</li></ul>
+    <p>The test is on holds, where the decision itself is no news. The tone score counts direction words in sentences about the economy, from a list fixed before any yields were joined. I kept the 2001-2008 statements back and <a href="https://github.com/atamalfuzi/boc_statements/blob/main/ANALYSIS_PLAN.md" target="_blank">committed the plan</a> before testing them.</p>
+    <div class="viz">
+      <div class="viz-key" role="group" aria-label="Period">
+        <button type="button" data-boc-period="2009-2026">2009-2026</button>
+        <button type="button" data-boc-period="2009-2017">2009-2017</button>
+        <button type="button" data-boc-period="2018-2026">2018-2026</button>
+        <button type="button" data-boc-period="2001-2008">2001-2008 (test)</button>
+      </div>
+      <div class="viz-key" role="group" aria-label="Which day">
+        <button type="button" data-boc-window="day">On the day</button>
+        <button type="button" data-boc-window="before">The day before (placebo)</button>
+        <button type="button" data-boc-window="after">The day after (placebo)</button>
+      </div>
+      <canvas id="viz-boc" role="img" aria-label="Scatter of the change in tone score from the previous statement against the 2-year yield's move, one dot per hold, for the chosen period and day."></canvas>
+      <p class="viz-readout" id="viz-boc-readout" aria-live="polite"></p>
+      <p class="hint">Hover or tap a dot for its statement. Moves leave out the part explained by the US 2-year yield. Higher tone means more words about rising prices and activity. Ranges are 95%.</p>
+    </div>
+    <table class="glance">
+      <thead><tr><th scope="col">Holds</th><th scope="col">Rank correlation</th><th scope="col">Status</th></tr></thead>
+      <tbody>
+        <tr><td>2009-2026, on the day</td><td>+0.08 (−0.10 to +0.26), n = 108</td><td>Looked at first</td></tr>
+        <tr><td>2009-2026, the day before (placebo)</td><td>−0.17 (−0.36 to +0.01)</td><td>Larger in size than the real result</td></tr>
+        <tr><td>2001-2008, on the day</td><td>+0.35 (−0.03 to +0.65), n = 29</td><td>Kept back and tested after the plan was committed</td></tr>
+        <tr><td>2001-2008, the day before and after (placebos)</td><td>−0.24 and −0.20, with wide ranges</td><td>Kept-back test</td></tr>
+        <tr><td>2018-2026, on the day</td><td>+0.33 (+0.05 to +0.58), n = 46</td><td>Found after seeing the full result, so a lead only</td></tr>
+        <tr><td>2009-2017, on the day</td><td>−0.10 (−0.32 to +0.13), n = 62</td><td>Found after seeing the full result</td></tr>
+      </tbody>
+    </table>
+    <p>The plan said the idea would be supported only if the kept-back result had a range excluding zero and clearly smaller placebos. It missed on the range, so the answer is "not established". It may be real in some periods, but these data can't show it.</p>
+    <p>A model that learns from the words themselves shows the risk. With more words than events, TF-IDF ridge regression gets an R² of 0.99 on past holds and −0.17 on later ones, worse than guessing the average. I left out a sentence classifier, because its labels would need someone other than the author of the test.</p>
+  </section>
+
+  <section class="section">
+    <h2>Why daily data limits this</h2>
+    <p>Free yield data is daily, and I found no openly licensed intraday source. A close-to-close window holds more than the statement: the Monetary Policy Report and press conference, data releases, and Fed decisions, which fell on the same day as 9 of the last 15 announcements.</p>
+    <p>The US 2-year yield explains about half of the Canadian 2-year's daily variance on ordinary days, so it is removed, but that control is imperfect. Daily data can compare groups of days. It can't credit one move to one statement. The median hold moves 2.0 bp against 1.3 bp on an ordinary day, and 5 holds out of 108 make up 42% of the squared moves.</p>
+  </section>
+
+  <section class="section">
+    <h2>Other limits</h2>
+    <ul>
+      <li>Few events: 108 holds since 2009 with yield data and 29 before. New statements arrive at eight a year.</li>
+      <li>Wording and yields may both respond to the same news, so these are associations.</li>
+      <li>A list fixed today may not suit 2005 or 2015 equally. That may explain the different results by period, but this project can't test it.</li>
+      <li>With this many comparisons, some ranges will exclude zero by chance.</li>
+      <li>Short yields had little room to move in 2009-10 and 2020-21.</li>
+      <li>Yields are quoted to 1 bp, close to a typical move. Benchmark bonds change over time, which may create small jumps, and US and Canadian closes differ in time.</li>
+      <li>Unscheduled moves, such as March 2020, are left out.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Bank of Canada rate statements, with page formatting and the closing information note removed; Valet benchmark bond and Treasury bill yields (sources: CanDeal Data and Analytics and the Bank of Canada), target rate and USD/CAD; Market Participants Survey; US Treasury par yields; Federal Reserve meeting calendars. Yield levels aren't republished, only moves on announcement days and summaries.</p>
+    <p>This work uses Bank of Canada content but isn't endorsed by the Bank.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="boc-data.js"></script>
+<script src="charts.js"></script>
+</body>
+</html>

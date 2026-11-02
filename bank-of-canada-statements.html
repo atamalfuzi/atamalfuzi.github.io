@@ -65,7 +65,7 @@
     <h1>How the Bank of Canada's language changed, and when bond markets respond</h1>
     <p class="lead">The Bank of Canada has published a statement with each scheduled rate decision since 2001. This project reads all 207 of them to October 2026, tracks how the language has changed, and compares them with bond yield moves on the day. Results are as of November 2026.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. It describes communication and markets. It is not investment advice, and it gives no trading signals, forecasts of decisions or verdicts on policy.</p>
-    <div class="links-row"><a href="boc_statements/">Statement explorer (updated weekly)</a><a href="https://github.com/atamalfuzi/boc_statements" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/boc_statements/blob/main/output/tests.csv" target="_blank">Every comparison (CSV)</a></div>
+    <div class="links-row"><a href="boc_statements/">Statement explorer (updated weekly)</a><a href="https://github.com/atamalfuzi/boc_statements" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/boc_statements/blob/main/output/tests.csv" target="_blank">All 16 correlations (CSV)</a></div>
   </div>
 
   <section class="section">
@@ -73,7 +73,7 @@
     <table class="glance">
       <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
       <tbody>
-        <tr><td><a href="#language">How has the language changed?</a></td><td>Phrase counts, TF-IDF similarity, topic model, reading grade</td><td>Longer and easier to read: 444 median words and grade 14.6 in 2009, 581 and 11.7 in 2026. Topics follow events.</td></tr>
+        <tr><td><a href="#language">How has the language changed?</a></td><td>Phrase counts, TF-IDF similarity, topic model, reading grade</td><td>Longer and easier to read: 442.5 median words and grade 14.6 in 2009, 581 and 11.7 in 2026. Topics follow events.</td></tr>
         <tr><td><a href="#yields">Which yields respond, and when?</a></td><td>Event study, US yield control, bootstrap</td><td>On holds, the 2-year moves most. That shape also appears in 2001-2008 statements kept back as a test. Which holds stand out changes over time.</td></tr>
         <tr><td><a href="#priced">How much is already priced in?</a></td><td>Regression on decision size, bill move, survey</td><td>Most of it. Decision size explains 3% of the 2-year move.</td></tr>
         <tr><td><a href="#wording">Does a change in wording line up with the reaction?</a></td><td>Fixed word list, placebo days, kept-back test, walk-forward</td><td>Not established. On holds, +0.08 in 2009-2026 and +0.35 in the 2001-2008 test, whose range includes zero.</td></tr>
@@ -86,10 +86,10 @@
     <h2>1. How has the language changed?</h2>
     <ul class="tags"><li>143 statements since 2009</li><li>TF-IDF similarity</li><li>Topic model (NMF)</li><li>Flesch-Kincaid grade</li></ul>
     <figure>
-      <img src="img/boc-language.png" srcset="img/boc-language-800.png 800w, img/boc-language.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three line charts by year from 2009. Median words rise from 444 to 581, reading grade falls from 14.6 to 11.7, and similarity to the previous statement falls to about 0.15 by 2019, jumps to 0.30 in 2021, then eases to 0.18." width="1600" height="704" loading="lazy" />
+      <img src="img/boc-language.png" srcset="img/boc-language-800.png 800w, img/boc-language.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three line charts by year from 2009. Median words rise from 442.5 to 581, reading grade falls from 14.6 to 11.7, and similarity to the previous statement falls to about 0.15 by 2019, jumps to 0.30 in 2021, then eases to 0.18." width="1600" height="704" loading="lazy" />
       <figcaption>Medians by year, for scheduled statements since 2009.</figcaption>
     </figure>
-    <p>Statements have grown from a median of 444 words in 2009 to 581 so far in 2026, with a high of 650 in 2025. The reading grade fell from 14.6 to 11.7, so they are longer but simpler.</p>
+    <p>Statements have grown from a median of 442.5 words in 2009 to 581 so far in 2026, with a high of 650 in 2025. The reading grade fell from 14.6 to 11.7, so they are longer but simpler.</p>
     <figure>
       <img src="img/boc-phrases.png" srcset="img/boc-phrases-800.png 800w, img/boc-phrases.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Heatmap of ten phrases by year. Tariff is dark in 2025 and 2026, quantitative is dark from 2021 to 2023, and commodity fades after 2023." width="1600" height="896" loading="lazy" />
       <figcaption>Share of each year's statements using a phrase.</figcaption>
@@ -148,18 +148,35 @@
       <p class="viz-readout" id="viz-boc-readout" aria-live="polite"></p>
       <p class="hint">Hover or tap a dot for its statement. Moves leave out the part explained by the US 2-year yield. Higher tone means more words about rising prices and activity. Ranges are 95%.</p>
     </div>
-    <table class="glance">
-      <thead><tr><th scope="col">Holds</th><th scope="col">Rank correlation</th><th scope="col">Status</th></tr></thead>
-      <tbody>
-        <tr><td>2009-2026, on the day</td><td>+0.08 (−0.10 to +0.26), n = 108</td><td>Looked at first</td></tr>
-        <tr><td>2009-2026, the day before (placebo)</td><td>−0.17 (−0.36 to +0.01)</td><td>Larger in size than the real result</td></tr>
-        <tr><td>2001-2008, on the day</td><td>+0.35 (−0.03 to +0.65), n = 29</td><td>Kept back and tested after the plan was committed</td></tr>
-        <tr><td>2001-2008, the day before and after (placebos)</td><td>−0.24 and −0.20, with wide ranges</td><td>Kept-back test</td></tr>
-        <tr><td>2018-2026, on the day</td><td>+0.33 (+0.05 to +0.58), n = 46</td><td>Found after seeing the full result, so a lead only</td></tr>
-        <tr><td>2009-2017, on the day</td><td>−0.10 (−0.32 to +0.13), n = 62</td><td>Found after seeing the full result</td></tr>
-      </tbody>
-    </table>
+    <p>All 16 rows of tests.csv, as rank correlations with 95% ranges. The groups keep apart what was fixed in advance and what wasn't.</p>
+    <p><strong>Planned test: kept back, and tested after the plan was committed</strong></p>
+    <table class="glance"><thead><tr><th scope="col">Sample</th><th scope="col">Comparison</th><th scope="col">Rank correlation</th><th scope="col">n</th></tr></thead><tbody>
+      <tr><td>2001-2008</td><td>Holds: tone change vs 2-year move</td><td>+0.35 (−0.03 to +0.65)</td><td>29</td></tr>
+      <tr><td>2001-2008</td><td>Holds: tone change vs move the day before (placebo)</td><td>−0.24 (−0.64 to +0.17)</td><td>29</td></tr>
+      <tr><td>2001-2008</td><td>Holds: tone change vs move the day after (placebo)</td><td>−0.20 (−0.57 to +0.18)</td><td>29</td></tr>
+      <tr><td>2001-2008</td><td>Holds: novelty vs size of move</td><td>+0.22 (−0.15 to +0.58)</td><td>29</td></tr>
+    </tbody></table>
+    <p><strong>First look: seen before the plan was written, and they shaped it, so they can't confirm themselves</strong></p>
+    <table class="glance"><thead><tr><th scope="col">Sample</th><th scope="col">Comparison</th><th scope="col">Rank correlation</th><th scope="col">n</th></tr></thead><tbody>
+      <tr><td>2009-2026</td><td>Holds: tone change vs 2-year move</td><td>+0.08 (−0.10 to +0.26)</td><td>108</td></tr>
+      <tr><td>2009-2026</td><td>Holds: tone change vs move the day before (placebo)</td><td>−0.17 (−0.36 to +0.01)</td><td>108</td></tr>
+      <tr><td>2009-2026</td><td>Holds: tone change vs move the day after (placebo)</td><td>−0.04 (−0.22 to +0.15)</td><td>108</td></tr>
+      <tr><td>2009-2026</td><td>All decisions: tone change vs 2-year move</td><td>+0.11 (−0.04 to +0.27)</td><td>141</td></tr>
+      <tr><td>2009-2026</td><td>All decisions: novelty vs size of move</td><td>+0.17 (+0.01 to +0.32)</td><td>141</td></tr>
+      <tr><td>2017-2026</td><td>Same-day move in USD/CAD vs 2-year move</td><td>−0.47 (−0.64 to −0.29)</td><td>78</td></tr>
+      <tr><td>2017-2026</td><td>Two-day move in USD/CAD vs 2-year move</td><td>−0.48 (−0.65 to −0.28)</td><td>78</td></tr>
+    </tbody></table>
+    <p><strong>After seeing results: periods and filters chosen after the first look, so leads at most</strong></p>
+    <table class="glance"><thead><tr><th scope="col">Sample</th><th scope="col">Comparison</th><th scope="col">Rank correlation</th><th scope="col">n</th></tr></thead><tbody>
+      <tr><td>2009-2017</td><td>Holds: tone change vs 2-year move</td><td>−0.10 (−0.32 to +0.13)</td><td>62</td></tr>
+      <tr><td>2018-2026</td><td>Holds: tone change vs 2-year move</td><td>+0.33 (+0.05 to +0.58)</td><td>46</td></tr>
+      <tr><td>2018-2026</td><td>Holds: tone change vs move the day before (placebo)</td><td>−0.16 (−0.43 to +0.11)</td><td>46</td></tr>
+      <tr><td>2018-2026</td><td>Holds: tone change vs move the day after (placebo)</td><td>+0.11 (−0.16 to +0.36)</td><td>46</td></tr>
+      <tr><td>2021-2026</td><td>Holds without a Fed decision that day: tone change vs 2-year move</td><td>+0.52 (+0.11 to +0.83)</td><td>21</td></tr>
+    </tbody></table>
     <p>The plan said the idea would be supported only if the kept-back result had a range excluding zero and clearly smaller placebos. It missed on the range, so the answer is "not established". It may be real in some periods, but these data can't show it.</p>
+    <p>The largest number on wording, +0.52, is also the weakest evidence: 21 holds, in a sample cut after seeing the results, with no placebo days and a wide range. Like the 2018-2026 lead, it can only be tested on statements after 2 November 2026. In the first look, the day-before placebo is larger in size than the real result.</p>
+    <p>Five of the 16 ranges exclude zero, and with this many comparisons some will by chance. Two of the five are USD/CAD, a second market price that can move on the same news as the 2-year yield, so they say nothing about wording. The plan's other two tests compare variances rather than ranks, so they are in output/maturity.csv and section 2.</p>
     <p>A model that learns from the words themselves shows the risk. With more words than events, TF-IDF ridge regression gets an R² of 0.99 on past holds and −0.17 on later ones, worse than guessing the average. I left out a sentence classifier, because its labels would need someone other than the author of the test.</p>
   </section>
 

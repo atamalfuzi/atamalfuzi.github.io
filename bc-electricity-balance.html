@@ -77,7 +77,7 @@
         <tr><td><a href="#water">How much hydro did it cost?</a></td><td>Regression on reservoir inflows, leave-one-year-out</td><td>Low inflows explain 7.1 TWh (90%: 5.4-8.7) of the 11.3 TWh fall in hydro output in 2023.</td></tr>
         <tr><td><a href="#supply">Where did the power come from?</a></td><td>Accounting identity, weather normalisation</td><td>Imports. Net imports rose 14.3 TWh while fossil-fuel generation fell.</td></tr>
         <tr><td><a href="#patterns">How does trade move hour by hour?</a></td><td>k-means, principal components, Markov switching</td><td>Three kinds of trading day; a heavy-import regime from September 2022 to August 2025.</td></tr>
-        <tr><td><a href="#forecast-flow">Can the hourly flow be forecast?</a></td><td>Ridge and gradient boosting, expanding-window tests, partial dependence</td><td>A day ahead, 8% better than repeating yesterday; BC's own water matters most.</td></tr>
+        <tr><td><a href="#forecast-flow">Can the hourly flow be forecast?</a></td><td>Ridge and gradient boosting, expanding-window tests, partial dependence</td><td>A day ahead, 8% better than repeating yesterday; in years held out, no single condition stands out.</td></tr>
         <tr><td><a href="#demand">How well can demand be forecast?</a></td><td>Seasonal ARIMA, conformal intervals, Kalman filter</td><td>Off by 3.1-3.8% on average one to six months out, with ranges that hold as often as stated.</td></tr>
       </tbody>
     </table>
@@ -99,7 +99,7 @@
   <section class="section" id="water">
     <h2>2. How much hydro output did low water cost?</h2>
     <ul class="tags"><li>Inflows to Kinbasket and Williston lakes</li><li>Least squares, Newey-West errors</li><li>Leave-one-year-out validation</li><li>Counterfactual with 90% range</li></ul>
-    <p>Inflows to BC Hydro's two largest reservoirs ran at 79% of normal in 2023 and 84% in 2024. A model of annual hydro output on this year's and last year's inflows and demand explains two thirds of the variation since 1980 and misses a held-out year by 3.8 TWh on average. With normal inflows it puts 2023's output 7.1 TWh higher, most of the 11.3 TWh fall. The other 4.7 TWh is output the inflows alone would not have cut, consistent with BC Hydro holding water back and buying instead, though the data cannot show it.</p>
+    <p>Inflows to BC Hydro's two largest reservoirs ran at 79% of normal in 2023 and 84% in 2024. A model of annual hydro output on this year's and last year's inflows and demand explains two thirds of the variation since 1980 and misses a held-out year by 3.8 TWh on average. With normal inflows it puts 2023's output 7.1 TWh higher, most of the 11.3 TWh fall. That leaves 4.2 TWh that low inflows do not account for. Separately, actual output was 4.7 TWh below what the model predicts at 2023's own inflows and demand, not much more than its usual miss. That would fit BC Hydro holding water back and buying instead, though the data cannot show it.</p>
     <figure>
       <img src="img/balance-water-to-power.png" srcset="img/balance-water-to-power-800.png 800w, img/balance-water-to-power.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: BC's annual hydro output since 1980 against the model's held-out predictions. Right: in 2023 and 2024, the fall in hydro output, the part explained by low inflows, and the rise in net imports." width="1600" height="747" loading="lazy" />
     </figure>
@@ -152,20 +152,20 @@
   <section class="section" id="forecast-flow">
     <h2>5. Can the hourly flow be forecast?</h2>
     <ul class="tags"><li>scikit-learn</li><li>Ridge regression</li><li>Gradient boosting</li><li>Expanding-window tests</li><li>Permutation importance</li><li>Partial dependence</li></ul>
-    <p>Forecasting each midnight for the next 24 hours, a linear model misses by 425 MW on average in years it was not trained on: 8% better than repeating yesterday (461 MW) and far better than the usual for the month and hour (984 MW). Gradient boosting does no better (449 MW), and in 2023 nothing beat repeating yesterday, because the drought took the flows outside anything in the training years.</p>
+    <p>Forecasting each midnight for the next 24 hours, a linear model misses by 424 MW on average in years it was not trained on: 8% better than repeating yesterday (461 MW) and far better than the usual for the month and hour (984 MW). Gradient boosting does no better (443 MW), and in 2023 nothing beat repeating yesterday, because the drought took the flows outside anything in the training years.</p>
     <figure>
       <img src="img/balance-flow-forecast.png" srcset="img/balance-flow-forecast-800.png 800w, img/balance-flow-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: the last two weeks of hourly flow with the day-ahead forecast and yesterday's flow. Right: each model's average error by year since 2021." width="1600" height="773" loading="lazy" />
     </figure>
-    <p>Permutation importance and partial dependence show that a model of same-hour conditions leans most on BC's own water: at 78% of normal hydro output it expects about 810 MW into BC, at 111% about 460 MW out. Higher demand across the border pulls power out of BC. These conditions alone improve on the usual for the month and hour by only 9%, because trading also turns on prices and reservoir plans that are not in open data.</p>
+    <p>Tested on each year after fitting to the others, a model of same-hour conditions has no input that stands out: shuffling one within the year held out adds 71 MW to its 878 MW error for Bonneville's demand, 58 MW for the hour, 53 MW for Bonneville's wind and 35 MW for BC's hydro output, which ranks first only in 2023. That test says little about water's effect from one year to the next, because BC's hydro output moves mostly between years. By partial dependence, a fit to all hours expects about 800 MW into BC at 78% of normal hydro output and about 560 MW out at 111%, and higher demand across the border pulls power out of BC; that has not been tested on years held out. These conditions alone improve on the usual for the month and hour by only 9%, because trading also turns on prices and reservoir plans that are not in open data.</p>
     <figure>
-      <img src="img/balance-flow-drivers.png" srcset="img/balance-flow-drivers-800.png 800w, img/balance-flow-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Permutation importance led by BC's hydro output over the past year, and partial dependence curves for BC's hydro, Bonneville demand, hour of the day and Vancouver temperature." width="1600" height="827" loading="lazy" />
+      <img src="img/balance-flow-drivers.png" srcset="img/balance-flow-drivers-800.png 800w, img/balance-flow-drivers.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Permutation importance on years held out, led by Bonneville demand, the hour and Bonneville wind, with BC's hydro output fourth, and partial dependence curves for BC's hydro, Bonneville demand, hour of the day and Vancouver temperature." width="1600" height="827" loading="lazy" />
     </figure>
   </section>
 
   <section class="section" id="demand">
     <h2>6. How much is weather, and how well can demand be forecast?</h2>
     <ul class="tags"><li>Seasonal ARIMA with degree days</li><li>Exponential smoothing</li><li>Conformal prediction intervals</li><li>Newey-West ranges</li><li>Kalman filter</li></ul>
-    <p>Tested from every month since 2014 with only earlier data, a seasonal ARIMA with heating and cooling degree days forecasts monthly demand with an average error of 3.1% a month ahead and 3.8% six months ahead, beating exponential smoothing and the same month last year. Its own 80% ranges held only 66% of outcomes, because they treat the weather ahead as known; ranges set from its past errors held 81%.</p>
+    <p>Tested from every month since 2014 with only earlier data, a seasonal ARIMA with heating and cooling degree days forecasts monthly demand with an average error of 3.1% a month ahead and 3.8% six months ahead, beating exponential smoothing and the same month last year. Its own 80% ranges held only 66% of outcomes, because they treat the weather ahead as known; ranges set from its past errors held 82%.</p>
     <figure>
       <img src="img/balance-demand-forecast.png" srcset="img/balance-demand-forecast-800.png 800w, img/balance-demand-forecast.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Left: BC's monthly demand over three years and the forecast for the next six months with 80% and 95% ranges. Right: average forecast error by months ahead for three methods." width="1600" height="747" loading="lazy" />
     </figure>
@@ -185,6 +185,7 @@
       <li>Hourly flows cover the BC Hydro-Bonneville connection only; prices, Alberta trade and BC's hourly demand are not in open data, which caps how well the flow can be explained.</li>
       <li>The day-ahead forecast uses the day's actual Vancouver temperature in place of a forecast, so it is slightly optimistic.</li>
       <li>Partial dependence shows associations in the data, not what would happen if one input changed alone.</li>
+      <li>Permutation importance within a year held out can understate slow inputs such as BC's hydro output, because the shuffle swaps only that year's values.</li>
       <li>Statistics Canada's 2015 demand figure is about 4 TWh below the years either side and is kept as reported.</li>
       <li>Site C does not yet appear in the capacity data, so the 2024-2025 hydro capacity factors may be overstated.</li>
     </ul>

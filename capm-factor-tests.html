@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>Testing the CAPM and the Fama-French factor models through 2026 | Ata Malfuzi</title>
+  <meta name="description" content="Tests of the CAPM, three- and five-factor models on US stock returns through September 2026, with GRS, Fama-MacBeth and Hansen-Jagannathan distance. Python." />
+  <meta property="og:title" content="Testing the CAPM and the Fama-French factor models through 2026 | Ata Malfuzi" />
+  <meta property="og:description" content="Tests of the CAPM, three- and five-factor models on US stock returns through September 2026, with GRS, Fama-MacBeth and Hansen-Jagannathan distance. Python." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/capm-factor-tests.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-capm.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Two scatter charts of mean excess return against market beta for 25 portfolios. From 1926 the fitted slope is +0.40. Since 1963 it is −0.37." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/capm-factor-tests.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Testing the CAPM and the Fama-French factor models through 2026</h1>
+    <p class="lead">Does the capital asset pricing model (CAPM) hold up on US stock returns through the latest available month, and how much do the Fama-French three- and five-factor models add? This is a redo of an exercise from a graduate financial economics course at Simon Fraser University, on data through September 2026. It reproduces the original result, then tests all three models. Results are as of November 2026 and describe files built from the 202609 CRSP database.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. It tests models on past returns and isn't investment advice.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/capm_factor_tests" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/capm_factor_tests/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td>Does the old result reproduce?</td><td data-label="Methods">The assignment's regression on its own files</td><td data-label="Answer">Yes: R² 0.1144 and slope 0.3993. On current files through 2026-09, R² is 0.098.</td></tr>
+        <tr><td><a href="#capm">Does the CAPM hold up?</a></td><td data-label="Methods">GRS, Fama-MacBeth with Shanken errors</td><td data-label="Answer">No. GRS rejects it (p below 0.001), and since 1963 the slope on beta is negative.</td></tr>
+        <tr><td><a href="#factors">How much do the factors add?</a></td><td data-label="Methods">Same tests, spanning regressions, Hansen-Jagannathan distance</td><td data-label="Answer">Since 1963, R² goes from 0.08 to 0.66 to 0.75, and mean absolute alpha from 0.19 to 0.09 to 0.09. GRS rejects all three.</td></tr>
+        <tr><td><a href="#stable">Is that stable?</a></td><td data-label="Methods">Subperiods</td><td data-label="Answer">No. The CAPM is not rejected before 1963, and since 2009 no model's R² is above 0.16.</td></tr>
+        <tr><td><a href="#portfolios">Does it depend on the portfolios?</a></td><td data-label="Methods">Three more sets of test portfolios</td><td data-label="Answer">Yes. On 30 industries, adding factors makes the alphas larger.</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">Test portfolios are the 25 value-weighted portfolios formed on size and book-to-market, unless stated otherwise. Returns are monthly, in per cent, in excess of the T-bill rate. Alpha is the part of a portfolio's mean return a model leaves unexplained. The GRS test asks whether all the alphas are zero together.</p>
+  </section>
+
+  <section class="section" id="capm">
+    <h2>1. Does the CAPM hold up?</h2>
+    <ul class="tags"><li>GRS test</li><li>Fama-MacBeth</li><li>Shanken errors</li><li>Resampled p-values</li></ul>
+    <figure>
+      <img src="img/capm-capm-line.png" srcset="img/capm-capm-line-800.png 800w, img/capm-capm-line.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two scatter charts of mean excess return against market beta for 25 portfolios. For 1926 to 2026 the fitted slope is +0.40 and R² is 0.10. For 1963 to 2026 the fitted slope is −0.37 and R² is 0.08. In both, a dashed line shows what the CAPM predicts." width="1600" height="896" loading="lazy" />
+      <figcaption>Mean excess return against market beta, in two samples.</figcaption>
+    </figure>
+    <p>The two samples have about the same R², and they say different things. Over the full history the slope has the right sign and is about 60% of the market premium. Since 1963 it is negative, and the intercept, which the CAPM says is zero, is 1.16% a month. The R² alone hides this.</p>
+  </section>
+
+  <section class="section" id="factors">
+    <h2>2. How much do the factors add?</h2>
+    <figure>
+      <img src="img/capm-model-fit.png" srcset="img/capm-model-fit-800.png 800w, img/capm-model-fit.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Three scatter charts of actual against fitted mean returns for 25 portfolios since 1963. Under the CAPM the points form a vertical cloud, R² 0.08. Under the three-factor model they follow the diagonal, R² 0.66, and under the five-factor model more closely, R² 0.75. Small growth stays well below the line under every model." width="1600" height="832" loading="lazy" />
+      <figcaption>Actual and fitted mean returns under each model, 1963-07 to 2026-09.</figcaption>
+    </figure>
+    <table class="glance">
+      <thead><tr><th scope="col">1963-07 to 2026-09</th><th scope="col">CAPM</th><th scope="col">Three-factor</th><th scope="col">Five-factor</th></tr></thead>
+      <tbody>
+        <tr><td>GRS F</td><td data-label="CAPM">4.17</td><td data-label="Three-factor">3.63</td><td data-label="Five-factor">3.21</td></tr>
+        <tr><td>p, resampled</td><td data-label="CAPM">below 0.001</td><td data-label="Three-factor">below 0.001</td><td data-label="Five-factor">below 0.001</td></tr>
+        <tr><td>Mean absolute alpha, % a month</td><td data-label="CAPM">0.193</td><td data-label="Three-factor">0.087</td><td data-label="Five-factor">0.089</td></tr>
+        <tr><td>Largest absolute alpha</td><td data-label="CAPM">0.529</td><td data-label="Three-factor">0.466</td><td data-label="Five-factor">0.277</td></tr>
+        <tr><td>Cross-sectional R²</td><td data-label="CAPM">0.08</td><td data-label="Three-factor">0.66</td><td data-label="Five-factor">0.75</td></tr>
+        <tr><td>95% resampled range for R²</td><td data-label="CAPM">0.00 to 0.53</td><td data-label="Three-factor">0.22 to 0.85</td><td data-label="Five-factor">0.39 to 0.90</td></tr>
+        <tr><td>Hansen-Jagannathan distance</td><td data-label="CAPM">0.375</td><td data-label="Three-factor">0.351</td><td data-label="Five-factor">0.328</td></tr>
+      </tbody>
+    </table>
+    <p>The three-factor model does most of the work on these portfolios. It halves the mean absolute alpha and takes out most of the value pattern. The five-factor model leaves the mean alpha where it was and mainly shrinks the largest one, small growth. The R² ranges overlap, so these data do not separate the two models on that measure. All three are rejected.</p>
+  </section>
+
+  <section class="section" id="stable">
+    <h2>3. Is that stable?</h2>
+    <p>Before 1963 the CAPM is not rejected (resampled p 0.185) and beta lines up with mean returns, though the price of market risk is imprecise. The three- and five-factor models fit best from 1963 to 1990, close to the period they were built on, with R² of 0.77 and 0.87. Since 2009 their R² has fallen to 0.14 and 0.16, and whether they are rejected depends on the p-value used. The 72 months since the assignment's data ended are too few to settle much with 25 portfolios.</p>
+  </section>
+
+  <section class="section" id="portfolios">
+    <h2>4. Does it depend on the portfolios?</h2>
+    <figure>
+      <img src="img/capm-alpha-by-assets.png" srcset="img/capm-alpha-by-assets-800.png 800w, img/capm-alpha-by-assets.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Grouped bars of mean absolute alpha by model and set of test portfolios. On the three sets sorted by size and another characteristic, the factors cut alpha from 0.15 to 0.20 down to 0.07 to 0.09. On 30 industries alpha rises, from 0.127 under the CAPM to 0.175 and 0.216." width="1600" height="896" loading="lazy" />
+      <figcaption>Mean absolute alpha, per cent a month, 1963-07 to 2026-09.</figcaption>
+    </figure>
+    <p>Size and book-to-market portfolios are a low bar, because the factors are built from the same sorts (Lewellen, Nagel and Shanken, 2010). On industries the pattern reverses: the CAPM is not rejected, and the extra factors raise the mean absolute alpha. The CAPM's rejection comes from portfolios sorted on these characteristics, and the extra factors' gains don't carry over to portfolios formed another way.</p>
+  </section>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>Betas are full-sample within each period, and fitted means use the same data. Errors in the betas bias prices toward zero.</li>
+      <li>The subperiod results are several tests on the same data, with no adjustment for that.</li>
+      <li>French's files change over time as CRSP revises its data, so new files will change these numbers. Over the same months, the current files give an R² of 0.1176 against the assignment's 0.1144.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Kenneth French Data Library, files built from the 202609 CRSP database, 1926-07 to 2026-09. The five-factor file starts in 1963-07, so comparisons of all three models use 759 months from then.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

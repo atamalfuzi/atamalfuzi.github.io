@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>Productivity and pay by sector in Canada | Ata Malfuzi</title>
+  <meta name="description" content="How far pay in Canada follows productivity across 13 sectors and 10 provinces, 1997 to 2024, from open tables and 8.1 million survey records. Python." />
+  <meta property="og:title" content="Productivity and pay by sector in Canada | Ata Malfuzi" />
+  <meta property="og:description" content="How far pay in Canada follows productivity across 13 sectors and 10 provinces, 1997 to 2024, from open tables and 8.1 million survey records. Python." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/canada-productivity-wages.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-productivity.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Line chart since 1997 of productivity, real compensation and real survey wages, ending at 30.9, 31.4 and 27.2 log points." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/canada-productivity-wages.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Productivity and pay by sector in Canada</h1>
+    <p class="lead">This began as a proposal for my labour economics course at Simon Fraser University. It had no results, because it depended on restricted survey access. This version answers its three questions from open data: Statistics Canada's productivity and labour tables for 1997 to 2024, and 8.1 million Labour Force Survey records for 2006 to 2024. It also changes parts of the design, including the standard errors, the deflators and the treatment of minimum wages. Results are as of November 2026.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. These results describe how pay and productivity move together. They are not causal estimates.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/canada_productivity_wages" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_productivity_wages/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#gains">How much of wage gains come from productivity?</a></td><td data-label="Methods">Growth accounting, panel with sector and province-year effects, wild cluster bootstrap</td><td data-label="Answer">Across all 13 sectors, both rose about 31 log points from 1997 to 2024, though compensation was well behind until 2019. Within a sector and province, pay barely follows its own productivity: −0.01% for a 1% rise (−0.06 to 0.04).</td></tr>
+        <tr><td><a href="#driver">Is productivity the main driver?</a></td><td data-label="Methods">Worker regression, decomposition of the change in pay</td><td data-label="Answer">Not one the data can isolate. Sector productivity accounts for 5% of the rise in pay since 2006, or about half if every trend common to all sectors is also credited to it. Education accounts for 25% and minimum wages for 18%.</td></tr>
+        <tr><td><a href="#sectors">Why do sectors differ?</a></td><td data-label="Methods">Variance split, sector estimates, worker-mix adjustment</td><td data-label="Answer">Differences in productivity growth mostly show up in relative prices (77%), with 12% in pay. Who works in a sector explains 52% of pay level differences but 17% of pay growth differences.</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">A log point is about 1% for small changes; 31 log points is a rise of 36%. Ranges are 95%.</p>
+  </section>
+
+  <section class="section" id="gains">
+    <h2>1. How much of wage gains come from productivity?</h2>
+    <ul class="tags"><li>13 business sectors, 1997-2024</li><li>Growth accounting</li><li>Sector and province-year effects</li><li>Wild cluster bootstrap</li></ul>
+    <figure>
+      <img src="img/productivity-aggregate.png" srcset="img/productivity-aggregate-800.png 800w, img/productivity-aggregate.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart since 1997 of productivity, real compensation and real survey wages, ending at 30.9, 31.4 and 27.2 log points. Compensation runs below productivity until the jump in 2020." width="1600" height="896" loading="lazy" />
+      <figcaption>Productivity, real compensation and real survey wages across the 13 sectors, deflated by the consumer price index.</figcaption>
+    </figure>
+    <p>Across the 13 sectors, productivity rose 30.9 log points from 1997 to 2024, and real compensation per hour rose 31.4. The match depends on the end date: through 2019, compensation had risen 24.2 against 29.0 for productivity, and the gap closed only after 2019.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Log points</th><th scope="col">1997-2024</th><th scope="col">1997-2019</th><th scope="col">2019-2024</th></tr></thead>
+      <tbody>
+        <tr><td>Productivity</td><td data-label="1997-2024">30.9</td><td data-label="1997-2019">29.0</td><td data-label="2019-2024">1.9</td></tr>
+        <tr><td>Real total compensation</td><td data-label="1997-2024">31.4</td><td data-label="1997-2019">24.2</td><td data-label="2019-2024">7.3</td></tr>
+        <tr><td>Real survey wage</td><td data-label="1997-2024">27.2</td><td data-label="1997-2019">20.2</td><td data-label="2019-2024">7.1</td></tr>
+      </tbody>
+    </table>
+    <p>Within a sector and province, compared with others in the same province and year, the picture is different. A 1% rise in productivity comes with −0.01% in the survey wage over five years (95% range −0.06 to 0.04), and 0.15% in national accounts compensation per hour (0.08 to 0.31), which shares its hours with productivity. Measured in the sector's own output prices, as Feldstein (2008) recommends, the figures are 0.41% and 0.56%.</p>
+  </section>
+
+  <section class="section" id="driver">
+    <h2>2. Is productivity the main driver?</h2>
+    <ul class="tags"><li>8.1 million worker records, 2006-2024</li><li>Decomposition</li><li>Clustered errors</li></ul>
+    <p>Real pay rose 22.1 log points from 2006 to 2024. A regression on worker records attributes 5% of that to sector productivity, 25% to education and 18% to minimum wages. Another 44% is common to all sectors and may include economy-wide productivity growth, so the range for productivity is 5% to about half. The design can't narrow it.</p>
+    <figure>
+      <img src="img/productivity-wage-change.png" srcset="img/productivity-wage-change-800.png 800w, img/productivity-wage-change.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Waterfall chart of the 22.1 log point rise in pay: education +5.6, other worker traits −0.7, minimum wage +4.1, sector and province mix +2.1, sector productivity +1.1, full-time and permanent jobs +0.3, union coverage −0.2, and year effects common to all +9.8." width="1600" height="864" loading="lazy" />
+      <figcaption>What the model attributes the rise in pay to. This is an accounting, and it doesn't show cause.</figcaption>
+    </figure>
+    <p>Productivity here is measured by sector, province and year, so every worker in a cell shares it. Robust errors, which the proposal planned to use, would make the estimate look about 18 times as precise as clustering by sector does.</p>
+    <figure>
+      <img src="img/productivity-clustering.png" srcset="img/productivity-clustering-800.png 800w, img/productivity-clustering.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="The same productivity estimate of about 0.09 with five ranges. The range is very narrow under robust errors, wider when clustered by sector, province and year or by sector and year, and widest when clustered by sector or with a wild cluster bootstrap, where it runs from about 0 to 0.18." width="1600" height="704" loading="lazy" />
+      <figcaption>The same estimate with 95% ranges under different assumptions about the errors.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="sectors">
+    <h2>3. Why do sectors differ?</h2>
+    <ul class="tags"><li>Variance split</li><li>Sector estimates</li><li>Worker-mix adjustment</li></ul>
+    <p>Sector productivity growth differs far more than pay growth. Of the variance in productivity growth across sectors, 77% lines up with relative output prices, 12% with real compensation and 11% with the labour share. This fits Baumol's (1967) account: workers can move between sectors, so pay grows at similar rates, and slower sectors' prices rise instead.</p>
+    <figure>
+      <img src="img/productivity-sectors.png" srcset="img/productivity-sectors-800.png 800w, img/productivity-sectors.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two scatter charts of the 13 sectors against productivity growth. Real compensation is nearly flat, with a slope of 0.12. Output prices against the consumer price index fall steeply, with a slope of −0.77." width="1600" height="873" loading="lazy" />
+      <figcaption>Growth from 1997-99 to 2017-19 in each of the 13 sectors. Circle area shows hours worked.</figcaption>
+    </figure>
+    <p>Holding worker characteristics fixed removes 52% of the variance in pay levels across sectors, but 17% of the variance in pay growth. Pass-through is highest in labour-intensive services, though measured productivity there may partly reflect pay.</p>
+    <figure>
+      <img src="img/productivity-passthrough.png" srcset="img/productivity-passthrough-800.png 800w, img/productivity-passthrough.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Pass-through estimates and 95% ranges for each of the 13 sectors, from about 0.40 in business support, 0.33 in other services and 0.32 in accommodation and food, down to below zero in utilities and in mining, oil, forestry and fishing. Most ranges include zero." width="1600" height="960" loading="lazy" />
+      <figcaption>Change in the survey wage for a 1% rise in the sector's own productivity, over five years.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section">
+    <h2>What this can't show</h2>
+    <p>Higher pay can raise measured productivity, common shocks can move both, and sector comparisons can't show how far economy-wide gains reach workers as a whole. Timing tests and instruments (the same sector in other provinces and in the US) find no sign of reverse causality, but their ranges are wide and they can't rule it out.</p>
+    <ul>
+      <li>Education, health and public administration are left out, because much of their output is measured from their spending on staff. They held 29% of employees in 2024.</li>
+      <li>Output and hours for a sector and province are estimates, and provincial productivity is noisy, which pulls slopes toward zero.</li>
+      <li>Provinces choose when to raise minimum wages, often when pay is rising, so the minimum wage share may not be the effect of the minimum alone. My <a href="canada-minimum-wage.html">minimum wage project</a> studies this directly.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Statistics Canada tables 36-10-0480, 36-10-0489, 14-10-0064, 14-10-0132 and 18-10-0004; Labour Force Survey public use microdata files, 2006 to 2024; general hourly minimum wage rates from the Government of Canada's minimum wage database; US real value added and employment by industry from the US Bureau of Economic Analysis.</p>
+    <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product. Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>How three filters read Canada's business cycles, and what they make of 2020 | Ata Malfuzi</title>
+  <meta name="description" content="Baxter-King, Hamilton and Hodrick-Prescott filters on Canadian national accounts since 1961, and how each treats the 2020 recession. Python, open data." />
+  <meta property="og:title" content="How three filters read Canada's business cycles, and what they make of 2020 | Ata Malfuzi" />
+  <meta property="og:description" content="Baxter-King, Hamilton and Hodrick-Prescott filters on Canadian national accounts since 1961, and how each treats the 2020 recession. Python, open data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/canada-business-cycles.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-cycles.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Line chart of output with the trend taken out, 2018 to 2024, under three filters. All fall in 2020, to −5.8, −12.3 and −13.9, and the Hamilton filter jumps to +11.5 in 2022." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/canada-business-cycles.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>How three filters read Canada's business cycles, and what they make of 2020</h1>
+    <p class="lead">Economists often describe a business cycle by taking the trend out of GDP and looking at what remains. How you take the trend out matters. I compare three common ways of doing it on Canadian national accounts: the Baxter-King filter, the Hamilton projection and the Hodrick-Prescott filter. This is a redo of an assignment from a graduate macroeconomics course at Simon Fraser University. Data run from 1961 to 2026Q2, and the results describe Statistics Canada's file dated August 28, 2026.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/canada_business_cycles" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_business_cycles/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#parts">How do the parts of output move?</a></td><td data-label="Methods">Three filters on logs</td><td data-label="Answer">Investment swings 3.4 to 3.7 times as far as output and moves with it. Consumption also moves with output. Government purchases are close to unrelated to it.</td></tr>
+        <tr><td><a href="#exports">Are net exports procyclical or countercyclical?</a></td><td data-label="Methods">Shares of trend output, Baxter-King, block bootstrap</td><td data-label="Answer">Weakly countercyclical: a correlation of −0.21 (−0.44 to 0.06), and about zero since 1990.</td></tr>
+        <tr><td><a href="#pandemic">How does each filter treat 2020?</a></td><td data-label="Methods">Five dated recessions, pandemic smoothed out as a test</td><td data-label="Answer">Log output fell 13.6 points. Baxter-King shows −5.8, Hodrick-Prescott −12.3 and Hamilton −13.9. Hamilton then shows +11.5 in 2022Q2, an echo of the fall.</td></tr>
+        <tr><td><a href="#choice">Which filter to use?</a></td><td data-label="Methods">Dating, leakage, real-time revisions</td><td data-label="Answer">Hodrick-Prescott for describing past cycles. Hamilton for reading the latest quarter.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>Explore the three filters</h2>
+    <div class="viz" id="viz-cycles-wrap" hidden>
+      <div class="viz-key" role="group" aria-label="Period">
+        <button type="button" data-cycle-view="all">1961 to 2026</button>
+        <button type="button" data-cycle-view="pandemic">2018 to 2024</button>
+      </div>
+      <canvas id="viz-cycles" role="img" aria-label="Log output with the trend taken out under the Baxter-King, Hamilton and Hodrick-Prescott filters, with recessions shaded. All three fall in 2020, and Hamilton jumps to plus 11.5 per cent in 2022."></canvas>
+      <div class="viz-key" role="group" aria-label="Pick out one filter">
+        <button type="button" data-cycle-filter="bk"><span class="swatch swatch-0" aria-hidden="true"></span>Baxter-King</button>
+        <button type="button" data-cycle-filter="hamilton"><span class="swatch swatch-orange" aria-hidden="true"></span>Hamilton</button>
+        <button type="button" data-cycle-filter="hp"><span class="swatch swatch-green" aria-hidden="true"></span>Hodrick-Prescott</button>
+      </div>
+      <p class="viz-readout" id="viz-cycles-readout" aria-live="polite"></p>
+      <p class="hint">Hover or tap for a quarter's readings, in per cent from trend. Recessions are shaded. Baxter-King has no reading for the first and last 12 quarters, and Hamilton none for the first 11.</p>
+    </div>
+    <noscript><figure>
+      <img src="img/cycles-output-gaps.png" srcset="img/cycles-output-gaps-800.png 800w, img/cycles-output-gaps.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of log output with the trend taken out under three filters, 1961 to 2026, with recessions shaded. Baxter-King and Hodrick-Prescott move together. Hamilton swings about twice as far, and its largest reading is +11.5 in 2022Q2." width="1600" height="896" loading="lazy" />
+      <figcaption>Output under the three filters.</figcaption>
+    </figure></noscript>
+  </section>
+
+  <section class="section" id="parts">
+    <h2>1. How do the parts of output move?</h2>
+    <ul class="tags"><li>Statistics Canada table 36-10-0104</li><li>Quarterly, 1961-2026</li><li>Hodrick-Prescott lambda of 1600</li><li>Baxter-King, 6 to 32 quarters</li></ul>
+    <figure>
+      <img src="img/cycles-hodrick-prescott.png" srcset="img/cycles-hodrick-prescott-800.png 800w, img/cycles-hodrick-prescott.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of output, consumption, investment and government purchases under the Hodrick-Prescott filter, 1961 to 2026, with recessions shaded. Investment swings far more than the others, down to about −28 in 2020." width="1600" height="896" loading="lazy" />
+      <figcaption>The parts of output under Hodrick-Prescott. The same chart for <a href="https://github.com/atamalfuzi/canada_business_cycles/blob/main/figures/baxter_king.png" target="_blank">Baxter-King</a> and <a href="https://github.com/atamalfuzi/canada_business_cycles/blob/main/figures/hamilton.png" target="_blank">Hamilton</a> is on GitHub, on the same vertical scale.</figcaption>
+    </figure>
+    <p>Investment swings 3.4 to 3.7 times as far as output and moves with it. Consumption also moves with output, and government purchases are close to unrelated to it. Through 2019, consumption is the least volatile series under all three filters. With 2020 included, its swings grow to about the size of output's.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Standard deviation in per cent, and correlation with output</th><th scope="col">Baxter-King</th><th scope="col">Hamilton</th><th scope="col">Hodrick-Prescott</th></tr></thead>
+      <tbody>
+        <tr><td>Output</td><td data-label="Baxter-King">1.46, 1.00</td><td data-label="Hamilton">3.19, 1.00</td><td data-label="Hodrick-Prescott">1.56, 1.00</td></tr>
+        <tr><td>Consumption</td><td data-label="Baxter-King">1.37, 0.84</td><td data-label="Hamilton">3.20, 0.81</td><td data-label="Hodrick-Prescott">1.52, 0.82</td></tr>
+        <tr><td>Investment</td><td data-label="Baxter-King">5.43, 0.84</td><td data-label="Hamilton">10.68, 0.82</td><td data-label="Hodrick-Prescott">5.68, 0.81</td></tr>
+        <tr><td>Government purchases</td><td data-label="Baxter-King">1.08, −0.03</td><td data-label="Hamilton">3.21, 0.16</td><td data-label="Hodrick-Prescott">1.21, 0.03</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="exports">
+    <h2>2. Are net exports procyclical or countercyclical?</h2>
+    <figure>
+      <img src="img/cycles-net-exports.png" srcset="img/cycles-net-exports-800.png 800w, img/cycles-net-exports.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of output, consumption, investment, government purchases and net exports as shares of trend output, Baxter-King filtered, 1964 to 2023. Net exports often rise as output falls, and their swings are as large as consumption's." width="1600" height="896" loading="lazy" />
+      <figcaption>Each series divided by the trend of output, then filtered.</figcaption>
+    </figure>
+    <p>Net exports are sometimes negative, so they have no log. Dividing each series by the trend of output gets around this, and it also shows how much each part contributes. On this measure investment accounts for 71% of the variance in output, and consumption for 36%.</p>
+    <p>Net exports are weakly countercyclical. The correlation with output is −0.21, with a 95% range of −0.44 to 0.06, and it is about zero since 1990. They rose during the 1981-82, 2008-09 and 2020 recessions and barely moved in the other two.</p>
+  </section>
+
+  <section class="section" id="pandemic">
+    <h2>3. 2020 against earlier recessions</h2>
+    <figure>
+      <img src="img/cycles-pandemic.png" srcset="img/cycles-pandemic-800.png 800w, img/cycles-pandemic.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of output with the trend taken out, 2018 to 2024, under three filters. Baxter-King falls from 2019 and reaches −5.8. Hodrick-Prescott rises to +2.1 before the fall and reaches −12.3. Hamilton reaches −13.9, then jumps to +11.5 in 2022." width="1600" height="896" loading="lazy" />
+      <figcaption>One fall in output, read three ways.</figcaption>
+    </figure>
+    <p>Log output fell 13.6 points from 2019Q4 to 2020Q2, about four times the average of the four earlier recessions. Baxter-King shows −5.8, about twice its usual low, because it removes much of a fall and rebound that fast. Hodrick-Prescott shows −12.3, and its trend bends down to meet the fall, lifting 2019 by up to 1.7 points. Hamilton shows −13.9, then +11.5 in 2022Q2, when the low quarters of 2020 reach its lags. That is its largest reading in the sample. If the pandemic is replaced with a straight line, 10.6 points of it go away.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Recession</th><th scope="col">Fall in log output</th><th scope="col">Baxter-King low</th><th scope="col">Hamilton low</th><th scope="col">Hodrick-Prescott low</th></tr></thead>
+      <tbody>
+        <tr><td>1974-75</td><td data-label="Fall in log output">1.1</td><td data-label="Baxter-King low">−2.0</td><td data-label="Hamilton low">−3.4</td><td data-label="Hodrick-Prescott low">−2.5</td></tr>
+        <tr><td>1981-82</td><td data-label="Fall in log output">5.5</td><td data-label="Baxter-King low">−4.4</td><td data-label="Hamilton low">−9.3</td><td data-label="Hodrick-Prescott low">−5.3</td></tr>
+        <tr><td>1990-92</td><td data-label="Fall in log output">2.5</td><td data-label="Baxter-King low">−2.1</td><td data-label="Hamilton low">−8.5</td><td data-label="Hodrick-Prescott low">−2.3</td></tr>
+        <tr><td>2008-09</td><td data-label="Fall in log output">4.5</td><td data-label="Baxter-King low">−3.2</td><td data-label="Hamilton low">−6.6</td><td data-label="Hodrick-Prescott low">−3.5</td></tr>
+        <tr><td>2020</td><td data-label="Fall in log output">13.6</td><td data-label="Baxter-King low">−5.8</td><td data-label="Hamilton low">−13.9</td><td data-label="Hodrick-Prescott low">−12.3</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">Log points, or per cent from trend. The low is taken within four quarters of the recession.</p>
+  </section>
+
+  <section class="section" id="choice">
+    <h2>4. Which filter to use</h2>
+    <p>For describing past cycles, I would use Hodrick-Prescott. Its low falls in the dated trough quarter in all five recessions, output is above trend at all five peaks, and 2020 moves other quarters less than it does under the other filters. For reading the latest quarter I would use Hamilton. Hodrick-Prescott's first reading has the wrong sign 37% of the time once later data arrive, against 12% for Hamilton, and Baxter-King has no reading for the last 12 quarters.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Test</th><th scope="col">Baxter-King</th><th scope="col">Hamilton</th><th scope="col">Hodrick-Prescott</th></tr></thead>
+      <tbody>
+        <tr><td>Low falls in the dated trough quarter, of 5 recessions</td><td data-label="Baxter-King">1</td><td data-label="Hamilton">4</td><td data-label="Hodrick-Prescott">5</td></tr>
+        <tr><td>Output above trend at the dated peak, of 5 recessions</td><td data-label="Baxter-King">4</td><td data-label="Hamilton">2</td><td data-label="Hodrick-Prescott">5</td></tr>
+        <tr><td>Largest leakage from 2020 outside the pandemic</td><td data-label="Baxter-King">2.6</td><td data-label="Hamilton">10.6</td><td data-label="Hodrick-Prescott">1.7</td></tr>
+        <tr><td>First reading has the wrong sign</td><td data-label="Baxter-King">no reading</td><td data-label="Hamilton">12%</td><td data-label="Hodrick-Prescott">37%</td></tr>
+        <tr><td>Latest quarter available</td><td data-label="Baxter-King">2023Q2</td><td data-label="Hamilton">2026Q2</td><td data-label="Hodrick-Prescott">2026Q2</td></tr>
+      </tbody>
+    </table>
+    <p>These tests lean toward filters that follow output closely, and the recession dates rest partly on GDP. They also don't test Hamilton's objection that Hodrick-Prescott can create cycles where there are none.</p>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Statistics Canada table 36-10-0104, quarterly, in chained 2017 dollars, seasonally adjusted at annual rates. Recession dates from the C.D. Howe Institute Business Cycle Council.</p>
+    <p>Adapted from Statistics Canada; this does not constitute an endorsement by Statistics Canada of this product.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="cycles-data.js"></script>
+<script src="charts.js"></script>
+</body>
+</html>

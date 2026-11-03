@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>Does narrowly winning a federal riding help a party win it again? | Ata Malfuzi</title>
+  <meta name="description" content="A replication of Kendall and Rekkas on incumbency in the Canadian Parliament, extended through 2025 with data-driven bandwidths and riding links. Python." />
+  <meta property="og:title" content="Does narrowly winning a federal riding help a party win it again? | Ata Malfuzi" />
+  <meta property="og:description" content="A replication of Kendall and Rekkas on incumbency in the Canadian Parliament, extended through 2025 with data-driven bandwidths and riding links. Python." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/canada-incumbency.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-incumbency.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Scatter of the share of candidates who won by their party's margin at the last election, with a jump of 11.6 points at a margin of zero." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/canada-incumbency.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Does narrowly winning a federal riding help a party win it again?</h1>
+    <p class="lead">Parties that win a riding (a federal electoral district) tend to win it again, but mostly because they were strong there already. Comparing candidates who just won with those who just lost separates the advantage of winning from that strength. In 2022 I replicated Kendall and Rekkas's study of this for a course at Simon Fraser University and wrote a critique of it. This project reruns that work in Python, applies current methods, tests the points the critique raised and adds the elections from 2011 to 2025.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/canada_incumbency_rd" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_incumbency_rd/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td>Do the 2022 numbers reproduce?</td><td data-label="Methods">The Stata regressions rewritten in Python, as a test</td><td data-label="Answer">Yes: all 20 estimates, standard errors and sample sizes.</td></tr>
+        <tr><td><a href="#size">How large is the advantage?</a></td><td data-label="Methods">Local linear regression discontinuity, data-driven bandwidth, robust range</td><td data-label="Answer">A narrow win adds 11.6 points to the chance of winning next time (4.9 to 16.0).</td></tr>
+        <tr><td><a href="#bandwidth">Does it depend on the bandwidth?</a></td><td data-label="Methods">The same estimate at 14 bandwidths</td><td data-label="Answer">Little from 5 to 15 points, then it rises with the bandwidth.</td></tr>
+        <tr><td><a href="#since">Has it changed since 2008?</a></td><td data-label="Methods">Riding links across two redistributions</td><td data-label="Answer">Can't tell. It is 15.6 points since 2011 (−1.9 to 27.4), and it runs from 10 to 30 depending on the linking rule.</td></tr>
+        <tr><td><a href="#checks">Does the margin's denominator matter?</a></td><td data-label="Methods">Votes over eligible voters, 2006 to 2025</td><td data-label="Answer">Little: 14.2 points on votes cast and 12.7 on eligible voters.</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">Ranges are 95%. A point here is a percentage point. The estimates describe close races only.</p>
+  </section>
+
+  <section class="section" id="size">
+    <h2>1. How large is the advantage?</h2>
+    <ul class="tags"><li>Liberal and Conservative candidates, 1872-2025</li><li>rdrobust</li><li>Triangular kernel</li><li>Clustered by riding</li></ul>
+    <figure>
+      <img src="img/incumbency-rd-plot.png" srcset="img/incumbency-rd-plot-800.png 800w, img/incumbency-rd-plot.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Scatter of the share of candidates who won by their party's margin in the riding at the last election, in one-point bins. Lines fitted on each side of zero jump from about 43% to about 55%, labelled 0.116 with a 95% range of 0.049 to 0.160." width="1600" height="896" loading="lazy" />
+      <figcaption>Share of candidates who won, by their party's margin last time. Each dot is a one-point bin, sized by the number of candidates.</figcaption>
+    </figure>
+    <p>A narrow win adds 11.6 points to a party's chance of winning the riding next time (95% range 4.9 to 16.0), for Liberal and Conservative candidates from 1872 to 2025. All 20 estimates in the 2022 table reproduce, with their standard errors and sample sizes.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Sample</th><th scope="col">Estimate</th><th scope="col">95% robust range</th><th scope="col">Bandwidth, points</th><th scope="col">Candidates</th></tr></thead>
+      <tbody>
+        <tr><td>1872-2008</td><td data-label="Estimate">0.113</td><td data-label="95% robust range">0.042 to 0.160</td><td data-label="Bandwidth, points">15.2</td><td data-label="Candidates">13,653</td></tr>
+        <tr><td>1872-2025</td><td data-label="Estimate">0.116</td><td data-label="95% robust range">0.049 to 0.160</td><td data-label="Bandwidth, points">14.2</td><td data-label="Candidates">16,519</td></tr>
+        <tr><td>1872-2025, province and parliament effects</td><td data-label="Estimate">0.111</td><td data-label="95% robust range">0.045 to 0.152</td><td data-label="Bandwidth, points">14.4</td><td data-label="Candidates">16,519</td></tr>
+      </tbody>
+    </table>
+    <p>This covers the party's overall advantage. I did not repeat the paper's split between party and individual effects.</p>
+  </section>
+
+  <section class="section" id="bandwidth">
+    <h2>2. Does it depend on the bandwidth?</h2>
+    <p>The critique asked whether the result depends on the two bandwidths the paper reports. It changes little between 5 and 15 points. Past 20 it climbs, because a straight line is being fitted through a curve, and the bias-corrected estimate stays near 0.11. The paper's cubic and quartic fits over ±70% are kept only for comparison, following Gelman and Imbens (2019).</p>
+    <figure>
+      <img src="img/incumbency-bandwidth.png" srcset="img/incumbency-bandwidth-800.png 800w, img/incumbency-bandwidth.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of the estimate at each bandwidth from 2 to 70 points. Two lines stay near 0.10 to 0.12 from about 5 to 15 points, then climb to 0.25 and 0.31 at 70 points. The 95% robust range is wide below 5 points and stays above zero from 3 points up." width="1600" height="896" loading="lazy" />
+      <figcaption>Local linear estimates at each bandwidth, with the 95% robust range shaded.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="since">
+    <h2>3. Has it changed since 2008?</h2>
+    <p>Federal ridings were redrawn before the 2015 and 2025 elections, so most new ridings have no exact predecessor. I linked ridings by their shared voters, using Elections Canada's transposition for 2013 and rebuilding the flows from 2021 polling divisions for 2023. At 75% overlap, 217 of 338 ridings link in 2015 and 283 of 343 in 2025. The rebuilt 2023 flows match Elections Canada's transposed elector counts with a correlation of 0.999.</p>
+    <figure>
+      <img src="img/incumbency-link-rules.png" srcset="img/incumbency-link-rules-800.png 800w, img/incumbency-link-rules.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot and range chart of the estimate for 2011 to 2025 under six linking rules: 0.13 at 50% overlap, 0.16 at 75%, 0.16 at 90%, 0.29 at 99%, 0.30 using only elections on the same map, and 0.10 with transposed margins for every riding. The ranges at 99% and on the same map exclude zero." width="1600" height="896" loading="lazy" />
+      <figcaption>Estimates since 2011 under each linking rule, with 95% robust ranges.</figcaption>
+    </figure>
+    <p>The estimate since 2011 is 15.6 points (−1.9 to 27.4), and it runs from 10 to 30 depending on the linking rule. I can't say that the advantage has changed.</p>
+    <figure>
+      <img src="img/incumbency-eras.png" srcset="img/incumbency-eras-800.png 800w, img/incumbency-eras.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot and range chart of estimates in seven eras from 1872 to 2025, between about 0.01 and 0.21 with no clear trend. Only the range for 1935 to 1958 excludes zero." width="1600" height="896" loading="lazy" />
+      <figcaption>Estimates in each era, each with its own data-driven bandwidth.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="checks">
+    <h2>4. Other checks</h2>
+    <p>Dividing the margin by eligible voters instead of votes cast, as the critique proposed, changes little: 12.7 points against 14.2 for 2006 to 2025. False cutoffs show no jumps, and a narrow win doesn't change whether a party runs again. Two checks are less clean: the density of Conservative margins before 1950, and narrow winners being somewhat less likely to have won two elections back. With about 35 tests, one or two below 5% are expected by chance, though I can't rule out real sorting in the early period.</p>
+    <figure>
+      <img src="img/incumbency-placebo.png" srcset="img/incumbency-placebo-800.png 800w, img/incumbency-placebo.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot and range chart of estimates at twelve false cutoffs from −20 to +20 points. All ranges include zero. The true cutoff at zero shows 0.116, with a range above zero." width="1600" height="896" loading="lazy" />
+      <figcaption>Estimates at made-up cutoffs, with the true cutoff in blue and 95% robust ranges.</figcaption>
+    </figure>
+    <p>Working with the source file also showed that 159 of its 308 winning margins for 2008 are measured against the third-place candidate. This doesn't affect the 2022 numbers, and I take all margins from 2008 on from Elections Canada's tables.</p>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Elections Canada official voting results, 2004 to 2025, transposition of votes, polling division boundaries and poll-by-poll results. The 1867-2008 file is from Kendall and Rekkas, "Incumbency advantages in the Canadian Parliament", <cite>Canadian Journal of Economics</cite> (2012), and isn't redistributed.</p>
+    <p>The results here are derived from copies of these sources and aren't official Elections Canada figures. Contains information licensed under the Open Government Licence - Canada.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

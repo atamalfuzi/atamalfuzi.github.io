@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>Checking my Bitcoin forecasts | Ata Malfuzi</title>
+  <meta name="description" content="A corrected rebuild of my 2022 MA paper on Bitcoin forecasting: the 0.9994 score was look-ahead, and no model beats a forecast of no change. Python." />
+  <meta property="og:title" content="Checking my Bitcoin forecasts | Ata Malfuzi" />
+  <meta property="og:description" content="A corrected rebuild of my 2022 MA paper on Bitcoin forecasting: the 0.9994 score was look-ahead, and no model beats a forecast of no change. Python." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/bitcoin-forecast-check.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-btc.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Two scatter charts of predicted against actual daily returns. With same-day inputs the points follow the diagonal, R² 0.79. With inputs from the day before they form a vertical band around zero, R² −0.02." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/bitcoin-forecast-check.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>Checking my Bitcoin forecasts</h1>
+    <p class="lead">In 2022 I wrote an MA paper at Simon Fraser University comparing ways to forecast Bitcoin's price. It concluded that a linear regression worked best, with a score of 0.9994. I rebuilt it in 2026 to see whether that held up. It didn't, and the reasons are useful for anyone evaluating a forecast. Results are as of 2 November 2026.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. This is a lesson in method. It isn't trading or investment advice.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/btc_forecast_check" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/btc_forecast_check/tree/main/output" target="_blank">All results (CSV)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#leak">Where did 0.9994 come from?</a></td><td data-label="Methods">Same regression, with one problem fixed at a time</td><td data-label="Answer">Look-ahead. R² on daily returns falls from 0.79 to −0.02 once the day's own prices are removed.</td></tr>
+        <tr><td><a href="#scales">Could the paper rank its models by MSE?</a></td><td data-label="Methods">One forecast measured on each scale</td><td data-label="Answer">No. The numbers were on three different scales.</td></tr>
+        <tr><td><a href="#rebuild">Does anything beat a random walk?</a></td><td data-label="Methods">Walk-forward, Diebold-Mariano, Clark-West</td><td data-label="Answer">No. ARIMA and the regression can't be told apart from it, and gradient boosting is worse.</td></tr>
+        <tr><td><a href="#direction">Can direction be forecast?</a></td><td data-label="Methods">Logit, walk-forward calibration, Brier scores</td><td data-label="Answer">Barely. Accuracy of about 51.7% against 51.6% for always saying up.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="leak">
+    <h2>1. Where did 0.9994 come from?</h2>
+    <p>The regression predicted each day's close from that day's open, high, low and volume. The high and low aren't known until the day is over, so this can't be used as a forecast. I don't have the original estimation code, so I rebuilt the setup from the paper's description and its data file, which gives 0.9995 against the 0.9994 reported.</p>
+    <figure>
+      <img src="img/btc-leak.png" srcset="img/btc-leak-800.png 800w, img/btc-leak.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two scatter charts of predicted against actual daily returns. With same-day inputs the points follow the diagonal, R² 0.79. With inputs from the day before they form a vertical band around zero, R² −0.02." width="1600" height="864" loading="lazy" />
+      <figcaption>The same regression on daily returns, with and without same-day inputs, using Bitstamp prices.</figcaption>
+    </figure>
+    <table class="glance">
+      <thead><tr><th scope="col">Inputs</th><th scope="col">Target</th><th scope="col">Validation</th><th scope="col">R², paper's file</th><th scope="col">R², Bitstamp</th></tr></thead>
+      <tbody>
+        <tr><td>Same day</td><td data-label="Target">Price, scaled</td><td data-label="Validation">Random 10%, mean of 200 draws</td><td data-label="R², paper's file">0.9995</td><td data-label="R², Bitstamp">0.9994</td></tr>
+        <tr><td>Same day</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.9947</td><td data-label="R², Bitstamp">0.9943</td></tr>
+        <tr><td>Day before</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.9705</td><td data-label="R², Bitstamp">0.9698</td></tr>
+        <tr><td>No-change forecast</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%</td><td data-label="R², paper's file">0.9713</td><td data-label="R², Bitstamp">0.9703</td></tr>
+        <tr><td>Same day</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.7974</td><td data-label="R², Bitstamp">0.7914</td></tr>
+        <tr><td>Day before</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">−0.0148</td><td data-label="R², Bitstamp">−0.0197</td></tr>
+        <tr><td>No-change forecast</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%</td><td data-label="R², paper's file">−0.0047</td><td data-label="R², Bitstamp">−0.0046</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section" id="scales">
+    <h2>2. Why fixing that wasn't enough</h2>
+    <p>Even without the leak, a regression on price levels scores 0.97, and repeating yesterday's price scores the same. Prices are close to their value the day before, so R² on levels says little.</p>
+    <p>The paper also ranked its models by MSE on three different scales: scaled prices, log returns and, for the logit, a log loss. Those numbers can't be compared. On its own scale, the paper's ARIMA was slightly worse than a forecast of no change.</p>
+  </section>
+
+  <section class="section" id="rebuild">
+    <h2>3. The rebuild</h2>
+    <ul class="tags"><li>3,582 days, January 2017 to November 2026</li><li>Walk-forward</li><li>Diebold-Mariano tests</li><li>Clark-West tests</li></ul>
+    <p>Every model now forecasts the next day's log return, using only what was known at the previous close, and is refit on earlier days only. I compared ARIMA, a lagged regression and gradient boosting with a random walk.</p>
+    <table class="glance">
+      <thead><tr><th scope="col">Model</th><th scope="col">Out-of-sample R² against a random walk</th><th scope="col">Diebold-Mariano p</th></tr></thead>
+      <tbody>
+        <tr><td>ARIMA(4,1,1)</td><td data-label="Out-of-sample R² against a random walk">−0.12%</td><td data-label="Diebold-Mariano p">0.73</td></tr>
+        <tr><td>Lagged regression</td><td data-label="Out-of-sample R² against a random walk">−0.58%</td><td data-label="Diebold-Mariano p">0.13</td></tr>
+        <tr><td>Gradient boosting</td><td data-label="Out-of-sample R² against a random walk">−3.27%</td><td data-label="Diebold-Mariano p">0.001</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="img/btc-skill.png" srcset="img/btc-skill-800.png 800w, img/btc-skill.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of each model's running squared-error gap against a random walk from 2017 to 2026. All three stay at or below zero. ARIMA and the regression stay close to it, and gradient boosting falls furthest." width="1600" height="864" loading="lazy" />
+      <figcaption>Running total of squared-error gaps. Above zero, a model has done better than a no-change forecast so far.</figcaption>
+    </figure>
+    <p>ARIMA and the regression can't be told apart from a random walk, and gradient boosting is measurably worse. A no-change forecast still gets an R² of 0.9985 on price levels, close to the paper's number.</p>
+    <figure>
+      <img src="img/btc-price.png" srcset="img/btc-price-800.png 800w, img/btc-price.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of the last 120 days. The regression's implied price and the no-change forecast overlap, both one day behind the actual close." width="1600" height="864" loading="lazy" />
+      <figcaption>Implied price and the no-change forecast over the last 120 days. This shows the method and says nothing about future prices.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="direction">
+    <h2>4. Can direction be forecast?</h2>
+    <p>The paper's logit had AUCs of 0.54 and 0.51, close to a coin flip, and that was its most reliable result. In the rebuild, after calibrating each model's forecasts on its own past, accuracy is about 51.7% against 51.6% for always saying up. The difference isn't significant.</p>
+    <figure>
+      <img src="img/btc-calibration.png" srcset="img/btc-calibration-800.png 800w, img/btc-calibration.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Four small charts of calibrated probability of an up day against the share of days that went up. Forecasts stay between about 50% and 60%, with wide ranges around each point." width="1600" height="736" loading="lazy" />
+      <figcaption>Calibrated forecasts against outcomes. On the grey line, forecasts match outcomes.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section">
+    <h2>What this does and doesn't show</h2>
+    <ul>
+      <li>The results don't prove that returns can't be forecast: with this many days, a true out-of-sample R² under about 0.7% couldn't be told from zero.</li>
+      <li>They come from one exchange, a daily horizon and a small set of inputs. No costs are modelled because no trading is modelled.</li>
+      <li>The repository's tests fail if any input or forecast changes when later prices change.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Daily BTC/USD candles from Bitstamp's public API, which aren't redistributed. The "paper's file" column comes from my own copy of the Yahoo file the paper used, which isn't redistributed either. The original paper isn't in the repository, and its numbers are quoted there and here.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

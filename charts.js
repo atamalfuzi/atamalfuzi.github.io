@@ -2,10 +2,11 @@
 // pages: canvas drawings with a readout on hover or tap. Data come from balance-data.js (BALANCE), written by trading.py in
 // bc_electricity_balance, gas-data.js (GAS), written by forecast.py in canada_gas_demand, minwage-data.js (MINWAGE), written
 // by site_data.py in canada_minimum_wage, boc-data.js (BOC), written by site_data.py in boc_statements, and smoke-data.js
-// (SMOKE), written by site_data.py in bc_wildfire_smoke. No libraries.
+// (SMOKE), written by site_data.py in bc_wildfire_smoke. cycles-data.js (CYCLES) comes from output_gaps.csv and recessions.csv
+// in canada_business_cycles. No libraries.
 (function () {
-  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined", hasBoc = typeof BOC !== "undefined", hasSmoke = typeof SMOKE !== "undefined";
-  if (!hasBalance && !hasGas && !hasMinwage && !hasBoc && !hasSmoke) return;
+  var hasBalance = typeof BALANCE !== "undefined", hasGas = typeof GAS !== "undefined", hasMinwage = typeof MINWAGE !== "undefined", hasBoc = typeof BOC !== "undefined", hasSmoke = typeof SMOKE !== "undefined", hasCycles = typeof CYCLES !== "undefined";
+  if (!hasBalance && !hasGas && !hasMinwage && !hasBoc && !hasSmoke && !hasCycles) return;
   var BLUE = [42, 120, 214], RED = [200, 65, 59];
   var PATTERN = ["#2a78d6", "#a8a7a2", "#c8413b"], FADED = "#eceeed", INK = "#17201d", MUTED = "#5f6964", RULE = "#e1e7e4";
   var GREY = "#a8a7a2", RAMP = ["#8fb8e8", "#5b97dc", "#2a78d6", "#1d5aa6", "#123b70"];  // RAMP: one blue per period, light to dark
@@ -762,5 +763,84 @@
     picker("data-smoke-threshold", String(threshold), function (v) { threshold = +v; sync(); }, false);
     picker("data-smoke-colour", colourBy, function (v) { colourBy = v; sync(); }, false);
     sync();
+  })();
+
+  // Output with the trend taken out under three filters, for all quarters or around 2020, with one filter picked out
+  if (hasCycles) (function () {
+    var D = CYCLES, view = "all", only = null, active = -1, render;
+    var FILTERS = [["bk", "Baxter-King", PATTERN[0]], ["hamilton", "Hamilton", "#eb6834"], ["hp", "Hodrick-Prescott", "#1baf7a"]];
+    var VIEWS = { all: [0, D.quarters.length - 1], pandemic: [D.quarters.indexOf("2018Q1"), D.quarters.indexOf("2024Q4")] };
+    var L = 34, R = 8, T = 8, B = 22, YMIN = -15, YMAX = 12.5;
+    var readout = document.getElementById("viz-cycles-readout");
+    document.getElementById("viz-cycles-wrap").hidden = false;  // without JavaScript, a static figure stands in
+    function px(i, w) { var v = VIEWS[view]; return L + (i - v[0]) / (v[1] - v[0]) * (w - L - R); }
+    function py(y, h) { return T + (YMAX - y) / (YMAX - YMIN) * (h - T - B); }
+    function signed(v) { return minus((v > 0 ? "+" : "") + v.toFixed(1)); }
+    function draw(ctx, w, h) {
+      var v = VIEWS[view];
+      ctx.textAlign = "right";
+      [-15, -10, -5, 0, 5, 10].forEach(function (y) {
+        ctx.fillStyle = y === 0 ? MUTED : RULE;
+        ctx.fillRect(L, py(y, h), w - L - R, 1);
+        ctx.fillStyle = MUTED;
+        ctx.fillText(minus(y), L - 6, py(y, h));
+      });
+      ctx.fillStyle = RULE;
+      D.recessions.forEach(function (r) {
+        var a = Math.max(D.quarters.indexOf(r[1]), v[0]), b = Math.min(D.quarters.indexOf(r[2]), v[1]);
+        if (a <= b) ctx.fillRect(px(a, w), T, Math.max(px(b, w) - px(a, w), 2), h - T - B);
+      });
+      ctx.textAlign = "center";
+      ctx.fillStyle = MUTED;
+      var every = view === "all" ? (w < 480 ? 20 : 10) : (w < 480 ? 2 : 1);
+      D.quarters.forEach(function (q, i) {
+        var y = +q.slice(0, 4);
+        if (i >= v[0] && i <= v[1] && q.slice(4) === "Q1" && y % every === 0) ctx.fillText(String(y), px(i, w), h - B / 2 + 2);
+      });
+      FILTERS.slice().sort(function (a, b) { return (a[0] === only) - (b[0] === only); }).forEach(function (f) {
+        ctx.strokeStyle = only === null || only === f[0] ? f[2] : FADED;
+        ctx.lineWidth = only === f[0] ? 2.5 : 1.6;
+        ctx.beginPath();
+        var on = false;
+        for (var i = v[0]; i <= v[1]; i++) {
+          var y = D[f[0]][i];
+          if (y === null) { on = false; continue; }
+          if (on) ctx.lineTo(px(i, w), py(y, h)); else ctx.moveTo(px(i, w), py(y, h));
+          on = true;
+        }
+        ctx.stroke();
+      });
+      if (active >= 0) {
+        ctx.fillStyle = INK;
+        ctx.fillRect(px(active, w), T, 1, h - T - B);
+      }
+    }
+    function hover(x, y, w) {
+      var v = VIEWS[view], i = Math.round(v[0] + (x - L) / (w - L - R) * (v[1] - v[0]));
+      if (i < v[0] || i > v[1]) { active = -1; render(); return null; }
+      if (i !== active) { active = i; render(); }
+      var rec = D.recessions.filter(function (r) { return i >= D.quarters.indexOf(r[1]) && i <= D.quarters.indexOf(r[2]); })[0];
+      return D.quarters[i] + (rec ? ", " + rec[0] + " recession" : "") + "\n" + FILTERS.map(function (f) {
+        return f[1] + ": " + (D[f[0]][i] === null ? "no reading" : signed(D[f[0]][i]) + "%");
+      }).join("\n");
+    }
+    function update() {
+      var v = VIEWS[view];
+      readout.textContent = FILTERS.filter(function (f) { return only === null || only === f[0]; }).map(function (f) {
+        var lo = null, hi = null;
+        for (var i = v[0]; i <= v[1]; i++) {
+          var y = D[f[0]][i];
+          if (y === null) continue;
+          if (lo === null || y < D[f[0]][lo]) lo = i;
+          if (hi === null || y > D[f[0]][hi]) hi = i;
+        }
+        return f[1] + ": lowest " + signed(D[f[0]][lo]) + " in " + D.quarters[lo] + ", highest " + signed(D[f[0]][hi]) + " in " + D.quarters[hi] + ".";
+      }).join(" ");
+      if (render) render();
+    }
+    picker("data-cycle-view", view, function (p) { view = p; active = -1; update(); }, false);
+    picker("data-cycle-filter", only, function (p) { only = p; update(); }, true);
+    render = chart("viz-cycles", 340, draw, hover);
+    update();
   })();
 })();

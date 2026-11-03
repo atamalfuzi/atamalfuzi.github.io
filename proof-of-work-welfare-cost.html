@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>The welfare cost of Proof of Work, revisited | Ata Malfuzi</title>
+  <meta name="description" content="A corrected 2026 re-analysis of my 2021 MA thesis on the welfare cost of Bitcoin and Ethereum. Python, public chain data." />
+  <meta property="og:title" content="The welfare cost of Proof of Work, revisited | Ata Malfuzi" />
+  <meta property="og:description" content="A corrected 2026 re-analysis of my 2021 MA thesis on the welfare cost of Bitcoin and Ethereum. Python, public chain data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://atamalfuzi.github.io/proof-of-work-welfare-cost.html" />
+  <meta property="og:image" content="https://atamalfuzi.github.io/img/og-pow.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Bar chart of welfare cost by source: Bitcoin 2015 1.43%, Ethereum 2020 as run in the thesis 2.18%, and corrected on 2020 data Bitcoin 0.74% and Ethereum 0.57%." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://atamalfuzi.github.io/proof-of-work-welfare-cost.html" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav">
+  <div class="nav-inner container">
+    <a href="/" class="nav-logo">Ata Malfuzi</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" class="active" aria-current="page">Portfolio</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container layout inner">
+  <aside class="profile" aria-label="Profile">
+    <img class="avatar" src="img/avatar.jpg" alt="Ata Malfuzi" width="280" height="280" />
+    <p class="profile-name">Ata Malfuzi</p>
+    <p class="profile-bio">Economist and data scientist</p>
+    <ul class="profile-links">
+      <li><a href="mailto:atamalfuzi@gmail.com"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/></svg><span>Email</span></a></li>
+      <li><a href="https://linkedin.com/in/ata-malfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5v6M8 7.6v.1M11.5 16.5v-6M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6v3.5"/></svg><span>LinkedIn</span></a></li>
+      <li><a href="https://github.com/atamalfuzi" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 8-4 4 4 4M15.5 8l4 4-4 4M13.5 6l-3 12"/></svg><span>GitHub</span></a></li>
+      <li><a href="https://scholar.google.com/citations?user=DN48TO8AAAAJ" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.6V16c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2v-4.4"/></svg><span>Google Scholar</span></a></li>
+      <li><a href="https://econlaunch.ca/#mentoring-book" target="_blank"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg><span>Book a career chat</span></a></li>
+    </ul>
+    <ul class="profile-facts">
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span>Vancouver, BC</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 12.5h17"/></svg><span>Environment and Climate Change Canada</span></li>
+      <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5M5 10.5v6.5M9.7 10.5v6.5M14.3 10.5v6.5M19 10.5v6.5M3.5 19.5h17"/></svg><span>SESIT Group, University of Victoria</span></li>
+    </ul>
+  </aside>
+
+<main id="main">
+<article class="project">
+  <div class="page-top">
+    <a class="back" href="projects.html">Back to portfolio</a>
+    <h1>The welfare cost of Proof of Work, revisited</h1>
+    <p class="lead">My 2021 MA thesis at Allameh Tabataba'i University applied Chiu and Koeppl's model of Proof-of-Work payments to Ethereum and compared it with Bitcoin. It reported a welfare cost of 2.17% of consumption for Ethereum and 1.43% for Bitcoin, and concluded that Bitcoin was the better monetary system. Checking it in 2026, I found errors in the Ethereum inputs that decided that answer. This page states them and reports what the model gives without them.</p>
+    <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
+    <div class="links-row"><a href="https://github.com/atamalfuzi/pow_welfare_cost" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/pow_welfare_cost/tree/main/results" target="_blank">All results (CSV)</a><a href="https://github.com/atamalfuzi/pow_welfare_cost/blob/main/thesis/malfuzi_2021_ma_thesis.pdf" target="_blank">The 2021 thesis, in Persian (PDF)</a></div>
+  </div>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <table class="glance">
+      <thead><tr><th scope="col">Question</th><th scope="col">2021 thesis</th><th scope="col">Corrected</th></tr></thead>
+      <tbody>
+        <tr><td>Welfare cost, Bitcoin</td><td data-label="2021 thesis">1.43% (2015 data)</td><td data-label="Corrected">0.74% (2020 data)</td></tr>
+        <tr><td>Welfare cost, Ethereum</td><td data-label="2021 thesis">2.17% (2020 data)</td><td data-label="Corrected">0.57% (2020 data)</td></tr>
+        <tr><td>Which costs less?</td><td data-label="2021 thesis">Bitcoin</td><td data-label="Corrected">Ethereum, by a modest margin, on the same year</td></tr>
+        <tr><td>Multiple of a cash system with 2% inflation, Bitcoin and Ethereum</td><td data-label="2021 thesis">478× and 725×</td><td data-label="Corrected">136× and 476×</td></tr>
+        <tr><td>Inflation with the same welfare, Bitcoin and Ethereum</td><td data-label="2021 thesis">234% and 355%</td><td data-label="Corrected">83% and 215%</td></tr>
+      </tbody>
+    </table>
+    <p class="notes">Welfare cost is the share of consumption people would give up to avoid the system's costs, against an ideal payment system.</p>
+  </section>
+
+  <section class="section" id="wrong">
+    <h2>What was wrong</h2>
+    <p>The Bitcoin number reproduces: this code gives 1.43% from the same inputs. The Ethereum number does not survive a check of its inputs.</p>
+    <figure>
+      <img src="img/pow-audit.png" srcset="img/pow-audit-800.png 800w, img/pow-audit.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot chart of the Ethereum estimate as each correction is added. It is 2.18% as run, 58.74% with the sigma the thesis tables print, 3.10% with real volume, 1.11% with the real fee share, 0.49% with an annual discount of 0.97, and 0.57% with actual issuance and measured transfer sizes. A dashed line marks Bitcoin's 2015 benchmark of 1.43%." width="1600" height="832" loading="lazy" />
+      <figcaption>Ethereum's estimate as each correction is added, on a log scale. The code as run gives 2.18%, against the 2.17% the thesis reports.</figcaption>
+    </figure>
+    <ul>
+      <li><strong>Volume per block.</strong> The code used the per-day volume as the per-block volume. That made sigma, the daily chance of a trade, 4.71, which is impossible for a probability. The thesis's table prints 0.0008, but that is not what was run, and running it gives 58.7%.</li>
+      <li><strong>Volume itself.</strong> The workbook divided the transfer count by the mean size where it should multiply. Real 2020 volume is about 3.118 million ETH a day, so sigma is about 0.028.</li>
+      <li><strong>Fee share.</strong> The thesis used 2.22%. Total fees were 4,164 ETH a day, so the share is 0.13%.</li>
+      <li><strong>Discounting.</strong> The code reused Bitcoin's discount per 10-minute block on 15-second blocks, which means an annual discount factor of 0.296 where 0.97 was intended.</li>
+      <li><strong>Different years.</strong> Bitcoin was 2015 data and Ethereum 2020. Bitcoin's subsidy fell from 25 to 6.25 coins per block in between.</li>
+      <li><strong>Scaled results.</strong> Ethereum's 725× and 354.5% were not computed. As the thesis says, they are Bitcoin's figures multiplied by 2.17/1.43.</li>
+    </ul>
+    <p>The first and third errors are why the thesis's number looks reasonable: with a sigma of 4.71, the cost is almost exactly the 2.22% fee share.</p>
+  </section>
+
+  <section class="section" id="corrected">
+    <h2>The corrected result</h2>
+    <ul class="tags"><li>Chiu and Koeppl model</li><li>2020 data for both coins</li><li>Transfer sizes from chain data</li><li>Resampled days</li></ul>
+    <figure>
+      <img src="img/pow-same-year.png" srcset="img/pow-same-year-800.png 800w, img/pow-same-year.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Stacked bars of welfare cost by source. Bitcoin 2015 is 1.43% and Ethereum 2020 as run in the thesis is 2.18%, nearly all mining. Corrected, Bitcoin 2020 is 0.74%, with 0.54% mining and 0.20% waiting, and Ethereum 2020 is 0.57%, nearly all mining." width="1600" height="832" loading="lazy" />
+      <figcaption>Welfare cost by source. Mining cost is close to miner revenue divided by transfer volume.</figcaption>
+    </figure>
+    <table class="glance">
+      <thead><tr><th scope="col">2020</th><th scope="col">Bitcoin</th><th scope="col">Ethereum</th></tr></thead>
+      <tbody>
+        <tr><td>Daily chance of a trade (sigma)</td><td data-label="Bitcoin">0.0131</td><td data-label="Ethereum">0.0279</td></tr>
+        <tr><td>Annual supply growth</td><td data-label="Bitcoin">2.49%</td><td data-label="Ethereum">4.56%</td></tr>
+        <tr><td>Fee share of transfer value</td><td data-label="Bitcoin">0.030%</td><td data-label="Ethereum">0.134%</td></tr>
+        <tr><td>Welfare cost</td><td data-label="Bitcoin">0.74%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Of which mining</td><td data-label="Bitcoin">0.54%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Of which waiting for confirmations</td><td data-label="Bitcoin">0.20%</td><td data-label="Ethereum">0.01%</td></tr>
+        <tr><td>Of which less trade from inflation and fees</td><td data-label="Bitcoin">0.01%</td><td data-label="Ethereum">under 0.01%</td></tr>
+        <tr><td>95% range from resampling days</td><td data-label="Bitcoin">0.72% to 0.75%</td><td data-label="Ethereum">0.57% to 0.58%</td></tr>
+        <tr><td>Value-weighted wait</td><td data-label="Bitcoin">23 blocks, just under 4 hours</td><td data-label="Ethereum">39 blocks, about 9 minutes</td></tr>
+      </tbody>
+    </table>
+    <p>Mining costs are about equal. The gap comes from waiting: Ethereum's large transfers wait more blocks but only minutes, and Bitcoin's wait hours.</p>
+    <p>The multiple and the inflation figure go the other way, and they shouldn't be used to rank the coins. Inflation hurts less when money changes hands more often. Ethereum's sigma is about twice Bitcoin's, so its 2% benchmark cost is much smaller and the same loss looks like a larger multiple.</p>
+  </section>
+
+  <section class="section" id="sensitivity">
+    <h2>How firm is the new ranking?</h2>
+    <figure>
+      <img src="img/pow-sensitivity.png" srcset="img/pow-sensitivity-800.png 800w, img/pow-sensitivity.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Dot chart of Bitcoin and Ethereum's 2020 welfare cost under 13 choices. Ethereum is lower in every row, by up to 0.44 points on blockchain.com volume, and the two nearly touch without Bitcoin's transfers over 1,000 coins and with thesis-era size tables." width="1600" height="1024" loading="lazy" />
+      <figcaption>Same-year estimates under other choices. Each row changes one choice from the baseline.</figcaption>
+    </figure>
+    <table class="glance">
+      <thead><tr><th scope="col">Change from the baseline</th><th scope="col">Bitcoin</th><th scope="col">Ethereum</th></tr></thead>
+      <tbody>
+        <tr><td>Baseline</td><td data-label="Bitcoin">0.74%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Bitcoin on blockchain.com volume, Chiu and Koeppl's source</td><td data-label="Bitcoin">1.01%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Bitcoin after the May 2020 halving only</td><td data-label="Bitcoin">0.64%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Own on-chain volume for both</td><td data-label="Bitcoin">0.56%</td><td data-label="Ethereum">0.41%</td></tr>
+        <tr><td>Bitcoin without transfers of 10,000 BTC or more</td><td data-label="Bitcoin">0.63%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Bitcoin without transfers of 1,000 BTC or more</td><td data-label="Bitcoin">0.58%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Ethereum top-level transactions only</td><td data-label="Bitcoin">0.74%</td><td data-label="Ethereum">0.70%</td></tr>
+        <tr><td>Thesis-era transfer size tables</td><td data-label="Bitcoin">0.57%</td><td data-label="Ethereum">0.57%</td></tr>
+        <tr><td>Annual discount 0.95</td><td data-label="Bitcoin">0.88%</td><td data-label="Ethereum">0.58%</td></tr>
+        <tr><td>Annual discount 0.99</td><td data-label="Bitcoin">0.61%</td><td data-label="Ethereum">0.57%</td></tr>
+      </tbody>
+    </table>
+    <p>Ethereum is lower under each alternative I tried, though barely in some. On the sampled days, 1,303 transfers of 10,000 BTC or more hold 67% of measured Bitcoin value, and many of them are probably large holders moving their own coins, which aren't payments. Without everything from 1,000 BTC, the two are level. Bitcoin's volume measures alone differ by a factor of three. I read this as: the thesis's ranking does not hold, Ethereum was somewhat cheaper in 2020, and the data don't support a confident claim about how much.</p>
+  </section>
+
+  <section class="section" id="rewards">
+    <h2>Rewards, fees and later years</h2>
+    <figure>
+      <img src="img/pow-rewards.png" srcset="img/pow-rewards-800.png 800w, img/pow-rewards.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two line charts. Left: welfare cost falls as the miner reward falls, to a low of about 0.52% for Bitcoin at 0.36 times its 2020 reward and 0.06% for Ethereum at 0.04 times. Right: cost rises about one for one with the fee share for both coins." width="1600" height="768" loading="lazy" />
+      <figcaption>Cost as rewards and fees change, with volume and transfer sizes held at 2020 values.</figcaption>
+    </figure>
+    <p>Each extra point of fee share adds about a point of cost, and paying the same reward through fees or new coins makes almost no difference. Lower rewards cut the cost until waiting takes over. Ethereum's low point flatters it, because the model leaves out network delays and the stale blocks that short blocks cause.</p>
+    <figure>
+      <img src="img/pow-halvings.png" srcset="img/pow-halvings-800.png 800w, img/pow-halvings.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Stacked bars of Bitcoin's welfare cost at each subsidy per block: 1.87% at 12.5 coins, 0.99% at 6.25, 0.56% at 3.125, 0.36% at 1.5625, and 0.29% at both 0.78125 and 0.390625. Mining shrinks and waiting grows at each step." width="1600" height="768" loading="lazy" />
+      <figcaption>Bitcoin's cost at each subsidy, holding volume, fees and transfer sizes at 2025 values.</figcaption>
+    </figure>
+    <p>On blockchain.com's volume, the only measure still public for these years, Bitcoin's cost fell from 1.01% in 2020 to 0.56% in 2025. Further halvings help until a subsidy of about 0.78 coins per block. Holding volume fixed over decades is a strong assumption.</p>
+    <p>The model does not apply to Ethereum after the Merge, because its double-spend limit and mining cost come from a hash race. I give only a rough range for 2025, 0.01% to 0.10%, which does not come from the model.</p>
+  </section>
+
+  <section class="section">
+    <h2>Limits</h2>
+    <ul>
+      <li>Transfers are not all payments. Exchange movements and contract activity count as volume, and the result depends directly on how much of it does.</li>
+      <li>Ethereum's volume counts ether only. Token transfers pay fees but their value isn't in the denominator, which overstates Ethereum's cost.</li>
+      <li>Volume does not respond to rewards or fees, and prices do not move.</li>
+      <li>Mining cost counts resources equal to miner revenue. It leaves out effects on anyone outside the model, such as emissions.</li>
+      <li>Waiting cost scales with the model's utility shifter, which has no empirical anchor.</li>
+    </ul>
+  </section>
+
+  <section class="section notes">
+    <h2>Data</h2>
+    <p>Supply, issuance, fees, volume and counts from Coin Metrics community data; Bitcoin estimated transaction value from blockchain.com; transfer sizes from AWS Public Blockchain Data. Raw Coin Metrics files aren't redistributed. The model is from Chiu and Koeppl, "The Economics of Cryptocurrencies: Bitcoin and Beyond", <cite>Canadian Journal of Economics</cite> (2022). The Python implementation is my own.</p>
+  </section>
+</article>
+</main>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>&copy; <span class="yr">2026</span> Ata Malfuzi, Vancouver</span>
+    <span>Economist and data scientist</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

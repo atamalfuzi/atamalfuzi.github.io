@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>Testing the CAPM and the Fama-French factor models through 2026</h1>
-    <p class="lead">Does the capital asset pricing model (CAPM) hold up on US stock returns through the latest available month, and how much do the Fama-French three- and five-factor models add? This is a redo of an exercise from a graduate financial economics course at Simon Fraser University, on data through September 2026. It reproduces the original result, then tests all three models. Results are as of November 2026 and describe files built from the 202609 CRSP database.</p>
+    <p class="lead">Does the capital asset pricing model (CAPM) hold up on US stock returns through the latest available month, and how much do the Fama-French three- and five-factor models add? It starts by reproducing a result I first got in 2021, then tests all three models on data through September 2026. Results are as of November 2026 and describe files built from the 202609 CRSP database.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. It tests models on past returns and isn't investment advice.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/capm_factor_tests" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/capm_factor_tests/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -73,7 +73,7 @@
     <table class="glance">
       <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
       <tbody>
-        <tr><td>Does the old result reproduce?</td><td data-label="Methods">The assignment's regression on its own files</td><td data-label="Answer">Yes: R² 0.1144 and slope 0.3993. On current files through 2026-09, R² is 0.098.</td></tr>
+        <tr><td>Does my 2021 result reproduce?</td><td data-label="Methods">The 2021 regression on its original files</td><td data-label="Answer">Yes: R² 0.1144 and slope 0.3993. On current files through 2026-09, R² is 0.098.</td></tr>
         <tr><td><a href="#capm">Does the CAPM hold up?</a></td><td data-label="Methods">GRS, Fama-MacBeth with Shanken errors</td><td data-label="Answer">No. GRS rejects it (p below 0.001), and since 1963 the slope on beta is negative.</td></tr>
         <tr><td><a href="#factors">How much do the factors add?</a></td><td data-label="Methods">Same tests, spanning regressions, Hansen-Jagannathan distance</td><td data-label="Answer">Since 1963, R² goes from 0.08 to 0.66 to 0.75, and mean absolute alpha from 0.19 to 0.09 to 0.09. GRS rejects all three.</td></tr>
         <tr><td><a href="#stable">Is that stable?</a></td><td data-label="Methods">Subperiods</td><td data-label="Answer">No. The CAPM is not rejected before 1963, and since 2009 no model's R² is above 0.16.</td></tr>
@@ -133,7 +133,7 @@
     <ul>
       <li>Betas are full-sample within each period, and fitted means use the same data. Errors in the betas bias prices toward zero.</li>
       <li>The subperiod results are several tests on the same data, with no adjustment for that.</li>
-      <li>French's files change over time as CRSP revises its data, so new files will change these numbers. Over the same months, the current files give an R² of 0.1176 against the assignment's 0.1144.</li>
+      <li>French's files change over time as CRSP revises its data, so new files will change these numbers. Over the same months, the current files give an R² of 0.1176 against 0.1144 in 2021.</li>
     </ul>
   </section>
 

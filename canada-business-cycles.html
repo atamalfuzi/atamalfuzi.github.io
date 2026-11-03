@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>How three filters read Canada's business cycles, and what they make of 2020</h1>
-    <p class="lead">Economists often describe a business cycle by taking the trend out of GDP and looking at what remains. How you take the trend out matters. I compare three common ways of doing it on Canadian national accounts: the Baxter-King filter, the Hamilton projection and the Hodrick-Prescott filter. This is a redo of an assignment from a graduate macroeconomics course at Simon Fraser University. Data run from 1961 to 2026Q2, and the results describe Statistics Canada's file dated August 28, 2026.</p>
+    <p class="lead">Canada's economy has grown by about 3% a year on average since 1961, but not steadily. The business cycle is the rise and fall around that growth. To measure it you first decide what normal output is at each date, called the trend, and then measure how far actual output is above or below it. I compare three common ways of doing this on Canadian national accounts: the Hodrick-Prescott filter, the Baxter-King filter and the Hamilton projection. Data run from 1961 to 2026Q2, and the results describe Statistics Canada's file dated August 28, 2026.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/canada_business_cycles" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_business_cycles/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -79,6 +79,15 @@
         <tr><td><a href="#choice">Which filter to use?</a></td><td data-label="Methods">Dating, leakage, real-time revisions</td><td data-label="Answer">Hodrick-Prescott for describing past cycles. Hamilton for reading the latest quarter.</td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section class="section" id="filters">
+    <h2>How the three filters work</h2>
+    <figure>
+      <img src="img/cycles-trends.png" srcset="img/cycles-trends-800.png 800w, img/cycles-trends.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of output from 2005 to 2026 in trillions of 2017 dollars, with the Hodrick-Prescott trend, a smooth line through it, and Hamilton's prediction from two years earlier, which dips in 2022 after the 2020 fall. Output falls below both lines in 2008-09 and 2020." width="1600" height="896" loading="lazy" />
+      <figcaption>What each filter treats as normal. The cycle is the gap between output and each line.</figcaption>
+    </figure>
+    <p>Hodrick-Prescott draws a smooth curve through the data, and its reading of recent years can change as new data arrive. Baxter-King keeps only movements that repeat every one and a half to eight years, and has no value for the first and last three years. Hamilton compares output with what you would have predicted two years earlier from its own past values, so it uses only the past.</p>
   </section>
 
   <section class="section">

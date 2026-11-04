@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'" />
   <title>Checking my Bitcoin forecasts | Ata Malfuzi</title>
-  <meta name="description" content="A corrected rebuild of my 2022 MA paper on Bitcoin forecasting: the 0.9994 score was look-ahead, and no model beats a forecast of no change. Python." />
+  <meta name="description" content="Why a Bitcoin price forecast scoring 0.9994 was look-ahead, and whether any model beats a forecast of no change when tested properly. Python." />
   <meta property="og:title" content="Checking my Bitcoin forecasts | Ata Malfuzi" />
-  <meta property="og:description" content="A corrected rebuild of my 2022 MA paper on Bitcoin forecasting: the 0.9994 score was look-ahead, and no model beats a forecast of no change. Python." />
+  <meta property="og:description" content="Why a Bitcoin price forecast scoring 0.9994 was look-ahead, and whether any model beats a forecast of no change when tested properly. Python." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://atamalfuzi.github.io/bitcoin-forecast-check.html" />
   <meta property="og:image" content="https://atamalfuzi.github.io/img/og-btc.png" />
@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>Checking my Bitcoin forecasts</h1>
-    <p class="lead">In 2022 I wrote an MA paper at Simon Fraser University comparing ways to forecast Bitcoin's price. It concluded that a linear regression worked best, with a score of 0.9994. I rebuilt it in 2026 to see whether that held up. It didn't, and the reasons are useful for anyone evaluating a forecast. Results are as of 2 November 2026.</p>
+    <p class="lead">In an unpublished 2022 study I compared ways to forecast Bitcoin's daily price and concluded that a linear regression worked best, with a score of 0.9994. I rebuilt it in 2026 to see whether that held up. It didn't, and the reasons are useful for anyone evaluating a forecast. Results are as of 2 November 2026.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. This is a lesson in method. It isn't trading or investment advice.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/btc_forecast_check" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/btc_forecast_check/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -74,7 +74,7 @@
       <thead><tr><th scope="col">Question</th><th scope="col">Methods</th><th scope="col">Answer</th></tr></thead>
       <tbody>
         <tr><td><a href="#leak">Where did 0.9994 come from?</a></td><td data-label="Methods">Same regression, with one problem fixed at a time</td><td data-label="Answer">Look-ahead. R² on daily returns falls from 0.79 to −0.02 once the day's own prices are removed.</td></tr>
-        <tr><td><a href="#scales">Could the paper rank its models by MSE?</a></td><td data-label="Methods">One forecast measured on each scale</td><td data-label="Answer">No. The numbers were on three different scales.</td></tr>
+        <tr><td><a href="#scales">Could the 2022 study rank its models by MSE?</a></td><td data-label="Methods">One forecast measured on each scale</td><td data-label="Answer">No. The numbers were on three different scales.</td></tr>
         <tr><td><a href="#rebuild">Does anything beat a random walk?</a></td><td data-label="Methods">Walk-forward, Diebold-Mariano, Clark-West</td><td data-label="Answer">No. ARIMA and the regression can't be told apart from it, and gradient boosting is worse.</td></tr>
         <tr><td><a href="#direction">Can direction be forecast?</a></td><td data-label="Methods">Logit, walk-forward calibration, Brier scores</td><td data-label="Answer">Barely. Accuracy of about 51.7% against 51.6% for always saying up.</td></tr>
       </tbody>
@@ -83,21 +83,21 @@
 
   <section class="section" id="leak">
     <h2>1. Where did 0.9994 come from?</h2>
-    <p>The regression predicted each day's close from that day's open, high, low and volume. The high and low aren't known until the day is over, so this can't be used as a forecast. I don't have the original estimation code, so I rebuilt the setup from the paper's description and its data file, which gives 0.9995 against the 0.9994 reported.</p>
+    <p>The regression predicted each day's close from that day's open, high, low and volume. The high and low aren't known until the day is over, so this can't be used as a forecast. I don't have the original estimation code, so I rebuilt the setup from the study's description and its data file, which gives 0.9995 against the 0.9994 reported.</p>
     <figure>
       <img src="img/btc-leak.png" srcset="img/btc-leak-800.png 800w, img/btc-leak.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Two scatter charts of predicted against actual daily returns. With same-day inputs the points follow the diagonal, R² 0.79. With inputs from the day before they form a vertical band around zero, R² −0.02." width="1600" height="864" loading="lazy" />
       <figcaption>The same regression on daily returns, with and without same-day inputs, using Bitstamp prices.</figcaption>
     </figure>
     <table class="glance">
-      <thead><tr><th scope="col">Inputs</th><th scope="col">Target</th><th scope="col">Validation</th><th scope="col">R², paper's file</th><th scope="col">R², Bitstamp</th></tr></thead>
+      <thead><tr><th scope="col">Inputs</th><th scope="col">Target</th><th scope="col">Validation</th><th scope="col">R², 2022 file</th><th scope="col">R², Bitstamp</th></tr></thead>
       <tbody>
-        <tr><td>Same day</td><td data-label="Target">Price, scaled</td><td data-label="Validation">Random 10%, mean of 200 draws</td><td data-label="R², paper's file">0.9995</td><td data-label="R², Bitstamp">0.9994</td></tr>
-        <tr><td>Same day</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.9947</td><td data-label="R², Bitstamp">0.9943</td></tr>
-        <tr><td>Day before</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.9705</td><td data-label="R², Bitstamp">0.9698</td></tr>
-        <tr><td>No-change forecast</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%</td><td data-label="R², paper's file">0.9713</td><td data-label="R², Bitstamp">0.9703</td></tr>
-        <tr><td>Same day</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">0.7974</td><td data-label="R², Bitstamp">0.7914</td></tr>
-        <tr><td>Day before</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², paper's file">−0.0148</td><td data-label="R², Bitstamp">−0.0197</td></tr>
-        <tr><td>No-change forecast</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%</td><td data-label="R², paper's file">−0.0047</td><td data-label="R², Bitstamp">−0.0046</td></tr>
+        <tr><td>Same day</td><td data-label="Target">Price, scaled</td><td data-label="Validation">Random 10%, mean of 200 draws</td><td data-label="R², 2022 file">0.9995</td><td data-label="R², Bitstamp">0.9994</td></tr>
+        <tr><td>Same day</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², 2022 file">0.9947</td><td data-label="R², Bitstamp">0.9943</td></tr>
+        <tr><td>Day before</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², 2022 file">0.9705</td><td data-label="R², Bitstamp">0.9698</td></tr>
+        <tr><td>No-change forecast</td><td data-label="Target">Price</td><td data-label="Validation">Last 10%</td><td data-label="R², 2022 file">0.9713</td><td data-label="R², Bitstamp">0.9703</td></tr>
+        <tr><td>Same day</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², 2022 file">0.7974</td><td data-label="R², Bitstamp">0.7914</td></tr>
+        <tr><td>Day before</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%, scaled on the past</td><td data-label="R², 2022 file">−0.0148</td><td data-label="R², Bitstamp">−0.0197</td></tr>
+        <tr><td>No-change forecast</td><td data-label="Target">Log return</td><td data-label="Validation">Last 10%</td><td data-label="R², 2022 file">−0.0047</td><td data-label="R², Bitstamp">−0.0046</td></tr>
       </tbody>
     </table>
   </section>
@@ -105,7 +105,7 @@
   <section class="section" id="scales">
     <h2>2. Why fixing that wasn't enough</h2>
     <p>Even without the leak, a regression on price levels scores 0.97, and repeating yesterday's price scores the same. Prices are close to their value the day before, so R² on levels says little.</p>
-    <p>The paper also ranked its models by MSE on three different scales: scaled prices, log returns and, for the logit, a log loss. Those numbers can't be compared. On its own scale, the paper's ARIMA was slightly worse than a forecast of no change.</p>
+    <p>The 2022 study also ranked its models by MSE on three different scales: scaled prices, log returns and, for the logit, a log loss. Those numbers can't be compared. On its own scale, its ARIMA was slightly worse than a forecast of no change.</p>
   </section>
 
   <section class="section" id="rebuild">
@@ -124,7 +124,7 @@
       <img src="img/btc-skill.png" srcset="img/btc-skill-800.png 800w, img/btc-skill.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of each model's running squared-error gap against a random walk from 2017 to 2026. All three stay at or below zero. ARIMA and the regression stay close to it, and gradient boosting falls furthest." width="1600" height="864" loading="lazy" />
       <figcaption>Running total of squared-error gaps. Above zero, a model has done better than a no-change forecast so far.</figcaption>
     </figure>
-    <p>ARIMA and the regression can't be told apart from a random walk, and gradient boosting is measurably worse. A no-change forecast still gets an R² of 0.9985 on price levels, close to the paper's number.</p>
+    <p>ARIMA and the regression can't be told apart from a random walk, and gradient boosting is measurably worse. A no-change forecast still gets an R² of 0.9985 on price levels, close to the 2022 number.</p>
     <figure>
       <img src="img/btc-price.png" srcset="img/btc-price-800.png 800w, img/btc-price.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Line chart of the last 120 days. The regression's implied price and the no-change forecast overlap, both one day behind the actual close." width="1600" height="864" loading="lazy" />
       <figcaption>Implied price and the no-change forecast over the last 120 days. This shows the method and says nothing about future prices.</figcaption>
@@ -133,7 +133,7 @@
 
   <section class="section" id="direction">
     <h2>4. Can direction be forecast?</h2>
-    <p>The paper's logit had AUCs of 0.54 and 0.51, close to a coin flip, and that was its most reliable result. In the rebuild, after calibrating each model's forecasts on its own past, accuracy is about 51.7% against 51.6% for always saying up. The difference isn't significant.</p>
+    <p>The 2022 logit had AUCs of 0.54 and 0.51, close to a coin flip, and that was its most reliable result. In the rebuild, after calibrating each model's forecasts on its own past, accuracy is about 51.7% against 51.6% for always saying up. The difference isn't significant.</p>
     <figure>
       <img src="img/btc-calibration.png" srcset="img/btc-calibration-800.png 800w, img/btc-calibration.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Four small charts of calibrated probability of an up day against the share of days that went up. Forecasts stay between about 50% and 60%, with wide ranges around each point." width="1600" height="736" loading="lazy" />
       <figcaption>Calibrated forecasts against outcomes. On the grey line, forecasts match outcomes.</figcaption>
@@ -151,7 +151,7 @@
 
   <section class="section notes">
     <h2>Data</h2>
-    <p>Daily BTC/USD candles from Bitstamp's public API, which aren't redistributed. The "paper's file" column comes from my own copy of the Yahoo file the paper used, which isn't redistributed either. The original paper isn't in the repository, and its numbers are quoted there and here.</p>
+    <p>Daily BTC/USD candles from Bitstamp's public API, which aren't redistributed. The "2022 file" column comes from my own copy of the Yahoo file the 2022 study used, which isn't redistributed either. The 2022 study isn't in the repository, and its numbers are quoted there and here.</p>
   </section>
 </article>
 </main>

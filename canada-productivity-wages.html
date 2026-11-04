@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>Productivity and pay by sector in Canada</h1>
-    <p class="lead">This began as a proposal for my labour economics course at Simon Fraser University. It had no results, because it depended on restricted survey access. This version answers its three questions from open data: Statistics Canada's productivity and labour tables for 1997 to 2024, and 8.1 million Labour Force Survey records for 2006 to 2024. It also changes parts of the design, including the standard errors, the deflators and the treatment of minimum wages. Results are as of November 2026.</p>
+    <p class="lead">How far does pay in Canada follow productivity, and why do sectors differ? This answers three questions from open data: Statistics Canada's productivity and labour tables for 1997 to 2024, and 8.1 million Labour Force Survey records for 2006 to 2024. It also changes parts of the design, including the standard errors, the deflators and the treatment of minimum wages. Results are as of November 2026.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. These results describe how pay and productivity move together. They are not causal estimates.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/canada_productivity_wages" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_productivity_wages/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -108,7 +108,7 @@
       <img src="img/productivity-wage-change.png" srcset="img/productivity-wage-change-800.png 800w, img/productivity-wage-change.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="Waterfall chart of the 22.1 log point rise in pay: education +5.6, other worker traits −0.7, minimum wage +4.1, sector and province mix +2.1, sector productivity +1.1, full-time and permanent jobs +0.3, union coverage −0.2, and year effects common to all +9.8." width="1600" height="864" loading="lazy" />
       <figcaption>What the model attributes the rise in pay to. This is an accounting, and it doesn't show cause.</figcaption>
     </figure>
-    <p>Productivity here is measured by sector, province and year, so every worker in a cell shares it. Robust errors, which the proposal planned to use, would make the estimate look about 18 times as precise as clustering by sector does.</p>
+    <p>Productivity here is measured by sector, province and year, so every worker in a cell shares it. Robust errors alone would make the estimate look about 18 times as precise as clustering by sector does.</p>
     <figure>
       <img src="img/productivity-clustering.png" srcset="img/productivity-clustering-800.png 800w, img/productivity-clustering.png 1600w" sizes="(max-width: 860px) calc(100vw - 2.5rem), 816px" alt="The same productivity estimate of about 0.09 with five ranges. The range is very narrow under robust errors, wider when clustered by sector, province and year or by sector and year, and widest when clustered by sector or with a wild cluster bootstrap, where it runs from about 0 to 0.18." width="1600" height="704" loading="lazy" />
       <figcaption>The same estimate with 95% ranges under different assumptions about the errors.</figcaption>

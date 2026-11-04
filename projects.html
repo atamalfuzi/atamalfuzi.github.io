@@ -115,7 +115,7 @@
       <div>
         <h3><a href="indigenous-income-gap.html">The Indigenous income gap in Canada, 2006 to 2021</a></h3>
         <p class="meta">Open data analysis in Python, 2026</p>
-        <p>A graduate econometrics assignment from Simon Fraser University, carried forward from the 2006 Census to 2021 with Statistics Canada's public microdata. Comparing people with the same age, education and other measured characteristics, Indigenous men's wages went from about 25% lower to about 14% lower, and Indigenous women's from about 10% lower to about 4% lower. The results describe a gap and don't identify causes. The people counted as Indigenous also changed between censuses, so this is not one group followed over time, and the write-up measures how much that could matter.</p>
+        <p>An earlier run of Pendakur and Pendakur's method on the 2006 Census, carried forward to 2021 with Statistics Canada's public microdata. Comparing people with the same age, education and other measured characteristics, Indigenous men's wages went from about 25% lower to about 14% lower, and Indigenous women's from about 10% lower to about 4% lower. The results describe a gap and don't identify causes. The people counted as Indigenous also changed between censuses, so this is not one group followed over time, and the write-up measures how much that could matter.</p>
         <div class="links-row"><a href="indigenous-income-gap.html">Project page</a><a href="https://github.com/atamalfuzi/canada_indigenous_income_gap" target="_blank">Code</a></div>
       </div>
     </li>
@@ -150,8 +150,8 @@
       <a href="canada-incumbency.html" tabindex="-1" aria-hidden="true"><img src="img/thumb-incumbency.jpg" srcset="img/thumb-incumbency.jpg 400w, img/thumb-incumbency-640.jpg 640w" sizes="(max-width: 560px) calc(100vw - 2.5rem), 184px" alt="" width="400" height="267" /></a>
       <div>
         <h3><a href="canada-incumbency.html">Does narrowly winning a federal riding help a party win it again?</a></h3>
-        <p class="meta">Regression discontinuity replication and extension in Python, 2022 and 2026</p>
-        <p>A party that narrowly wins a federal riding is about 12 points more likely to win it next time, across elections from 1872 to 2025. I reproduced my 2022 replication of Kendall and Rekkas exactly, then added data-driven bandwidths, validity checks and five new elections, linking ridings across two redistributions by the voters they share. Since 2011 the data can't separate the estimate from earlier periods, and it depends on how the redistributions are handled.</p>
+        <p class="meta">Regression discontinuity replication and extension in Python, 2026</p>
+        <p>A party that narrowly wins a federal riding is about 12 points more likely to win it next time, across elections from 1872 to 2025. I reproduced an earlier replication of Kendall and Rekkas exactly, then added data-driven bandwidths, validity checks and five new elections, linking ridings across two redistributions by the voters they share. Since 2011 the data can't separate the estimate from earlier periods, and it depends on how the redistributions are handled.</p>
         <div class="links-row"><a href="canada-incumbency.html">Project page</a><a href="https://github.com/atamalfuzi/canada_incumbency_rd" target="_blank">Code</a></div>
       </div>
     </li>
@@ -159,17 +159,17 @@
       <a href="bitcoin-forecast-check.html" tabindex="-1" aria-hidden="true"><img src="img/thumb-btc.jpg" srcset="img/thumb-btc.jpg 400w, img/thumb-btc-640.jpg 640w" sizes="(max-width: 560px) calc(100vw - 2.5rem), 184px" alt="" width="400" height="267" /></a>
       <div>
         <h3><a href="bitcoin-forecast-check.html">Checking my Bitcoin forecasts</a></h3>
-        <p class="meta">Rebuild of an MA paper in Python, 2022 and 2026</p>
-        <p>My 2022 paper reported a regression score of 0.9994 for Bitcoin's closing price. The rebuild shows that score came from using the same day's high and low, and tests the models again using only earlier information. Across 3,582 days to November 2026, none of them beats a forecast of no change.</p>
+        <p class="meta">Forecast evaluation in Python, 2026</p>
+        <p>An unpublished 2022 study of mine reported a regression score of 0.9994 for Bitcoin's closing price. The rebuild shows that score came from using the same day's high and low, and tests the models again using only earlier information. Across 3,582 days to November 2026, none of them beats a forecast of no change.</p>
         <div class="links-row"><a href="bitcoin-forecast-check.html">Project page</a><a href="https://github.com/atamalfuzi/btc_forecast_check" target="_blank">Code</a></div>
       </div>
     </li>
     <li>
       <a href="proof-of-work-welfare-cost.html" tabindex="-1" aria-hidden="true"><img src="img/thumb-pow.jpg" srcset="img/thumb-pow.jpg 400w, img/thumb-pow-640.jpg 640w" sizes="(max-width: 560px) calc(100vw - 2.5rem), 184px" alt="" width="400" height="267" /></a>
       <div>
-        <h3><a href="proof-of-work-welfare-cost.html">The welfare cost of Proof of Work, revisited</a></h3>
-        <p class="meta">MA thesis re-analysis in Python, 2021 and 2026</p>
-        <p>My MA thesis calibrated a model of Proof-of-Work payments and found Ethereum more costly than Bitcoin, 2.17% of consumption against 1.43%. Checking it in 2026, I found errors in the Ethereum inputs that decided that answer, along with a comparison of different years. Corrected and on the same year, 2020, Ethereum costs 0.57% and Bitcoin 0.74%, with most of the cost in both being mining.</p>
+        <h3><a href="proof-of-work-welfare-cost.html">The welfare cost of Proof of Work: Bitcoin and Ethereum</a></h3>
+        <p class="meta">Model calibration in Python, 2026</p>
+        <p>Chiu and Koeppl measured the welfare cost of Bitcoin's Proof of Work with a model of how blockchains settle payments. I applied the same model to Ethereum and compared the two coins on the same year, using transfer sizes measured from public chain data. In 2020 Proof of Work cost about 0.74% of consumption for Bitcoin and 0.57% for Ethereum, mostly in mining, and the gap rests on Bitcoin's largest transfers.</p>
         <div class="links-row"><a href="proof-of-work-welfare-cost.html">Project page</a><a href="https://github.com/atamalfuzi/pow_welfare_cost" target="_blank">Code</a></div>
       </div>
     </li>
@@ -218,11 +218,9 @@
 <section class="section">
   <h2>Academic work</h2>
   <ul class="plain-list">
-    <li><h3>Bitcoin price forecasting using different methods</h3><p class="status">MA paper</p><p>Simon Fraser University, 2022. Compared regression, ARIMA and logit forecasts of Bitcoin's price. A 2026 rebuild found that the paper's headline result, a score of 0.9994, came from look-ahead leakage: the regression used the same day's high and low to predict that day's close. Using only earlier information, no model beats a forecast of no change. <a href="bitcoin-forecast-check.html">The rebuild</a>.</p></li>
-    <li><h3>Economics coursework</h3><p class="status">Graduate coursework</p><p>Simon Fraser University, 2021-2023. Stata and R from my MA at SFU: replications of published papers using regression discontinuity, instrumental variables and difference-in-differences, CAPM tests, option pricing and business cycle filters, plus my BSc project comparing CNG and biogas in one engine. <a href="https://github.com/atamalfuzi/economics_coursework" target="_blank">Code on GitHub</a>.</p></li>
-    <li><h3>Welfare analysis of proof-of-work: Ethereum and Bitcoin</h3><p class="status">Graduate research</p><p>Allameh Tabataba'i University, 2021. Compared which protocol costs its users less, with blockchain data collected in Python and simulations in MATLAB. The 2026 re-analysis corrects calibration errors in the thesis, mainly in the Ethereum inputs, and puts both coins on 2020 data. Ethereum's welfare cost goes from 2.17% to 0.57% of consumption and Bitcoin's from 1.43% to 0.74%, so Ethereum comes out somewhat lower, where the thesis found Bitcoin lower. <a href="proof-of-work-welfare-cost.html">The corrected re-analysis</a>.</p></li>
+    <li><h3>Welfare analysis of proof-of-work: Ethereum and Bitcoin</h3><p class="status">Graduate research</p><p>Allameh Tabataba'i University, 2021. Compared which protocol costs its users less, with blockchain data collected in Python and simulations in MATLAB.</p></li>
     <li><h3>Market analysis of Iranian internet exchange points</h3><p class="status">National project</p><p>Allameh Tabataba'i University, 2020-2021. A market study on developing new internet exchange points, delivered to a national project with multinational research teams.</p></li>
-    <li><h3>Thermoeconomic analysis of a combined heat and power engine in Iran</h3><p class="status">Undergraduate thesis</p><p>Payame Noor University, 2018. Compared one engine on two fuels, compressed natural gas (CNG) and biogas, and the business case for each. <a href="https://github.com/atamalfuzi/economics_coursework/tree/main/BSc%20Project" target="_blank">Report and workbooks</a>.</p></li>
+    <li><h3>Thermoeconomic analysis of a combined heat and power engine in Iran</h3><p class="status">Undergraduate thesis</p><p>Payame Noor University, 2018. Compared one engine on two fuels, compressed natural gas (CNG) and biogas, and the business case for each.</p></li>
   </ul>
 </section>
 </main>

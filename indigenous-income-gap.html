@@ -63,7 +63,7 @@
   <div class="page-top">
     <a class="back" href="projects.html">Back to portfolio</a>
     <h1>The Indigenous income gap in Canada, 2006 to 2021</h1>
-    <p class="lead">How much lower are the incomes and wages of Indigenous people in Canada than those of other Canadians with the same age, education, language, marital status, area and household size? And how did that change? I look at four rounds of Statistics Canada's public census microdata: 2006, 2011, 2016 and 2021, for Canadian citizens by birth aged 25 to 64. The project started as an assignment in a graduate applied econometrics course at Simon Fraser University, which applied the method of Pendakur and Pendakur (2011) to the 2006 Census. I reproduce that work in Python first, then carry it forward.</p>
+    <p class="lead">How much lower are the incomes and wages of Indigenous people in Canada than those of other Canadians with the same age, education, language, marital status, area and household size? And how did that change? I look at four rounds of Statistics Canada's public census microdata: 2006, 2011, 2016 and 2021, for Canadian citizens by birth aged 25 to 64. It starts from an earlier, unpublished run of Pendakur and Pendakur's (2011) method on the 2006 Census, which I reproduce in Python first and then carry forward.</p>
     <p class="notes">Personal project: my own analysis of publicly available data. It is not associated with my work for any current or past employer and does not represent their views. The results describe a gap and what goes with it in these files. They don't show what causes it. Nothing here measures the abilities, habits or culture of any group.</p>
     <div class="links-row"><a href="https://github.com/atamalfuzi/canada_indigenous_income_gap" target="_blank">Code on GitHub</a><a href="https://github.com/atamalfuzi/canada_indigenous_income_gap/tree/main/output" target="_blank">All results (CSV)</a></div>
   </div>
@@ -83,7 +83,7 @@
         <tr><td><a href="#observed">How much do measured characteristics account for?</a></td><td data-label="Methods">Oaxaca-Blinder decomposition</td><td data-label="Answer">Roughly a third to a half of the wage gap among men, and roughly 60% or more among women. Education is the largest part.</td></tr>
         <tr><td><a href="#groups">Who does the average cover?</a></td><td data-label="Methods">Gaps by group</td><td data-label="Answer">Very different groups. The largest gaps are among registered men who are band members: 39% lower wages in 2006 and 26% in 2021.</td></tr>
         <tr><td><a href="#pandemic">How much is 2021 a pandemic result?</a></td><td data-label="Methods">Total income less pandemic benefits</td><td data-label="Answer">A good part. Taking benefits out removes about two thirds of the 2016 to 2021 narrowing in men's total income.</td></tr>
-        <tr><td><a href="#reproduce">Does the 2006 assignment reproduce?</a></td><td data-label="Methods">The same regressions in Python</td><td data-label="Answer">Closely, not exactly. All 32 estimates are within 0.35 standard errors, but the sample is 0.7% larger, for a reason I could not trace.</td></tr>
+        <tr><td><a href="#reproduce">Does the earlier 2006 run reproduce?</a></td><td data-label="Methods">The same regressions in Python</td><td data-label="Answer">Closely, not exactly. All 32 estimates are within 0.35 standard errors, but the sample is 0.7% larger, for a reason I could not trace.</td></tr>
         <tr><td><a href="#identity">Are these the same people over time?</a></td><td data-label="Methods">Counts of the same birth years, and a what-if</td><td data-label="Answer">No. The same birth years count 28% more Indigenous people in 2021 than in 2006, while the comparison group shrinks 4%.</td></tr>
       </tbody>
     </table>
@@ -156,7 +156,7 @@
       </tbody>
     </table>
     <p>Each group is compared with the same comparison group. The groups other than Métis and registered band members are small, with margins of error of about 4 to 25 points. Inuit women's incomes are higher than the comparison group's in every year; the area measure doesn't separate the North, so this isn't a comparison of people in the same places.</p>
-    <p><strong>Band membership is not the same as living on reserve.</strong> The public files have no on-reserve measure, and many band members live off reserve. The original assignment had labelled these groups as if they were about reserves, and that is corrected here. Pendakur and Pendakur's later paper, which can see where people live, finds much less narrowing for registered people living on reserve, so the narrowing among band members here may come mostly from those living off reserve.</p>
+    <p><strong>Band membership is not the same as living on reserve.</strong> The public files have no on-reserve measure, and many band members live off reserve. The earlier run had labelled these groups as if they were about reserves, and that is corrected here. Pendakur and Pendakur's later paper, which can see where people live, finds much less narrowing for registered people living on reserve, so the narrowing among band members here may come mostly from those living off reserve.</p>
   </section>
 
   <section class="section" id="pandemic">
@@ -174,8 +174,8 @@
   </section>
 
   <section class="section" id="reproduce">
-    <h2>5. Reproducing the 2006 assignment</h2>
-    <p>The assignment ran regressions of log total income and log wages, separately for women and men. The Python version follows the same steps, and all 32 group estimates are within 0.35 standard errors of the assignment's, with none changing sign. The samples differ by about 2,500 people, 0.7%. The assignment used a copy of the file converted through R that I no longer have, and dropping the highest incomes doesn't reproduce its numbers, so I don't know the cause. The code here reads Statistics Canada's file directly.</p>
+    <h2>5. Reproducing the earlier 2006 run</h2>
+    <p>The earlier run used regressions of log total income and log wages, separately for women and men. The Python version follows the same steps, and all 32 group estimates are within 0.35 standard errors of the earlier run's, with none changing sign. The samples differ by about 2,500 people, 0.7%. It used a copy of the file converted through R that I no longer have, and dropping the highest incomes doesn't reproduce its numbers, so I don't know the cause. The code here reads Statistics Canada's file directly.</p>
     <p>To compare across years, the model uses only variables that exist in every census. On 2006 data, those changes move the group estimates by 0.053 log points at most.</p>
   </section>
 
